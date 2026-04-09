@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState, useCallback } from 'react'
 import { useChat } from 'ai/react'
 import { Button } from '@/components/ui/button'
 import ReactMarkdown from 'react-markdown'
@@ -34,16 +34,44 @@ const SUGGESTED_QUESTIONS: Record<string, string[]> = {
   ],
 }
 
+// 语音识别类型声明
+interface SpeechRecognitionEvent extends Event {
+  results: SpeechRecognitionResultList
+}
+interface SpeechRecognitionErrorEvent extends Event {
+  error: string
+}
+interface SpeechRecognitionInstance extends EventTarget {
+  lang: string
+  continuous: boolean
+  interimResults: boolean
+  start(): void
+  stop(): void
+  onresult: ((e: SpeechRecognitionEvent) => void) | null
+  onerror: ((e: SpeechRecognitionErrorEvent) => void) | null
+  onend: (() => void) | null
+}
+
+declare global {
+  interface Window {
+    SpeechRecognition: new () => SpeechRecognitionInstance
+    webkitSpeechRecognition: new () => SpeechRecognitionInstance
+  }
+}
+
 export default function ChatInterface({ skillId, skillName, skillEmoji }: Props) {
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
+  const recognitionRef = useRef<SpeechRecognitionInstance | null>(null)
   const suggestions = SUGGESTED_QUESTIONS[skillId] || SUGGESTED_QUESTIONS['default']
+
+  const [isRecording, setIsRecording] = useState(false)
+  const [voiceSupported, setVoiceSupported] = useState(false)
 
   const { messages, input, setInput, append, setMessages, isLoading } = useChat({
     api: '/api/chat',
     body: { skillId },
     onError: () => {
-      // 用 setMessages 添加本地错误消息，避免触发新的 API 请求
       setMessages(prev => [
         ...prev,
         {
@@ -54,6 +82,14 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
       ])
     },
   })
+
+  // 检测浏览器是否支持语音识别
+  useEffect(() => {
+    setVoiceSupported(
+      typeof window !== 'undefined' &&
+      ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)
+    )
+  }, [])
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -71,6 +107,45 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
       sendMessage(input)
     }
   }
+
+  const toggleRecording = useCallback(() => {
+    if (isRecording) {
+      // 停止录音
+      recognitionRef.current?.stop()
+      setIsRecording(false)
+      return
+    }
+
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition
+    const recognition = new SpeechRecognition()
+
+    // 自动检测语言：先尝试中文，用户说英文也能识别
+    recognition.lang = 'zh-CN'
+    recognition.continuous = false
+    recognition.interimResults = true
+
+    recognition.onresult = (e: SpeechRecognitionEvent) => {
+      let transcript = ''
+      for (let i = 0; i < e.results.length; i++) {
+        transcript += e.results[i][0].transcript
+      }
+      setInput(transcript)
+    }
+
+    recognition.onerror = (e: SpeechRecognitionErrorEvent) => {
+      console.error('语音识别错误:', e.error)
+      setIsRecording(false)
+    }
+
+    recognition.onend = () => {
+      setIsRecording(false)
+    }
+
+    recognitionRef.current = recognition
+    recognition.start()
+    setIsRecording(true)
+  }, [isRecording, setInput])
 
   return (
     <div className="flex flex-col h-full max-w-3xl mx-auto w-full">
@@ -160,13 +235,41 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
 
       {/* Input Area */}
       <div className="flex-none border-t border-white/10 px-4 py-4">
-        <div className="flex gap-3 items-end">
+        <div className="flex gap-2 items-end">
+          {/* 语音按钮 */}
+          {voiceSupported && (
+            <button
+              onClick={toggleRecording}
+              disabled={isLoading}
+              title={isRecording ? '点击停止录音' : '点击开始语音输入'}
+              className={`flex-none w-10 h-10 rounded-xl flex items-center justify-center transition-all disabled:opacity-30 ${
+                isRecording
+                  ? 'bg-red-500 text-white animate-pulse'
+                  : 'bg-white/[0.05] border border-white/10 text-white/50 hover:text-white hover:border-white/25'
+              }`}
+            >
+              {isRecording ? (
+                // 停止图标
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <rect x="6" y="6" width="12" height="12" rx="2"/>
+                </svg>
+              ) : (
+                // 麦克风图标
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                  <line x1="12" x2="12" y1="19" y2="22"/>
+                </svg>
+              )}
+            </button>
+          )}
+
           <textarea
             ref={inputRef}
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder={`问 ${skillName} 任何问题…`}
+            placeholder={isRecording ? '正在聆听…' : `问 ${skillName} 任何问题…`}
             rows={1}
             className="flex-1 bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 resize-none focus:outline-none focus:border-white/25 transition-colors"
             style={{ maxHeight: '120px' }}
@@ -183,6 +286,7 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
         </div>
         <p className="text-xs text-white/20 mt-2 text-center">
           Enter 发送 · Shift+Enter 换行
+          {voiceSupported && ' · 🎤 支持语音输入'}
         </p>
       </div>
     </div>
