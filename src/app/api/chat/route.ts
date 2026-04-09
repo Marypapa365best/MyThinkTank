@@ -9,12 +9,12 @@ import { getSkillById } from '@/lib/skills-registry'
 const MODELS = {
   gemini: {
     provider: () => createGoogleGenerativeAI({ apiKey: process.env.GOOGLE_API_KEY }),
-    model: 'gemini-2.0-flash',
+    model: 'gemini-1.5-flash',   // 最稳定、免费额度最大
     available: !!process.env.GOOGLE_API_KEY,
   },
   claude: {
     provider: () => createAnthropic({ apiKey: process.env.ANTHROPIC_API_KEY }),
-    model: 'claude-opus-4-5',
+    model: 'claude-haiku-4-5-20251001',
     available: !!process.env.ANTHROPIC_API_KEY,
   },
 }
@@ -55,7 +55,8 @@ export async function POST(req: NextRequest) {
 
     return result.toDataStreamResponse()
   } catch (error) {
-    console.error('Chat API error:', error)
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    const msg = error instanceof Error ? error.message : String(error)
+    console.error('Chat API error:', msg)
+    return NextResponse.json({ error: msg }, { status: 500 })
   }
 }
