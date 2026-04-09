@@ -67,24 +67,37 @@ export default function BrainstormInterface() {
     let fullContent = ''
 
     if (reader) {
-      while (true) {
-        const { done, value } = await reader.read()
-        if (done) break
-        const chunk = decoder.decode(value, { stream: true })
-        fullContent += chunk
-        // 实时更新当前 turn 的内容
-        setTurns(prev => {
-          const updated = [...prev]
-          updated[turnIndex] = { ...updated[turnIndex], content: fullContent }
-          return updated
-        })
+      try {
+        while (true) {
+          const { done, value } = await reader.read()
+          if (done) break
+          const chunk = decoder.decode(value, { stream: true })
+          fullContent += chunk
+          setTurns(prev => {
+            const updated = [...prev]
+            updated[turnIndex] = { ...updated[turnIndex], content: fullContent }
+            return updated
+          })
+        }
+        // flush 剩余字节（修复最后几个字被截断的问题）
+        const remaining = decoder.decode()
+        if (remaining) {
+          fullContent += remaining
+        }
+      } catch (streamErr) {
+        if ((streamErr as Error).name === 'AbortError') throw streamErr
+        console.error('Stream read error:', streamErr)
       }
     }
 
-    // 标记完成
+    // 标记完成（即使内容为空也要清除 isStreaming，防止卡在"思考中"）
     setTurns(prev => {
       const updated = [...prev]
-      updated[turnIndex] = { ...updated[turnIndex], content: fullContent, isStreaming: false }
+      updated[turnIndex] = {
+        ...updated[turnIndex],
+        content: fullContent || '（未能获取回答，请重试）',
+        isStreaming: false,
+      }
       return updated
     })
 
@@ -126,6 +139,10 @@ export default function BrainstormInterface() {
       if ((e as Error).name !== 'AbortError') {
         console.error('Brainstorm error:', e)
       }
+      // 清除所有卡在"思考中"的 turn，防止永久卡住
+      setTurns(prev => prev.map(t =>
+        t.isStreaming ? { ...t, isStreaming: false, content: t.content || '（回答失败，请重试）' } : t
+      ))
     } finally {
       setIsRunning(false)
     }
