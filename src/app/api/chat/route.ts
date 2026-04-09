@@ -9,7 +9,7 @@ import { getSkillById } from '@/lib/skills-registry'
 const MODELS = {
   gemini: {
     provider: () => createGoogleGenerativeAI({ apiKey: process.env.GOOGLE_API_KEY }),
-    model: 'gemini-1.5-flash',   // 最稳定、免费额度最大
+    model: 'gemini-2.5-flash-preview-04-17',  // Gemini 2.5 Flash
     available: !!process.env.GOOGLE_API_KEY,
   },
   claude: {
