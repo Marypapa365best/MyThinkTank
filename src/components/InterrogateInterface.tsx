@@ -101,8 +101,9 @@ export default function InterrogateInterface() {
     try {
       const collectedCritiques: CritiqueItem[] = []
 
-      // 依次让每个审问者发言
+      // 依次让每个审问者发言（每次请求间隔 800ms，避免触发速率限制）
       for (let i = 0; i < selectedIds.length; i++) {
+        if (i > 0) await new Promise(r => setTimeout(r, 800))
         const skillId = selectedIds[i]
         const skill = availableSkills.find(s => s.id === skillId)!
 

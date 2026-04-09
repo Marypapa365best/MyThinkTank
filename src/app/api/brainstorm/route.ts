@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
       contextMessage += `请直接以你的思维框架对这个话题发表看法。`
     }
 
-    contextMessage += `\n\n【语言】必须用中文回答。【长度】150字以内，言简意赅。`
+    contextMessage += `\n\n【语言】必须用中文回答。观点说透为止，不要强行截短。`
 
     const messages = [
       { role: 'user' as const, content: systemPrompt },
