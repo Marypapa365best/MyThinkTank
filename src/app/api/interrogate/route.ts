@@ -149,10 +149,7 @@ ${critiquesText}
   } catch (error) {
     const msg = error instanceof Error ? error.message : String(error)
     console.error('Interrogate API error:', msg)
-    // Gemini 内容过滤导致的错误，返回可读提示
-    if (msg.includes('SAFETY') || msg.includes('blocked') || msg.includes('finish_reason')) {
-      return new Response('（该角色的风格被当前模型的安全过滤拦截，可在 .env.local 切换 PREFERRED_MODEL=claude 解决）', { status: 200 })
-    }
-    return NextResponse.json({ error: msg }, { status: 500 })
+    // 把真实错误信息作为正常文本流返回，方便前端直接显示诊断信息
+    return new Response(`⚠️ 错误：${msg}`, { status: 200 })
   }
 }
