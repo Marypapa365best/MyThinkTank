@@ -5,7 +5,6 @@ import { streamText } from 'ai'
 import { loadSkillPrompt, detectLanguage } from '@/lib/load-skill'
 import { getSkillById } from '@/lib/skills-registry'
 
-// 支持的模型配置
 const MODELS = {
   gemini: {
     provider: () => createGoogleGenerativeAI({ apiKey: process.env.GOOGLE_API_KEY }),
@@ -25,32 +24,44 @@ function getActiveModel() {
   return Object.values(MODELS).find(m => m.available) ?? MODELS.gemini
 }
 
+// content 可能是字符串，也可能是 [{type:'text', text:'...'}] 数组（multimodal SDK 格式）
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function extractText(content: any): string {
+  if (typeof content === 'string') return content
+  if (Array.isArray(content)) {
+    return content
+      .filter((p: { type: string; text?: string }) => p.type === 'text' && p.text)
+      .map((p: { type: string; text?: string }) => p.text ?? '')
+      .join('')
+  }
+  return String(content ?? '')
+}
+
 type ChatMessage = { role: 'user' | 'assistant'; content: string }
 
-// 清理消息列表，确保符合 Gemini 格式要求：
-// 1. 只保留 user / assistant 角色
-// 2. 不能有连续相同角色
-// 3. 必须以 user 结尾
-function sanitizeMessages(raw: { role: string; content: string }[]): ChatMessage[] {
-  // 过滤有效角色且内容非空
-  const filtered = raw
-    .filter(m => (m.role === 'user' || m.role === 'assistant') && m.content?.trim())
-    .map(m => ({ role: m.role as 'user' | 'assistant', content: m.content.trim() }))
+// 确保消息列表符合 Gemini 要求：角色严格交替，最后一条是 user
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function sanitizeMessages(raw: any[]): ChatMessage[] {
+  if (!Array.isArray(raw)) return []
+
+  const filtered: ChatMessage[] = raw
+    .filter(m => m.role === 'user' || m.role === 'assistant')
+    .map(m => ({ role: m.role as 'user' | 'assistant', content: extractText(m.content) }))
+    .filter(m => m.content.trim().length > 0)
 
   if (filtered.length === 0) return []
 
-  // 去除连续相同角色（保留后者）
+  // 合并连续相同角色
   const deduped: ChatMessage[] = [filtered[0]]
   for (let i = 1; i < filtered.length; i++) {
     if (filtered[i].role !== deduped[deduped.length - 1].role) {
       deduped.push(filtered[i])
     } else {
-      // 合并相同角色的连续消息
       deduped[deduped.length - 1].content += '\n' + filtered[i].content
     }
   }
 
-  // 确保最后一条是 user
+  // 去掉末尾非 user 消息
   while (deduped.length > 0 && deduped[deduped.length - 1].role !== 'user') {
     deduped.pop()
   }
@@ -60,16 +71,22 @@ function sanitizeMessages(raw: { role: string; content: string }[]): ChatMessage
 
 export async function POST(req: NextRequest) {
   try {
-    const { skillId, messages } = await req.json()
+    const body = await req.json()
+    const { skillId, messages } = body
+
+    console.log('[Chat] skillId:', skillId, 'raw msg count:', Array.isArray(messages) ? messages.length : 'N/A')
+    if (Array.isArray(messages) && messages.length > 0) {
+      console.log('[Chat] first msg role:', messages[0].role, 'content type:', typeof messages[0].content)
+    }
 
     const skill = getSkillById(skillId)
     if (!skill) {
       return NextResponse.json({ error: 'Skill not found' }, { status: 404 })
     }
 
-    console.log('[Chat] raw messages:', JSON.stringify(messages))
     const cleanMessages = sanitizeMessages(messages)
-    console.log('[Chat] clean messages:', JSON.stringify(cleanMessages))
+    console.log('[Chat] clean msg count:', cleanMessages.length)
+
     if (cleanMessages.length === 0) {
       return NextResponse.json({ error: 'No valid user message' }, { status: 400 })
     }
@@ -81,7 +98,7 @@ export async function POST(req: NextRequest) {
     const activeModel = getActiveModel()
     const provider = activeModel.provider()
 
-    console.log(`[Chat] model=${activeModel.model} skill=${skillId} msgs=${cleanMessages.length}`)
+    console.log(`[Chat] model=${activeModel.model} msgs=${cleanMessages.length}`)
 
     const result = await streamText({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
