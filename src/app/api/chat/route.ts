@@ -24,7 +24,9 @@ function getActiveModel() {
   return Object.values(MODELS).find(m => m.available) ?? MODELS.gemini
 }
 
-// content 可能是字符串，也可能是 [{type:'text', text:'...'}] 数组（multimodal SDK 格式）
+type ChatMessage = { role: 'user' | 'assistant'; content: string }
+
+// content 可能是字符串或 [{type:'text', text:'...'}] 数组
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function extractText(content: any): string {
   if (typeof content === 'string') return content
@@ -37,9 +39,6 @@ function extractText(content: any): string {
   return String(content ?? '')
 }
 
-type ChatMessage = { role: 'user' | 'assistant'; content: string }
-
-// 确保消息列表符合 Gemini 要求：角色严格交替，最后一条是 user
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function sanitizeMessages(raw: any[]): ChatMessage[] {
   if (!Array.isArray(raw)) return []
@@ -61,7 +60,7 @@ function sanitizeMessages(raw: any[]): ChatMessage[] {
     }
   }
 
-  // 去掉末尾非 user 消息
+  // 确保最后一条是 user
   while (deduped.length > 0 && deduped[deduped.length - 1].role !== 'user') {
     deduped.pop()
   }
@@ -74,19 +73,12 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
     const { skillId, messages } = body
 
-    console.log('[Chat] skillId:', skillId, 'raw msg count:', Array.isArray(messages) ? messages.length : 'N/A')
-    if (Array.isArray(messages) && messages.length > 0) {
-      console.log('[Chat] first msg role:', messages[0].role, 'content type:', typeof messages[0].content)
-    }
-
     const skill = getSkillById(skillId)
     if (!skill) {
       return NextResponse.json({ error: 'Skill not found' }, { status: 404 })
     }
 
     const cleanMessages = sanitizeMessages(messages)
-    console.log('[Chat] clean msg count:', cleanMessages.length)
-
     if (cleanMessages.length === 0) {
       return NextResponse.json({ error: 'No valid user message' }, { status: 400 })
     }
@@ -98,13 +90,22 @@ export async function POST(req: NextRequest) {
     const activeModel = getActiveModel()
     const provider = activeModel.provider()
 
-    console.log(`[Chat] model=${activeModel.model} msgs=${cleanMessages.length}`)
+    // Gemini 不支持 system 参数，将 system prompt 作为第一轮对话注入
+    // 这样可以避免 @ai-sdk/google 的 system 转换兼容性问题
+    const allMessages: ChatMessage[] = systemPrompt
+      ? [
+          { role: 'user', content: systemPrompt },
+          { role: 'assistant', content: '好的，我已完全理解以上设定，将严格按照这个框架来回答。请提问。' },
+          ...cleanMessages,
+        ]
+      : cleanMessages
+
+    console.log(`[Chat] model=${activeModel.model} skill=${skillId} msgs=${allMessages.length}`)
 
     const result = await streamText({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       model: (provider as any)(activeModel.model),
-      system: systemPrompt || undefined,
-      messages: cleanMessages,
+      messages: allMessages,
       maxTokens: 2048,
     })
 

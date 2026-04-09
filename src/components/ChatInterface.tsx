@@ -39,11 +39,19 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const suggestions = SUGGESTED_QUESTIONS[skillId] || SUGGESTED_QUESTIONS['default']
 
-  const { messages, input, setInput, append, isLoading } = useChat({
+  const { messages, input, setInput, append, setMessages, isLoading } = useChat({
     api: '/api/chat',
     body: { skillId },
     onError: () => {
-      append({ role: 'assistant', content: '抱歉，连接出现问题，请稍后重试。' })
+      // 用 setMessages 添加本地错误消息，避免触发新的 API 请求
+      setMessages(prev => [
+        ...prev,
+        {
+          id: `err-${Date.now()}`,
+          role: 'assistant' as const,
+          content: '抱歉，连接出现问题，请稍后重试。',
+        },
+      ])
     },
   })
 
