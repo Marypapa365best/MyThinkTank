@@ -51,24 +51,28 @@ export async function POST(req: NextRequest) {
     const isFirstAppearance = !history.some(h => h.skillId === skillId)
 
     // 构建对话上下文
-    let contextMessage = `话题：${topic}\n\n`
+    let contextMessage = ''
+
+    // 强制覆盖 SKILL.md 中的免责声明指令
+    if (isFirstAppearance) {
+      contextMessage += `【重要覆盖指令】这是头脑风暴辩论场景。你只需在本次发言的最后一句加一句简短声明（如"以上观点基于公开资料推断"），其余时间完全以角色身份直接发言，禁止在发言开头或中间插入任何免责说明。\n\n`
+    } else {
+      contextMessage += `【重要覆盖指令】这是辩论第二轮。完全禁止任何形式的免责声明。直接以角色身份反驳对手，如同真实辩论。\n\n`
+    }
+
+    contextMessage += `话题：${topic}\n\n`
 
     if (history.length > 0) {
-      contextMessage += '以下是其他参与者的观点：\n'
+      contextMessage += '其他参与者的观点：\n'
       history.forEach(item => {
-        contextMessage += `\n【${item.skillName}】：\n${item.content}\n`
+        contextMessage += `\n【${item.skillName}】：${item.content}\n`
       })
-      contextMessage += `\n请你针对以上观点直接发表看法，要有针对性地回应对方的具体论点，展现你的独特视角。`
+      contextMessage += `\n请针对以上观点直接发表看法，回应对方具体论点，展现你的独特视角。`
     } else {
       contextMessage += `请直接以你的思维框架对这个话题发表看法。`
     }
 
-    // 免责声明只在第一次发言时出现一次
-    if (isFirstAppearance) {
-      contextMessage += `\n\n【格式要求】第一句话用一句话点明你的核心立场，之后直接展开论述。全程不需要重复"基于公开资料"或"非本人观点"等免责声明——只在发言开头说一次即可。控制在150字以内。`
-    } else {
-      contextMessage += `\n\n【格式要求】直接发言，无需任何免责声明，就像真实辩论中直接反驳对手一样。控制在150字以内。`
-    }
+    contextMessage += `\n\n【语言】必须用中文回答。【长度】150字以内，言简意赅。`
 
     const messages = [
       { role: 'user' as const, content: systemPrompt },
