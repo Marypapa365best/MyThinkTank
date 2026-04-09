@@ -25,6 +25,9 @@ export default function Navbar() {
           <Link href="/skills" className="hover:text-white transition-colors">
             智囊库
           </Link>
+          <Link href="/brainstorm" className="hover:text-white transition-colors">
+            💡 头脑风暴
+          </Link>
           <Link href="/pricing" className="hover:text-white transition-colors">
             定价
           </Link>
@@ -61,6 +64,7 @@ export default function Navbar() {
       {menuOpen && (
         <div className="md:hidden border-t border-white/10 bg-[#0a0a0a] px-4 py-4 flex flex-col gap-4 text-sm">
           <Link href="/skills" className="text-white/60 hover:text-white">智囊库</Link>
+          <Link href="/brainstorm" className="text-white/60 hover:text-white">💡 头脑风暴</Link>
           <Link href="/pricing" className="text-white/60 hover:text-white">定价</Link>
           <Link href="/about" className="text-white/60 hover:text-white">关于</Link>
           <div className="flex gap-3 pt-2">
