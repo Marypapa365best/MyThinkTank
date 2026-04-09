@@ -1,14 +1,9 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useRef, useEffect } from 'react'
+import { useChat } from 'ai/react'
 import { Button } from '@/components/ui/button'
 import ReactMarkdown from 'react-markdown'
-
-interface Message {
-  id: string
-  role: 'user' | 'assistant'
-  content: string
-}
 
 interface Props {
   skillId: string
@@ -40,93 +35,26 @@ const SUGGESTED_QUESTIONS: Record<string, string[]> = {
 }
 
 export default function ChatInterface({ skillId, skillName, skillEmoji }: Props) {
-  const [messages, setMessages] = useState<Message[]>([])
-  const [input, setInput] = useState('')
-  const [loading, setLoading] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
-
   const suggestions = SUGGESTED_QUESTIONS[skillId] || SUGGESTED_QUESTIONS['default']
+
+  const { messages, input, setInput, append, isLoading } = useChat({
+    api: '/api/chat',
+    body: { skillId },
+    onError: () => {
+      append({ role: 'assistant', content: '抱歉，连接出现问题，请稍后重试。' })
+    },
+  })
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
   const sendMessage = async (text: string) => {
-    if (!text.trim() || loading) return
-
-    const userMsg: Message = {
-      id: Date.now().toString(),
-      role: 'user',
-      content: text.trim(),
-    }
-
-    setMessages(prev => [...prev, userMsg])
+    if (!text.trim() || isLoading) return
     setInput('')
-    setLoading(true)
-
-    try {
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          skillId,
-          messages: [...messages, userMsg].map(m => ({
-            role: m.role,
-            content: m.content,
-          })),
-        }),
-      })
-
-      if (!res.ok) throw new Error('API error')
-
-      const reader = res.body?.getReader()
-      const decoder = new TextDecoder()
-      let assistantContent = ''
-
-      const assistantMsg: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: '',
-      }
-      setMessages(prev => [...prev, assistantMsg])
-
-      if (reader) {
-        while (true) {
-          const { done, value } = await reader.read()
-          if (done) break
-          const chunk = decoder.decode(value)
-          const lines = chunk.split('\n')
-          for (const line of lines) {
-            if (line.startsWith('data: ')) {
-              const data = line.slice(6)
-              if (data === '[DONE]') break
-              try {
-                const parsed = JSON.parse(data)
-                const delta = parsed.choices?.[0]?.delta?.content || ''
-                assistantContent += delta
-                setMessages(prev =>
-                  prev.map(m =>
-                    m.id === assistantMsg.id ? { ...m, content: assistantContent } : m
-                  )
-                )
-              } catch {}
-            }
-          }
-        }
-      }
-    } catch (err) {
-      setMessages(prev => [
-        ...prev,
-        {
-          id: (Date.now() + 2).toString(),
-          role: 'assistant',
-          content: '抱歉，连接出现问题，请稍后重试。',
-        },
-      ])
-    } finally {
-      setLoading(false)
-    }
+    await append({ role: 'user', content: text.trim() })
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -209,7 +137,7 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
           </div>
         ))}
 
-        {loading && messages[messages.length - 1]?.role === 'user' && (
+        {isLoading && messages[messages.length - 1]?.role === 'user' && (
           <div className="flex gap-3">
             <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-sm">
               {skillEmoji}
@@ -234,11 +162,11 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
             rows={1}
             className="flex-1 bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 resize-none focus:outline-none focus:border-white/25 transition-colors"
             style={{ maxHeight: '120px' }}
-            disabled={loading}
+            disabled={isLoading}
           />
           <Button
             onClick={() => sendMessage(input)}
-            disabled={!input.trim() || loading}
+            disabled={!input.trim() || isLoading}
             size="sm"
             className="bg-white text-black hover:bg-white/90 h-10 px-4 flex-none disabled:opacity-30"
           >
