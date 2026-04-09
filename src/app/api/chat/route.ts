@@ -67,7 +67,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Skill not found' }, { status: 404 })
     }
 
+    console.log('[Chat] raw messages:', JSON.stringify(messages))
     const cleanMessages = sanitizeMessages(messages)
+    console.log('[Chat] clean messages:', JSON.stringify(cleanMessages))
     if (cleanMessages.length === 0) {
       return NextResponse.json({ error: 'No valid user message' }, { status: 400 })
     }
