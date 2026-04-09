@@ -2,10 +2,13 @@ import fs from 'fs'
 import path from 'path'
 
 // 读取 SKILL.md 文件内容作为 system prompt
-export function loadSkillPrompt(skillId: string, lang: 'zh' | 'en' = 'zh'): string {
+export function loadSkillPrompt(
+  skillId: string,
+  lang: 'zh' | 'en' = 'zh',
+  maxChars?: number  // 可选截断：多智囊场景节省 token
+): string {
   const skillsDir = path.join(process.cwd(), 'skills')
 
-  // 语言优先级：指定语言 → 中文降级
   const filenames = lang === 'en'
     ? ['SKILL.en.md', 'SKILL.md']
     : ['SKILL.md']
@@ -13,7 +16,16 @@ export function loadSkillPrompt(skillId: string, lang: 'zh' | 'en' = 'zh'): stri
   for (const filename of filenames) {
     const filePath = path.join(skillsDir, skillId, filename)
     if (fs.existsSync(filePath)) {
-      return fs.readFileSync(filePath, 'utf-8')
+      const content = fs.readFileSync(filePath, 'utf-8')
+      if (maxChars && content.length > maxChars) {
+        // 在段落边界截断，不截断半句话
+        const truncated = content.slice(0, maxChars)
+        const lastPara = truncated.lastIndexOf('\n\n')
+        return lastPara > maxChars * 0.7
+          ? truncated.slice(0, lastPara)
+          : truncated
+      }
+      return content
     }
   }
 

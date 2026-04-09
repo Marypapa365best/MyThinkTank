@@ -120,7 +120,7 @@ export default function BrainstormInterface() {
 
       for (let round = 0; round < DEBATE_ROUNDS; round++) {
         for (const skillId of selectedIds) {
-          if (turnIndex > 0) await new Promise(r => setTimeout(r, 800))
+          if (turnIndex > 0) await new Promise(r => setTimeout(r, 2500))
           const skill = availableSkills.find(s => s.id === skillId)!
           const content = await streamPersonaResponse(
             skillId,

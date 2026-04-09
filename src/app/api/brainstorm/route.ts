@@ -43,7 +43,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Skill not found' }, { status: 404 })
     }
 
-    const systemPrompt = loadSkillPrompt(skillId, 'zh')
+    // 多智囊场景截断 SKILL.md 到前 2000 字，节省 token
+    const systemPrompt = loadSkillPrompt(skillId, 'zh', 2000)
     const activeModel = getActiveModel()
     const provider = activeModel.provider()
 

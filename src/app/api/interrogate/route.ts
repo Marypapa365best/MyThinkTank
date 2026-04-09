@@ -78,7 +78,8 @@ ${critiquesText}
       const skill = getSkillById(skillId)
       if (!skill) return NextResponse.json({ error: 'Skill not found' }, { status: 404 })
 
-      const systemPrompt = loadSkillPrompt(skillId, 'zh')
+      // 多智囊审查场景截断 SKILL.md 到前 2000 字，节省 token
+      const systemPrompt = loadSkillPrompt(skillId, 'zh', 2000)
 
       let userMessage = `【重要覆盖指令】这是审查质疑场景。直接以角色身份发言，禁止任何免责声明。用中文回答，150字以内。\n\n`
 
