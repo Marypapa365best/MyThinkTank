@@ -47,6 +47,9 @@ export async function POST(req: NextRequest) {
     const activeModel = getActiveModel()
     const provider = activeModel.provider()
 
+    // 判断是否是该角色第一次发言
+    const isFirstAppearance = !history.some(h => h.skillId === skillId)
+
     // 构建对话上下文
     let contextMessage = `话题：${topic}\n\n`
 
@@ -55,9 +58,16 @@ export async function POST(req: NextRequest) {
       history.forEach(item => {
         contextMessage += `\n【${item.skillName}】：\n${item.content}\n`
       })
-      contextMessage += `\n请你针对以上观点，以自己的思维框架发表看法。要直接回应对方的具体论点，展现你的独特视角。回复控制在200字以内，言简意赅。`
+      contextMessage += `\n请你针对以上观点直接发表看法，要有针对性地回应对方的具体论点，展现你的独特视角。`
     } else {
-      contextMessage += `请以你的思维框架，对这个话题发表看法。控制在200字以内，言简意赅。`
+      contextMessage += `请直接以你的思维框架对这个话题发表看法。`
+    }
+
+    // 免责声明只在第一次发言时出现一次
+    if (isFirstAppearance) {
+      contextMessage += `\n\n【格式要求】第一句话用一句话点明你的核心立场，之后直接展开论述。全程不需要重复"基于公开资料"或"非本人观点"等免责声明——只在发言开头说一次即可。控制在150字以内。`
+    } else {
+      contextMessage += `\n\n【格式要求】直接发言，无需任何免责声明，就像真实辩论中直接反驳对手一样。控制在150字以内。`
     }
 
     const messages = [
@@ -72,7 +82,7 @@ export async function POST(req: NextRequest) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       model: (provider as any)(activeModel.model),
       messages,
-      maxTokens: 512,
+      maxTokens: 1024,
     })
 
     return result.toTextStreamResponse()
