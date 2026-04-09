@@ -32,6 +32,20 @@ export function loadSkillPrompt(
   throw new Error(`Skill not found: ${skillId}`)
 }
 
+// 读取压缩版 SKILL.compact.md，用于头脑风暴/质疑团等多智囊场景（节省 token）
+// 若压缩版不存在，自动回退到截断版 SKILL.md（前 800 字）
+export function loadCompactSkillPrompt(skillId: string): string {
+  const skillsDir = path.join(process.cwd(), 'skills')
+  const compactPath = path.join(skillsDir, skillId, 'SKILL.compact.md')
+
+  if (fs.existsSync(compactPath)) {
+    return fs.readFileSync(compactPath, 'utf-8')
+  }
+
+  // 回退：截断完整 SKILL.md
+  return loadSkillPrompt(skillId, 'zh', 800)
+}
+
 // 检测用户消息语言（简单判断）
 export function detectLanguage(text: string): 'zh' | 'en' {
   const chineseChars = (text.match(/[\u4e00-\u9fff]/g) || []).length

@@ -176,6 +176,9 @@ export default function BrainstormInterface() {
           <p className="text-white/40 text-sm max-w-md mx-auto">
             选择 2–3 位智囊，输入话题，让他们相互辩论，碰撞出不同视角的火花
           </p>
+          <p className="mt-3 text-xs text-white/20 max-w-sm mx-auto">
+            以下内容基于公开资料推断，代表各人物的思维框架，非本人观点
+          </p>
         </div>
 
         {/* Setup Panel */}

@@ -192,7 +192,10 @@ export default function InterrogateInterface() {
           <div className="text-4xl mb-3">🔍</div>
           <h1 className="text-3xl font-bold mb-2">质疑团</h1>
           <p className="text-white/40 text-sm max-w-md mx-auto">
-            粘贴任何人的言论，让顶级智囊联合审查——找漏洞、戳谎言、去伪存真
+            粘贴任何人的言论，让顶级智囊联合审查——只评判事实与逻辑，不搞人身攻击
+          </p>
+          <p className="mt-3 text-xs text-white/20 max-w-sm mx-auto">
+            以下内容基于公开资料推断，代表各人物的思维框架，非本人观点
           </p>
         </div>
 
