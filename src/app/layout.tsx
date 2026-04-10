@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import DisclaimerBanner from "@/components/DisclaimerBanner";
 
 const geist = Geist({ subsets: ["latin"] });
 
@@ -24,6 +26,8 @@ export default function RootLayout({
       >
         <Navbar />
         <main>{children}</main>
+        <Footer />
+        <DisclaimerBanner />
       </body>
     </html>
   );
