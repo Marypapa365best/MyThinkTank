@@ -163,24 +163,23 @@ export default function BrainstormInterface() {
           turnIndex++
         }
       }
-      // 保存到历史记录
-      setTurns(finalTurns => {
-        const completedTurns = finalTurns.filter(t => t.content && !t.content.includes('回答失败'))
-        if (completedTurns.length > 0) {
-          const skills = selectedIds.map(id => {
-            const sk = allSkills.find(s => s.id === id)
-            return { skillId: id, skillName: sk?.name ?? id, skillEmoji: sk?.emoji ?? '' }
-          })
-          saveSession({
-            type: 'brainstorm',
-            title: topic.slice(0, 60) + (topic.length > 60 ? '…' : ''),
-            topic,
-            brainstormSkills: skills,
-            turns: completedTurns.map(t => ({ skillId: t.skillId, skillName: t.skillName, skillEmoji: t.skillEmoji, content: t.content })),
-          })
-        }
-        return finalTurns
-      })
+      // 保存到历史记录（直接用 history 数组，避免异步 setState 副作用）
+      if (history.length > 0) {
+        const skills = selectedIds.map(id => {
+          const sk = allSkills.find(s => s.id === id)
+          return { skillId: id, skillName: sk?.name ?? id, skillEmoji: sk?.emoji ?? '' }
+        })
+        saveSession({
+          type: 'brainstorm',
+          title: topic.slice(0, 60) + (topic.length > 60 ? '…' : ''),
+          topic,
+          brainstormSkills: skills,
+          turns: history.map(h => {
+            const sk = allSkills.find(s => s.id === h.skillId)
+            return { skillId: h.skillId, skillName: h.skillName, skillEmoji: sk?.emoji ?? '', content: h.content }
+          }),
+        })
+      }
       setIsDone(true)
     } catch (e) {
       if ((e as Error).name !== 'AbortError') {
