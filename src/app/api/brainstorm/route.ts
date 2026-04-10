@@ -14,7 +14,7 @@ const MODELS = {
   },
   claude: {
     provider: () => createAnthropic({ apiKey: process.env.ANTHROPIC_API_KEY }),
-    model: 'claude-3-7-sonnet-20250219',
+    model: 'claude-haiku-4-5-20251001',
     available: !!process.env.ANTHROPIC_API_KEY,
     isGemini: false,
   },
