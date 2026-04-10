@@ -24,7 +24,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="zh">
         <body
-          className={`${geist.className} bg-[#141413] text-[#f5f4ed] antialiased`}
+          className={`${geist.className} bg-[#f5f4ed] text-[#141413] antialiased`}
         >
           <Navbar />
           <main>{children}</main>

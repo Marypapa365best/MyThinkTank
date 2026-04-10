@@ -10,24 +10,29 @@ export default function Navbar() {
   const { isSignedIn } = useUser()
 
   return (
-    <nav className="fixed top-0 w-full z-50 border-b border-[#2a2a28] bg-[#141413]/90 backdrop-blur-md">
+    <nav className="fixed top-0 w-full z-50 border-b border-[#f0eee6] bg-[#f5f4ed]/90 backdrop-blur-md">
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <span className="text-xl font-bold tracking-tight">我的智囊</span>
-          <span className="hidden sm:inline text-xs text-white/40 font-normal mt-0.5">
+          <span
+            className="text-xl font-medium tracking-tight text-[#141413]"
+            style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+          >
+            我的智囊
+          </span>
+          <span className="hidden sm:inline text-xs text-[#87867f] font-normal mt-0.5">
             · My Think Tank
           </span>
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-6 text-sm text-[#b0aea5]">
-          <Link href="/skills" className="hover:text-[#f5f4ed] transition-colors">智囊库</Link>
-          <Link href="/brainstorm" className="hover:text-[#f5f4ed] transition-colors">💡 头脑风暴</Link>
-          <Link href="/interrogate" className="hover:text-[#f5f4ed] transition-colors">🔍 质疑团</Link>
-          <Link href="/create-skill" className="hover:text-[#f5f4ed] transition-colors">✨ 创建智囊</Link>
-          <Link href="/history" className="hover:text-[#f5f4ed] transition-colors">📚 历史</Link>
-          <Link href="/pricing" className="hover:text-[#f5f4ed] transition-colors">定价</Link>
+        <div className="hidden md:flex items-center gap-6 text-sm text-[#5e5d59]">
+          <Link href="/skills" className="hover:text-[#141413] transition-colors">智囊库</Link>
+          <Link href="/brainstorm" className="hover:text-[#141413] transition-colors">💡 头脑风暴</Link>
+          <Link href="/interrogate" className="hover:text-[#141413] transition-colors">🔍 质疑团</Link>
+          <Link href="/create-skill" className="hover:text-[#141413] transition-colors">✨ 创建智囊</Link>
+          <Link href="/history" className="hover:text-[#141413] transition-colors">📚 历史</Link>
+          <Link href="/pricing" className="hover:text-[#141413] transition-colors">定价</Link>
         </div>
 
         {/* Auth — desktop */}
@@ -37,19 +42,27 @@ export default function Navbar() {
               appearance={{
                 elements: {
                   avatarBox: 'w-8 h-8',
-                  userButtonPopoverCard: 'bg-[#111] border border-white/10 text-white',
+                  userButtonPopoverCard: 'bg-[#faf9f5] border border-[#f0eee6] text-[#141413]',
                 },
               }}
             />
           ) : (
             <>
               <SignInButton mode="modal">
-                <Button variant="ghost" size="sm" className="text-[#b0aea5] hover:text-[#f5f4ed]">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-[#5e5d59] hover:text-[#141413] hover:bg-[#f0eee6]"
+                >
                   登录
                 </Button>
               </SignInButton>
               <Link href="/sign-up">
-                <Button size="sm" className="bg-[#c96442] text-[#faf9f5] hover:bg-[#d97757]">
+                <Button
+                  size="sm"
+                  className="bg-[#c96442] text-[#faf9f5] hover:bg-[#d97757] rounded-xl px-4"
+                  style={{ boxShadow: '0px 0px 0px 0px #c96442, 0px 0px 0px 1px #c96442' }}
+                >
                   免费开始
                 </Button>
               </Link>
@@ -59,7 +72,7 @@ export default function Navbar() {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-white/60 hover:text-white"
+          className="md:hidden text-[#5e5d59] hover:text-[#141413]"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -73,23 +86,23 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden border-t border-[#2a2a28] bg-[#141413] px-4 py-4 flex flex-col gap-4 text-sm">
-          <Link href="/skills" className="text-[#b0aea5] hover:text-[#f5f4ed]">智囊库</Link>
-          <Link href="/brainstorm" className="text-[#b0aea5] hover:text-[#f5f4ed]">💡 头脑风暴</Link>
-          <Link href="/interrogate" className="text-[#b0aea5] hover:text-[#f5f4ed]">🔍 质疑团</Link>
-          <Link href="/create-skill" className="text-[#b0aea5] hover:text-[#f5f4ed]">✨ 创建智囊</Link>
-          <Link href="/history" className="text-[#b0aea5] hover:text-[#f5f4ed]">📚 历史</Link>
-          <Link href="/pricing" className="text-[#b0aea5] hover:text-[#f5f4ed]">定价</Link>
+        <div className="md:hidden border-t border-[#f0eee6] bg-[#f5f4ed] px-4 py-4 flex flex-col gap-4 text-sm">
+          <Link href="/skills" className="text-[#5e5d59] hover:text-[#141413]">智囊库</Link>
+          <Link href="/brainstorm" className="text-[#5e5d59] hover:text-[#141413]">💡 头脑风暴</Link>
+          <Link href="/interrogate" className="text-[#5e5d59] hover:text-[#141413]">🔍 质疑团</Link>
+          <Link href="/create-skill" className="text-[#5e5d59] hover:text-[#141413]">✨ 创建智囊</Link>
+          <Link href="/history" className="text-[#5e5d59] hover:text-[#141413]">📚 历史</Link>
+          <Link href="/pricing" className="text-[#5e5d59] hover:text-[#141413]">定价</Link>
           <div className="flex gap-3 pt-2">
             {isSignedIn ? (
               <UserButton />
             ) : (
               <>
                 <SignInButton mode="modal">
-                  <Button variant="ghost" size="sm" className="text-[#b0aea5] hover:text-[#f5f4ed]">登录</Button>
+                  <Button variant="ghost" size="sm" className="text-[#5e5d59] hover:text-[#141413]">登录</Button>
                 </SignInButton>
                 <Link href="/sign-up">
-                  <Button size="sm" className="bg-[#c96442] text-[#faf9f5] hover:bg-[#d97757]">免费开始</Button>
+                  <Button size="sm" className="bg-[#c96442] text-[#faf9f5] hover:bg-[#d97757] rounded-xl">免费开始</Button>
                 </Link>
               </>
             )}

@@ -4,13 +4,14 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ── Design System: Warm Dark (inspired by Anthropic/Claude) ─────────────────
-   Light source: DESIGN.md in project root
-   Strategy: Keep dark mode but use warm-toned palette from the design system.
-   Background: #141413 (Anthropic Near Black — warmest "black" in tech)
-   Accent:     #c96442 (Terracotta Brand — earthy, un-tech CTA)
-   All grays carry a yellow-brown undertone, zero cool blue-grays.
-─────────────────────────────────────────────────────────────────────────────── */
+/* ── Design System: Anthropic/Claude Authentic ────────────────────────────────
+   Reference: DESIGN.md in project root
+   Core principle: LIGHT-FIRST parchment canvas (#f5f4ed) with strategic dark
+   sections (#141413). Page alternates between light and dark "chapters".
+   Typography: Georgia (serif) for headings at weight 500; sans for UI.
+   Brand accent: Terracotta (#c96442) — earthy, warm, un-tech.
+   All neutrals carry yellow-brown undertones. Zero cool blue-grays.
+──────────────────────────────────────────────────────────────────────────────── */
 
 /* Tailwind theme tokens → CSS variables */
 @theme inline {
@@ -18,7 +19,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-heading: var(--font-heading);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -40,7 +41,7 @@
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
   --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--card);
+  --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
   --radius-sm: calc(var(--radius) * 0.6);
@@ -51,49 +52,56 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 
-  /* ── Nuwa warm palette tokens ───────────────────────────────────────────── */
-  --color-terracotta:    #c96442;   /* Brand CTA — Terracotta Brand */
-  --color-coral:         #d97757;   /* Lighter brand accent */
-  --color-near-black:    #141413;   /* Anthropic Near Black — page bg */
-  --color-dark-surface:  #30302e;   /* Cards, elevated containers */
-  --color-dark-mid:      #1e1e1c;   /* Between page bg and cards */
-  --color-warm-silver:   #b0aea5;   /* Text on dark surfaces */
-  --color-stone-gray:    #87867f;   /* Tertiary text */
-  --color-olive-gray:    #5e5d59;   /* Secondary body text (light mode) */
-  --color-border-dark:   #30302e;   /* Standard border on dark surfaces */
-  --color-border-warm:   #2a2a28;   /* Subtle border */
-  --color-ivory:         #faf9f5;   /* Light surface */
-  --color-parchment:     #f5f4ed;   /* Page bg (light mode) */
+  /* ── Nuwa / Anthropic warm palette tokens ──────────────────────────────── */
+  --color-terracotta:      #c96442;   /* Brand CTA */
+  --color-coral:           #d97757;   /* Lighter brand accent */
+  --color-near-black:      #141413;   /* Near Black — dark section bg / primary text */
+  --color-dark-surface:    #30302e;   /* Dark containers / borders */
+  --color-dark-mid:        #1e1e1c;   /* Between bg and cards (dark) */
+  --color-warm-silver:     #b0aea5;   /* Text on dark surfaces */
+  --color-stone-gray:      #87867f;   /* Tertiary text */
+  --color-olive-gray:      #5e5d59;   /* Secondary body text */
+  --color-charcoal-warm:   #4d4c48;   /* Button text on light surfaces */
+  --color-dark-warm:       #3d3d3a;   /* Emphasized secondary text (light sections) */
+  --color-parchment:       #f5f4ed;   /* PRIMARY page background */
+  --color-ivory:           #faf9f5;   /* Cards on parchment */
+  --color-warm-sand:       #e8e6dc;   /* Secondary button bg */
+  --color-border-cream:    #f0eee6;   /* Standard border on light surfaces */
+  --color-border-warm:     #e8e6dc;   /* Prominent border on light */
+  --color-border-dark:     #30302e;   /* Border on dark surfaces */
+  --color-ring-warm:       #d1cfc5;   /* Button ring on light */
 }
 
-/* ── Root: Warm Dark theme ──────────────────────────────────────────────────── */
+/* ── Root: Light Parchment theme (PRIMARY) ──────────────────────────────────── */
 :root {
-  --background:            #141413;   /* Anthropic Near Black */
-  --foreground:            #f5f4ed;   /* Parchment — warmest "white" */
-  --card:                  #1e1e1c;   /* Dark Mid — between bg and surface */
-  --card-foreground:       #f5f4ed;
-  --popover:               #1e1e1c;
-  --popover-foreground:    #f5f4ed;
+  --background:            #f5f4ed;   /* Parchment — primary page bg */
+  --foreground:            #141413;   /* Near Black — primary text */
+  --card:                  #faf9f5;   /* Ivory — card surface on parchment */
+  --card-foreground:       #141413;
+  --popover:               #faf9f5;
+  --popover-foreground:    #141413;
   --primary:               #c96442;   /* Terracotta Brand */
   --primary-foreground:    #faf9f5;   /* Ivory text on terracotta */
-  --secondary:             #30302e;   /* Dark Surface */
-  --secondary-foreground:  #b0aea5;   /* Warm Silver */
-  --muted:                 #1e1e1c;
+  --secondary:             #e8e6dc;   /* Warm Sand */
+  --secondary-foreground:  #4d4c48;   /* Charcoal Warm */
+  --muted:                 #faf9f5;
   --muted-foreground:      #87867f;   /* Stone Gray */
-  --accent:                #c96442;   /* Terracotta */
+  --accent:                #c96442;
   --accent-foreground:     #faf9f5;
-  --destructive:           #b53333;   /* Error Crimson */
-  --border:                #2a2a28;
-  --input:                 #2a2a28;
-  --ring:                  #c96442;   /* Focus ring: Terracotta */
+  --destructive:           #b53333;
+  --border:                #f0eee6;   /* Border Cream */
+  --input:                 #f0eee6;
+  --ring:                  #c96442;
   --radius:                0.625rem;
-  --sidebar:               #1e1e1c;
+  --font-heading:          Georgia, 'Times New Roman', serif;
+  /* Sidebar stays dark */
+  --sidebar:               #141413;
   --sidebar-foreground:    #f5f4ed;
   --sidebar-primary:       #c96442;
   --sidebar-primary-foreground: #faf9f5;
   --sidebar-accent:        #30302e;
   --sidebar-accent-foreground: #b0aea5;
-  --sidebar-border:        #2a2a28;
+  --sidebar-border:        #30302e;
   --sidebar-ring:          #c96442;
 }
 
@@ -102,17 +110,48 @@
     @apply border-border outline-ring/50;
   }
   body {
-    background-color: #141413;
-    color: #f5f4ed;
+    background-color: #f5f4ed;
+    color: #141413;
     @apply font-sans;
   }
   html {
     @apply font-sans;
   }
 
-  /* Warm scrollbar */
+  /* Serif headings — weight 500, tight line-height */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 500;
+  }
+
+  /* Body text — generous line-height */
+  p {
+    line-height: 1.6;
+  }
+
+  /* Warm scrollbar (for dark sections) */
   ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: #141413; }
-  ::-webkit-scrollbar-thumb { background: #30302e; border-radius: 3px; }
+  ::-webkit-scrollbar-track { background: #f5f4ed; }
+  ::-webkit-scrollbar-thumb { background: #e8e6dc; border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: #c96442; }
+}
+
+/* ── Dark section utility ──────────────────────────────────────────────────── */
+/* Use class="section-dark" on any section to flip to Near Black theme */
+.section-dark {
+  background-color: #141413;
+  color: #faf9f5;
+}
+.section-dark ::-webkit-scrollbar-track { background: #141413; }
+.section-dark ::-webkit-scrollbar-thumb { background: #30302e; }
+
+/* ── Ring shadow utilities (Anthropic signature style) ─────────────────────── */
+.ring-warm {
+  box-shadow: 0px 0px 0px 0px #e8e6dc, 0px 0px 0px 1px #d1cfc5;
+}
+.ring-terracotta {
+  box-shadow: 0px 0px 0px 0px #c96442, 0px 0px 0px 1px #c96442;
+}
+.shadow-whisper {
+  box-shadow: rgba(0,0,0,0.05) 0px 4px 24px;
 }

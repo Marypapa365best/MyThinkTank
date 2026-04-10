@@ -1,5 +1,7 @@
 import Link from 'next/link'
 
+const serifStyle = { fontFamily: "Georgia, 'Times New Roman', serif", fontWeight: 500 }
+
 const PLANS = [
   {
     name: '免费',
@@ -8,7 +10,7 @@ const PLANS = [
     description: '体验核心功能，感受智囊力量',
     highlight: false,
     cta: '免费开始',
-    ctaHref: '/signup',
+    ctaHref: '/sign-up',
     features: [
       { text: '单人对话（5次/天）', included: true },
       { text: '头脑风暴（2次/天）', included: true },
@@ -29,7 +31,7 @@ const PLANS = [
     highlight: true,
     badge: '最受欢迎',
     cta: '开始 7 天试用',
-    ctaHref: '/signup?plan=pro',
+    ctaHref: '/sign-up?plan=pro',
     features: [
       { text: '单人对话（无限次）', included: true },
       { text: '头脑风暴（无限次）', included: true },
@@ -71,7 +73,7 @@ const FAQ = [
   },
   {
     q: '自定义智囊的数据存在哪里？',
-    a: '目前存储在你浏览器的本地存储中（localStorage），不会上传服务器。清除浏览器数据会丢失，建议定期导出备份（专业版功能）。',
+    a: '存储在你的账号数据库中，云端永久保存。登录即可跨设备访问。',
   },
   {
     q: '智囊的回答是真实人物的观点吗？',
@@ -89,119 +91,149 @@ const FAQ = [
 
 export default function PricingPage() {
   return (
-    <div className="min-h-screen pt-24 pb-24 px-4">
-      <div className="max-w-5xl mx-auto">
+    <div className="min-h-screen">
 
-        {/* Header */}
-        <div className="text-center mb-14">
-          <h1 className="text-4xl font-bold mb-3">简单透明的定价</h1>
-          <p className="text-white/40 text-base max-w-md mx-auto">
+      {/* ── Header — LIGHT ─────────────────────────────────────────────────── */}
+      <div className="bg-[#f5f4ed] pt-28 pb-16 px-4 border-b border-[#f0eee6]">
+        <div className="max-w-5xl mx-auto text-center">
+          <h1
+            className="text-4xl text-[#141413] mb-3"
+            style={serifStyle}
+          >
+            简单透明的定价
+          </h1>
+          <p className="text-[#5e5d59] text-base max-w-md mx-auto leading-relaxed">
             从免费版开始，随时升级。不绑定，不套路。
           </p>
         </div>
+      </div>
 
-        {/* Plans */}
-        <div className="grid md:grid-cols-3 gap-5 mb-20">
-          {PLANS.map((plan) => (
-            <div
-              key={plan.name}
-              className={`relative rounded-2xl p-6 flex flex-col ${
-                plan.highlight
-                  ? 'bg-[#c96442] text-[#faf9f5]'
-                  : 'bg-[#1e1e1c] border border-[#2a2a28] text-[#f5f4ed]'
-              }`}
-            >
-              {plan.badge && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="bg-[#141413] text-[#c96442] text-xs font-medium px-3 py-1 rounded-full border border-[#c96442]/40">
-                    {plan.badge}
-                  </span>
-                </div>
-              )}
-
-              {/* Plan name & price */}
-              <div className="mb-5">
-                <div className={`text-sm font-medium mb-3 ${plan.highlight ? 'text-[#faf9f5]/70' : 'text-[#87867f]'}`}>
-                  {plan.name}
-                </div>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-bold">{plan.price}</span>
-                  <span className={`text-sm ${plan.highlight ? 'text-[#faf9f5]/60' : 'text-[#87867f]'}`}>{plan.period}</span>
-                </div>
-                <p className={`text-sm mt-2 ${plan.highlight ? 'text-[#faf9f5]/80' : 'text-[#87867f]'}`}>
-                  {plan.description}
-                </p>
-              </div>
-
-              {/* CTA */}
-              <Link
-                href={plan.ctaHref}
-                className={`block text-center py-2.5 rounded-xl text-sm font-medium transition-all mb-6 ${
+      {/* ── Plans — DARK ───────────────────────────────────────────────────── */}
+      <div className="bg-[#141413] py-16 px-4">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-5 mb-6">
+            {PLANS.map((plan) => (
+              <div
+                key={plan.name}
+                className={`relative rounded-2xl p-6 flex flex-col ${
                   plan.highlight
-                    ? 'bg-[#141413] text-[#faf9f5] hover:bg-[#1e1e1c]'
-                    : 'bg-[#30302e] text-[#f5f4ed] hover:bg-[#3a3a38] border border-[#2a2a28]'
+                    ? 'bg-[#faf9f5] text-[#141413]'
+                    : 'bg-[#1e1e1c] border border-[#30302e] text-[#f5f4ed]'
                 }`}
+                style={plan.highlight ? { boxShadow: 'rgba(0,0,0,0.12) 0px 8px 32px' } : {}}
               >
-                {plan.cta}
-              </Link>
-
-              {/* Features */}
-              <ul className="space-y-2.5 flex-1">
-                {plan.features.map((f) => (
-                  <li key={f.text} className="flex items-start gap-2.5 text-sm">
-                    <span className={`mt-0.5 flex-none text-base leading-none ${
-                      f.included
-                        ? plan.highlight ? 'text-[#faf9f5]' : 'text-[#b0aea5]'
-                        : plan.highlight ? 'text-[#faf9f5]/25' : 'text-[#5e5d59]'
-                    }`}>
-                      {f.included ? '✓' : '–'}
+                {plan.badge && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                    <span className="bg-[#c96442] text-[#faf9f5] text-xs font-medium px-3 py-1 rounded-full">
+                      {plan.badge}
                     </span>
-                    <span className={
-                      f.included
-                        ? plan.highlight ? 'text-[#faf9f5]/90' : 'text-[#b0aea5]'
-                        : plan.highlight ? 'text-[#faf9f5]/30' : 'text-[#5e5d59]'
-                    }>
-                      {f.text}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+                  </div>
+                )}
 
-        {/* Feature comparison note */}
-        <div className="text-center mb-20">
-          <p className="text-white/20 text-xs">
+                {/* Plan name & price */}
+                <div className="mb-5">
+                  <div className={`text-xs font-medium mb-3 tracking-wide uppercase ${
+                    plan.highlight ? 'text-[#87867f]' : 'text-[#5e5d59]'
+                  }`}>
+                    {plan.name}
+                  </div>
+                  <div className="flex items-baseline gap-1">
+                    <span
+                      className="text-4xl"
+                      style={serifStyle}
+                    >
+                      {plan.price}
+                    </span>
+                    <span className={`text-sm ${plan.highlight ? 'text-[#87867f]' : 'text-[#5e5d59]'}`}>
+                      {plan.period}
+                    </span>
+                  </div>
+                  <p className={`text-sm mt-2 leading-relaxed ${
+                    plan.highlight ? 'text-[#5e5d59]' : 'text-[#87867f]'
+                  }`}>
+                    {plan.description}
+                  </p>
+                </div>
+
+                {/* CTA */}
+                <Link
+                  href={plan.ctaHref}
+                  className={`block text-center py-2.5 rounded-xl text-sm font-medium transition-all mb-6 ${
+                    plan.highlight
+                      ? 'bg-[#c96442] text-[#faf9f5] hover:bg-[#d97757]'
+                      : 'bg-[#30302e] text-[#b0aea5] hover:bg-[#3a3a38] border border-[#3a3a38]'
+                  }`}
+                >
+                  {plan.cta}
+                </Link>
+
+                {/* Features */}
+                <ul className="space-y-2.5 flex-1">
+                  {plan.features.map((f) => (
+                    <li key={f.text} className="flex items-start gap-2.5 text-sm">
+                      <span className={`mt-0.5 flex-none text-base leading-none ${
+                        f.included
+                          ? plan.highlight ? 'text-[#c96442]' : 'text-[#c96442]'
+                          : plan.highlight ? 'text-[#d1cfc5]' : 'text-[#3a3a38]'
+                      }`}>
+                        {f.included ? '✓' : '–'}
+                      </span>
+                      <span className={
+                        f.included
+                          ? plan.highlight ? 'text-[#141413]' : 'text-[#b0aea5]'
+                          : plan.highlight ? 'text-[#c2c0b6]' : 'text-[#3a3a38]'
+                      }>
+                        {f.text}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <p className="text-center text-[#5e5d59] text-xs">
             所有价格含税 · 年付享 8 折优惠 · 汇率变动时价格可能调整
           </p>
         </div>
+      </div>
 
-        {/* FAQ */}
+      {/* ── FAQ — LIGHT ────────────────────────────────────────────────────── */}
+      <div className="bg-[#f5f4ed] py-20 px-4">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-xl font-semibold mb-8 text-center">常见问题</h2>
-          <div className="space-y-5">
+          <h2
+            className="text-2xl text-[#141413] mb-10 text-center"
+            style={serifStyle}
+          >
+            常见问题
+          </h2>
+          <div className="space-y-6">
             {FAQ.map((item) => (
-              <div key={item.q} className="border-b border-white/8 pb-5">
-                <h3 className="text-sm font-medium text-white/80 mb-2">{item.q}</h3>
-                <p className="text-sm text-white/40 leading-relaxed">{item.a}</p>
+              <div key={item.q} className="border-b border-[#f0eee6] pb-6">
+                <h3
+                  className="text-sm font-medium text-[#141413] mb-2"
+                  style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+                >
+                  {item.q}
+                </h3>
+                <p className="text-sm text-[#5e5d59] leading-relaxed">{item.a}</p>
               </div>
             ))}
           </div>
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center mt-20">
-          <p className="text-white/30 text-sm mb-4">还有疑问？</p>
+        <div className="text-center mt-16">
+          <p className="text-[#87867f] text-sm mb-4">还有疑问？</p>
           <a
             href="mailto:hello@mythinkank.ai"
-            className="text-white/60 hover:text-white text-sm underline underline-offset-4 transition-colors"
+            className="text-[#c96442] hover:text-[#d97757] text-sm underline underline-offset-4 transition-colors"
           >
             发邮件给我们
           </a>
         </div>
-
       </div>
+
     </div>
   )
 }

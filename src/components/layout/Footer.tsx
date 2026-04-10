@@ -2,12 +2,17 @@ import Link from 'next/link'
 
 export default function Footer() {
   return (
-    <footer className="border-t border-[#2a2a28] mt-16 py-10 px-4">
+    <footer className="bg-[#141413] border-t border-[#30302e] mt-0 py-10 px-4">
       <div className="max-w-5xl mx-auto">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Brand */}
           <div className="text-center sm:text-left">
-            <p className="text-sm font-medium text-[#87867f]">我的智囊</p>
+            <p
+              className="text-sm font-medium text-[#b0aea5]"
+              style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+            >
+              我的智囊
+            </p>
             <p className="text-xs text-[#5e5d59] mt-0.5">思维框架模拟工具，非任何人物授权</p>
           </div>
 
@@ -38,7 +43,7 @@ export default function Footer() {
         </div>
 
         {/* Legal note */}
-        <p className="text-center text-xs text-[#3a3a38] mt-6 leading-relaxed max-w-2xl mx-auto">
+        <p className="text-center text-xs text-[#3d3d3a] mt-6 leading-relaxed max-w-2xl mx-auto">
           本平台所有智囊均基于公开资料推断，模拟思维框架，并非任何人物本人授权、认可或关联。
           内容仅供参考，不构成投资、法律或医疗建议。
           © {new Date().getFullYear()} 我的智囊
