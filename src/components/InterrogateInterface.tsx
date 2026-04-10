@@ -5,6 +5,16 @@ import { SKILLS_REGISTRY } from '@/lib/skills-registry'
 import ReactMarkdown from 'react-markdown'
 import { saveSession } from '@/lib/history'
 import type { CritiqueItem } from '@/app/api/interrogate/route'
+import { getCustomSkills, type CustomSkill } from '@/lib/custom-skills'
+
+interface SkillEntry {
+  id: string
+  name: string
+  emoji: string
+  available: boolean
+  isCustom: boolean
+  content?: string
+}
 
 interface CritiqueResult {
   skillId: string
@@ -32,8 +42,23 @@ export default function InterrogateInterface() {
   const bottomRef = useRef<HTMLDivElement>(null)
   const abortRef = useRef<AbortController | null>(null)
 
-  const availableSkills = SKILLS_REGISTRY.filter(s => s.available)
+  const [allSkills, setAllSkills] = useState<SkillEntry[]>(
+    SKILLS_REGISTRY.filter(s => s.available).map(s => ({ ...s, isCustom: false }))
+  )
   const hasStarted = critiques.length > 0
+
+  useEffect(() => {
+    const custom = getCustomSkills().map((cs: CustomSkill): SkillEntry => ({
+      id: cs.id,
+      name: cs.name,
+      emoji: cs.emoji,
+      available: true,
+      isCustom: true,
+      content: cs.content,
+    }))
+    const builtIn = SKILLS_REGISTRY.filter(s => s.available).map(s => ({ ...s, isCustom: false, content: undefined }))
+    setAllSkills([...builtIn, ...custom])
+  }, [])
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -106,7 +131,7 @@ export default function InterrogateInterface() {
       for (let i = 0; i < selectedIds.length; i++) {
         if (i > 0) await new Promise(r => setTimeout(r, 2500))
         const skillId = selectedIds[i]
-        const skill = availableSkills.find(s => s.id === skillId)!
+        const skill = allSkills.find(s => s.id === skillId)!
 
         // 追加空的 critique 条目
         setCritiques(prev => [
@@ -114,14 +139,18 @@ export default function InterrogateInterface() {
           { skillId, skillName: skill.name, skillEmoji: skill.emoji, content: '', isStreaming: true },
         ])
 
+        const reqBody: Record<string, unknown> = {
+          skillId,
+          skillName: skill.name,
+          targetName,
+          targetContent,
+          previousCritiques: [...collectedCritiques],
+        }
+        if (skill.isCustom && skill.content) reqBody.skillContent = skill.content
+
         const content = await streamResponse(
           '/api/interrogate',
-          {
-            skillId,
-            targetName,
-            targetContent,
-            previousCritiques: [...collectedCritiques],
-          },
+          reqBody,
           abort.signal,
           (text) => {
             setCritiques(prev => {
@@ -164,7 +193,7 @@ export default function InterrogateInterface() {
         const validCritiques = finalCritiques.filter(c => c.content && !c.content.includes('回答失败'))
         if (validCritiques.length > 0) {
           const interrogators = selectedIds.map(id => {
-            const sk = SKILLS_REGISTRY.find(s => s.id === id)
+            const sk = allSkills.find(s => s.id === id)
             return { skillId: id, skillName: sk?.name ?? id, skillEmoji: sk?.emoji ?? '' }
           })
           saveSession({
@@ -257,7 +286,7 @@ export default function InterrogateInterface() {
                 <span className="text-xs text-white/25">最多 {MAX_INTERROGATORS} 位</span>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-                {availableSkills.map(skill => {
+                {allSkills.map(skill => {
                   const selected = selectedIds.includes(skill.id)
                   const disabled = !selected && selectedIds.length >= MAX_INTERROGATORS
                   return (

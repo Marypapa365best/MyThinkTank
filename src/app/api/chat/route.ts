@@ -71,11 +71,17 @@ function sanitizeMessages(raw: any[]): ChatMessage[] {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
-    const { skillId, messages } = body
+    const { skillId, skillName: customSkillName, skillContent, messages } = body
 
-    const skill = getSkillById(skillId)
-    if (!skill) {
+    const isCustom = typeof skillId === 'string' && skillId.startsWith('custom-')
+    const skill = isCustom ? null : getSkillById(skillId)
+
+    if (!isCustom && !skill) {
       return NextResponse.json({ error: 'Skill not found' }, { status: 404 })
+    }
+
+    if (isCustom && !skillContent) {
+      return NextResponse.json({ error: 'skillContent required for custom skills' }, { status: 400 })
     }
 
     const cleanMessages = sanitizeMessages(messages)
@@ -85,7 +91,7 @@ export async function POST(req: NextRequest) {
 
     const lastUserMsg = [...cleanMessages].reverse().find(m => m.role === 'user')
     const lang = lastUserMsg ? detectLanguage(lastUserMsg.content) : 'zh'
-    const systemPrompt = loadSkillPrompt(skillId, lang)
+    const systemPrompt = skillContent ?? loadSkillPrompt(skillId, lang)
 
     const activeModel = getActiveModel()
     const provider = activeModel.provider()
@@ -100,7 +106,7 @@ export async function POST(req: NextRequest) {
         ]
       : cleanMessages
 
-    console.log(`[Chat] model=${activeModel.model} skill=${skillId} msgs=${allMessages.length}`)
+    console.log(`[Chat] model=${activeModel.model} skill=${skillId ?? customSkillName} msgs=${allMessages.length}`)
 
     const result = await streamText({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

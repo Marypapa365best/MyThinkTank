@@ -51,19 +51,27 @@ export interface BrainstormHistoryItem {
 
 export async function POST(req: NextRequest) {
   try {
-    const { skillId, topic, history = [] } = await req.json() as {
+    const { skillId, skillName: customSkillName, skillContent, topic, history = [] } = await req.json() as {
       skillId: string
+      skillName?: string
+      skillContent?: string
       topic: string
       history: BrainstormHistoryItem[]
     }
 
-    const skill = getSkillById(skillId)
-    if (!skill) {
+    const isCustom = typeof skillId === 'string' && skillId.startsWith('custom-')
+    const skill = isCustom ? null : getSkillById(skillId)
+
+    if (!isCustom && !skill) {
       return NextResponse.json({ error: 'Skill not found' }, { status: 404 })
+    }
+    if (isCustom && !skillContent) {
+      return NextResponse.json({ error: 'skillContent required for custom skills' }, { status: 400 })
     }
 
     // 多智囊场景使用压缩版 SKILL.compact.md（~500字），大幅节省 token
-    const systemPrompt = loadCompactSkillPrompt(skillId)
+    const systemPrompt = skillContent ?? loadCompactSkillPrompt(skillId)
+    const resolvedSkillName = skill?.name ?? customSkillName ?? skillId
     const activeModel = getActiveModel()
 
     // 构建对话上下文
@@ -92,7 +100,7 @@ export async function POST(req: NextRequest) {
       { role: 'user' as const, content: contextMessage },
     ]
 
-    console.log(`[Brainstorm] model=${activeModel.model} skill=${skillId} round=${history.length}`)
+    console.log(`[Brainstorm] model=${activeModel.model} skill=${resolvedSkillName} round=${history.length}`)
 
     const result = await streamText({
       model: buildModel(activeModel),

@@ -4,6 +4,16 @@ import { useState, useRef, useEffect } from 'react'
 import { SKILLS_REGISTRY } from '@/lib/skills-registry'
 import type { BrainstormHistoryItem } from '@/app/api/brainstorm/route'
 import { saveSession } from '@/lib/history'
+import { getCustomSkills, type CustomSkill } from '@/lib/custom-skills'
+
+interface SkillEntry {
+  id: string
+  name: string
+  emoji: string
+  available: boolean
+  isCustom: boolean
+  content?: string  // only for custom skills
+}
 
 interface TurnResult {
   skillId: string
@@ -25,7 +35,23 @@ export default function BrainstormInterface() {
   const bottomRef = useRef<HTMLDivElement>(null)
   const abortRef = useRef<AbortController | null>(null)
 
-  const availableSkills = SKILLS_REGISTRY.filter(s => s.available)
+  const [allSkills, setAllSkills] = useState<SkillEntry[]>(
+    SKILLS_REGISTRY.filter(s => s.available).map(s => ({ ...s, isCustom: false }))
+  )
+
+  // Load custom skills from localStorage on mount
+  useEffect(() => {
+    const custom = getCustomSkills().map((cs: CustomSkill): SkillEntry => ({
+      id: cs.id,
+      name: cs.name,
+      emoji: cs.emoji,
+      available: true,
+      isCustom: true,
+      content: cs.content,
+    }))
+    const builtIn = SKILLS_REGISTRY.filter(s => s.available).map(s => ({ ...s, isCustom: false, content: undefined }))
+    setAllSkills([...builtIn, ...custom])
+  }, [])
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -40,24 +66,27 @@ export default function BrainstormInterface() {
   }
 
   async function streamPersonaResponse(
-    skillId: string,
-    skillName: string,
-    skillEmoji: string,
+    skill: SkillEntry,
     topic: string,
     history: BrainstormHistoryItem[],
     signal: AbortSignal,
     turnIndex: number
   ) {
+    const { id: skillId, name: skillName, emoji: skillEmoji, isCustom, content: skillContent } = skill
+
     // 在 turns 列表末尾追加这个 turn（空内容 + isStreaming）
     setTurns(prev => [
       ...prev,
       { skillId, skillName, skillEmoji, content: '', isStreaming: true }
     ])
 
+    const body: Record<string, unknown> = { skillId, skillName, topic, history }
+    if (isCustom && skillContent) body.skillContent = skillContent
+
     const res = await fetch('/api/brainstorm', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ skillId, topic, history }),
+      body: JSON.stringify(body),
       signal,
     })
 
@@ -122,11 +151,9 @@ export default function BrainstormInterface() {
       for (let round = 0; round < DEBATE_ROUNDS; round++) {
         for (const skillId of selectedIds) {
           if (turnIndex > 0) await new Promise(r => setTimeout(r, 2500))
-          const skill = availableSkills.find(s => s.id === skillId)!
+          const skill = allSkills.find(s => s.id === skillId)!
           const content = await streamPersonaResponse(
-            skillId,
-            skill.name,
-            skill.emoji,
+            skill,
             topic,
             [...history],
             abort.signal,
@@ -141,7 +168,7 @@ export default function BrainstormInterface() {
         const completedTurns = finalTurns.filter(t => t.content && !t.content.includes('回答失败'))
         if (completedTurns.length > 0) {
           const skills = selectedIds.map(id => {
-            const sk = SKILLS_REGISTRY.find(s => s.id === id)
+            const sk = allSkills.find(s => s.id === id)
             return { skillId: id, skillName: sk?.name ?? id, skillEmoji: sk?.emoji ?? '' }
           })
           saveSession({
@@ -214,7 +241,7 @@ export default function BrainstormInterface() {
                 </span>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-                {availableSkills.map(skill => {
+                {allSkills.map(skill => {
                   const selected = selectedIds.includes(skill.id)
                   const disabled = !selected && selectedIds.length >= MAX_SKILLS
                   return (
@@ -283,7 +310,7 @@ export default function BrainstormInterface() {
               <div className="text-white/80 text-sm">{topic}</div>
               <div className="flex justify-center gap-2 mt-3">
                 {selectedIds.map(id => {
-                  const s = availableSkills.find(sk => sk.id === id)!
+                  const s = allSkills.find(sk => sk.id === id)!
                   return (
                     <span key={id} className="text-xs px-2 py-0.5 rounded-full bg-white/[0.06] text-white/50">
                       {s.emoji} {s.name}

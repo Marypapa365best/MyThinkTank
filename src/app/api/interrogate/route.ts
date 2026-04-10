@@ -51,9 +51,11 @@ export interface CritiqueItem {
 
 export async function POST(req: NextRequest) {
   try {
-    const { skillId, targetName, targetContent, previousCritiques = [], isSynthesis = false } =
+    const { skillId, skillName: customSkillName, skillContent, targetName, targetContent, previousCritiques = [], isSynthesis = false } =
       await req.json() as {
         skillId?: string
+        skillName?: string
+        skillContent?: string
         targetName: string
         targetContent: string
         previousCritiques: CritiqueItem[]
@@ -97,13 +99,16 @@ ${critiquesText}
       // 单个审问者的质疑
       if (!skillId) return NextResponse.json({ error: 'skillId required' }, { status: 400 })
 
-      const skill = getSkillById(skillId)
-      if (!skill) return NextResponse.json({ error: 'Skill not found' }, { status: 404 })
+      const isCustom = typeof skillId === 'string' && skillId.startsWith('custom-')
+      const skill = isCustom ? null : getSkillById(skillId)
+
+      if (!isCustom && !skill) return NextResponse.json({ error: 'Skill not found' }, { status: 404 })
+      if (isCustom && !skillContent) return NextResponse.json({ error: 'skillContent required for custom skills' }, { status: 400 })
 
       // 多智囊审查场景使用压缩版 SKILL.compact.md（~500字），大幅节省 token
-      const systemPrompt = loadCompactSkillPrompt(skillId)
+      const systemPrompt = skillContent ?? loadCompactSkillPrompt(skillId)
 
-      const skillName = skill.name
+      const skillName = skill?.name ?? customSkillName ?? skillId
 
       let userMessage = `这是一个思维框架模拟练习。请你扮演 ${skillName} 的思维框架（注意：是模拟其分析视角，非冒充本人），对以下言论进行批判性分析。可以在回答开头用一句话说明这是框架模拟，之后直接展开分析。用中文回答。\n\n`
 

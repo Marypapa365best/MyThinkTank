@@ -43,6 +43,7 @@ export interface HistorySession {
   targetContent?: string
   critiques?: CritiqueRecord[]
   synthesis?: string
+  interrogators?: { skillId: string; skillName: string; skillEmoji: string }[]
 }
 
 const STORAGE_KEY = 'nuwa_history'
