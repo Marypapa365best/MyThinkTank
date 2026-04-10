@@ -2,19 +2,19 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { UserButton, SignInButton, useUser } from '@clerk/nextjs'
 import { Button } from '@/components/ui/button'
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const { isSignedIn } = useUser()
 
   return (
     <nav className="fixed top-0 w-full z-50 border-b border-white/10 bg-[#0a0a0a]/80 backdrop-blur-md">
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <span className="text-xl font-bold tracking-tight">
-            我的智囊
-          </span>
+          <span className="text-xl font-bold tracking-tight">我的智囊</span>
           <span className="hidden sm:inline text-xs text-white/40 font-normal mt-0.5">
             · My Think Tank
           </span>
@@ -22,37 +22,39 @@ export default function Navbar() {
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-6 text-sm text-white/60">
-          <Link href="/skills" className="hover:text-white transition-colors">
-            智囊库
-          </Link>
-          <Link href="/brainstorm" className="hover:text-white transition-colors">
-            💡 头脑风暴
-          </Link>
-          <Link href="/interrogate" className="hover:text-white transition-colors">
-            🔍 质疑团
-          </Link>
-          <Link href="/create-skill" className="hover:text-white transition-colors">
-            ✨ 创建智囊
-          </Link>
-          <Link href="/history" className="hover:text-white transition-colors">
-            📚 历史
-          </Link>
-          <Link href="/pricing" className="hover:text-white transition-colors">
-            定价
-          </Link>
-          <Link href="/about" className="hover:text-white transition-colors">
-            关于
-          </Link>
+          <Link href="/skills" className="hover:text-white transition-colors">智囊库</Link>
+          <Link href="/brainstorm" className="hover:text-white transition-colors">💡 头脑风暴</Link>
+          <Link href="/interrogate" className="hover:text-white transition-colors">🔍 质疑团</Link>
+          <Link href="/create-skill" className="hover:text-white transition-colors">✨ 创建智囊</Link>
+          <Link href="/history" className="hover:text-white transition-colors">📚 历史</Link>
+          <Link href="/pricing" className="hover:text-white transition-colors">定价</Link>
         </div>
 
-        {/* Auth Buttons */}
+        {/* Auth — desktop */}
         <div className="hidden md:flex items-center gap-3">
-          <Link href="/login">
-            <Button variant="ghost" size="sm" className="text-white/60 hover:text-white">登录</Button>
-          </Link>
-          <Link href="/signup">
-            <Button size="sm" className="bg-white text-black hover:bg-white/90">免费开始</Button>
-          </Link>
+          {isSignedIn ? (
+            <UserButton
+              appearance={{
+                elements: {
+                  avatarBox: 'w-8 h-8',
+                  userButtonPopoverCard: 'bg-[#111] border border-white/10 text-white',
+                },
+              }}
+            />
+          ) : (
+            <>
+              <SignInButton mode="modal">
+                <Button variant="ghost" size="sm" className="text-white/60 hover:text-white">
+                  登录
+                </Button>
+              </SignInButton>
+              <Link href="/sign-up">
+                <Button size="sm" className="bg-white text-black hover:bg-white/90">
+                  免费开始
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -78,10 +80,19 @@ export default function Navbar() {
           <Link href="/create-skill" className="text-white/60 hover:text-white">✨ 创建智囊</Link>
           <Link href="/history" className="text-white/60 hover:text-white">📚 历史</Link>
           <Link href="/pricing" className="text-white/60 hover:text-white">定价</Link>
-          <Link href="/about" className="text-white/60 hover:text-white">关于</Link>
           <div className="flex gap-3 pt-2">
-            <Link href="/login"><Button variant="ghost" size="sm">登录</Button></Link>
-            <Link href="/signup"><Button size="sm" className="bg-white text-black">免费开始</Button></Link>
+            {isSignedIn ? (
+              <UserButton />
+            ) : (
+              <>
+                <SignInButton mode="modal">
+                  <Button variant="ghost" size="sm">登录</Button>
+                </SignInButton>
+                <Link href="/sign-up">
+                  <Button size="sm" className="bg-white text-black">免费开始</Button>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}

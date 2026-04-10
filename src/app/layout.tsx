@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -20,15 +21,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="zh">
-      <body
-        className={`${geist.className} bg-[#0a0a0a] text-white antialiased`}
-      >
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-        <DisclaimerBanner />
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="zh">
+        <body
+          className={`${geist.className} bg-[#0a0a0a] text-white antialiased`}
+        >
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+          <DisclaimerBanner />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

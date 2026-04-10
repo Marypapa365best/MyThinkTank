@@ -14,22 +14,36 @@ const TYPE_COLOR = {
 
 export default function HistoryPage() {
   const [sessions, setSessions] = useState<HistorySession[]>([])
+  const [loading, setLoading] = useState(true)
   const [expanded, setExpanded] = useState<string | null>(null)
 
-  useEffect(() => { setSessions(getAllSessions()) }, [])
+  useEffect(() => {
+    getAllSessions().then(s => {
+      setSessions(s)
+      setLoading(false)
+    })
+  }, [])
 
-  function handleDelete(id: string, e: React.MouseEvent) {
+  async function handleDelete(id: string, e: React.MouseEvent) {
     e.stopPropagation()
-    deleteSession(id)
-    setSessions(getAllSessions())
+    await deleteSession(id)
+    setSessions(prev => prev.filter(s => s.id !== id))
     if (expanded === id) setExpanded(null)
   }
 
-  function handleClear() {
+  async function handleClear() {
     if (!confirm('确定要清空所有历史记录吗？')) return
-    clearAllSessions()
+    await clearAllSessions()
     setSessions([])
     setExpanded(null)
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen pt-24 flex items-center justify-center">
+        <p className="text-white/30 text-sm animate-pulse">加载中…</p>
+      </div>
+    )
   }
 
   return (
@@ -71,11 +85,7 @@ export default function HistoryPage() {
         {/* Session list */}
         <div className="space-y-3">
           {sessions.map(s => (
-            <div
-              key={s.id}
-              className={`border rounded-xl overflow-hidden transition-colors ${TYPE_COLOR[s.type]}`}
-            >
-              {/* Summary row */}
+            <div key={s.id} className={`border rounded-xl overflow-hidden transition-colors ${TYPE_COLOR[s.type]}`}>
               <div
                 className="flex items-start gap-3 p-4 cursor-pointer hover:bg-white/5"
                 onClick={() => setExpanded(expanded === s.id ? null : s.id)}
@@ -100,7 +110,6 @@ export default function HistoryPage() {
                   <p className="text-xs text-white/30 mt-1">{formatTime(s.timestamp)}</p>
                 </div>
                 <div className="flex items-center gap-2 ml-2 shrink-0">
-                  {/* Export buttons (stop propagation so they don't toggle expand) */}
                   <button
                     onClick={e => { e.stopPropagation(); downloadMarkdown(s) }}
                     className="text-white/25 hover:text-white/70 text-xs transition-colors px-1.5 py-0.5 rounded border border-white/10 hover:border-white/25"
@@ -111,7 +120,7 @@ export default function HistoryPage() {
                   <button
                     onClick={e => { e.stopPropagation(); printSession(s) }}
                     className="text-white/25 hover:text-white/70 text-xs transition-colors px-1.5 py-0.5 rounded border border-white/10 hover:border-white/25"
-                    title="导出 PDF（浏览器打印）"
+                    title="导出 PDF"
                   >
                     PDF
                   </button>
@@ -125,7 +134,6 @@ export default function HistoryPage() {
                 </div>
               </div>
 
-              {/* Expanded content */}
               {expanded === s.id && (
                 <div className="border-t border-white/10 p-4 space-y-4">
                   <SessionDetail session={s} />
@@ -152,7 +160,6 @@ function SessionDetail({ session: s }: { session: HistorySession }) {
       </div>
     )
   }
-
   if (s.type === 'brainstorm' && s.turns) {
     return (
       <div className="space-y-4">
@@ -166,7 +173,6 @@ function SessionDetail({ session: s }: { session: HistorySession }) {
       </div>
     )
   }
-
   if (s.type === 'interrogate') {
     return (
       <div className="space-y-4">
@@ -191,6 +197,5 @@ function SessionDetail({ session: s }: { session: HistorySession }) {
       </div>
     )
   }
-
   return null
 }

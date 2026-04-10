@@ -48,16 +48,18 @@ export default function InterrogateInterface() {
   const hasStarted = critiques.length > 0
 
   useEffect(() => {
-    const custom = getCustomSkills().map((cs: CustomSkill): SkillEntry => ({
-      id: cs.id,
-      name: cs.name,
-      emoji: cs.emoji,
-      available: true,
-      isCustom: true,
-      content: cs.content,
-    }))
-    const builtIn = SKILLS_REGISTRY.filter(s => s.available).map(s => ({ ...s, isCustom: false, content: undefined }))
-    setAllSkills([...builtIn, ...custom])
+    getCustomSkills().then(customList => {
+      const custom = customList.map((cs: CustomSkill): SkillEntry => ({
+        id: cs.id,
+        name: cs.name,
+        emoji: cs.emoji,
+        available: true,
+        isCustom: true,
+        content: cs.content,
+      }))
+      const builtIn = SKILLS_REGISTRY.filter(s => s.available).map(s => ({ ...s, isCustom: false, content: undefined }))
+      setAllSkills([...builtIn, ...custom])
+    })
   }, [])
 
   useEffect(() => {

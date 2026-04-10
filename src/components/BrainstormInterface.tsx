@@ -39,18 +39,20 @@ export default function BrainstormInterface() {
     SKILLS_REGISTRY.filter(s => s.available).map(s => ({ ...s, isCustom: false }))
   )
 
-  // Load custom skills from localStorage on mount
+  // Load custom skills on mount
   useEffect(() => {
-    const custom = getCustomSkills().map((cs: CustomSkill): SkillEntry => ({
-      id: cs.id,
-      name: cs.name,
-      emoji: cs.emoji,
-      available: true,
-      isCustom: true,
-      content: cs.content,
-    }))
-    const builtIn = SKILLS_REGISTRY.filter(s => s.available).map(s => ({ ...s, isCustom: false, content: undefined }))
-    setAllSkills([...builtIn, ...custom])
+    getCustomSkills().then(customList => {
+      const custom = customList.map((cs: CustomSkill): SkillEntry => ({
+        id: cs.id,
+        name: cs.name,
+        emoji: cs.emoji,
+        available: true,
+        isCustom: true,
+        content: cs.content,
+      }))
+      const builtIn = SKILLS_REGISTRY.filter(s => s.available).map(s => ({ ...s, isCustom: false, content: undefined }))
+      setAllSkills([...builtIn, ...custom])
+    })
   }, [])
 
   useEffect(() => {

@@ -84,12 +84,12 @@ export default function CreateSkillPage() {
     }
   }
 
-  function saveSkill() {
+  async function saveSkill() {
     if (!skillName.trim()) {
       setError('请填写智囊名称')
       return
     }
-    saveCustomSkill({
+    await saveCustomSkill({
       name: skillName.trim(),
       emoji: skillEmoji,
       description: skillDescription.trim() || `${skillName} 的思维框架`,

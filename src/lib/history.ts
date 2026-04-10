@@ -1,4 +1,6 @@
-// 对话历史记录 —— 存储在 localStorage，支持单人对话、头脑风暴、质疑团三种类型
+// 对话历史记录
+// 已登录 → Supabase（通过 /api/db/sessions）
+// 未登录 → localStorage 降级
 
 export type SessionType = 'chat' | 'brainstorm' | 'interrogate'
 
@@ -25,7 +27,7 @@ export interface HistorySession {
   id: string
   type: SessionType
   timestamp: number
-  title: string          // 自动生成的摘要标题
+  title: string
 
   // 单人对话
   skillId?: string
@@ -46,55 +48,114 @@ export interface HistorySession {
   interrogators?: { skillId: string; skillName: string; skillEmoji: string }[]
 }
 
-const STORAGE_KEY = 'nuwa_history'
-const MAX_SESSIONS = 100
+// ── localStorage helpers ──────────────────────────────────────────────────────
 
-function load(): HistorySession[] {
+const LS_KEY = 'nuwa_history'
+const MAX_LOCAL = 100
+
+function lsLoad(): HistorySession[] {
   if (typeof window === 'undefined') return []
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]')
-  } catch {
-    return []
-  }
+  try { return JSON.parse(localStorage.getItem(LS_KEY) ?? '[]') } catch { return [] }
 }
 
-function save(sessions: HistorySession[]) {
+function lsSave(sessions: HistorySession[]) {
   if (typeof window === 'undefined') return
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions.slice(0, MAX_SESSIONS)))
+  localStorage.setItem(LS_KEY, JSON.stringify(sessions.slice(0, MAX_LOCAL)))
 }
 
-export function saveSession(session: Omit<HistorySession, 'id' | 'timestamp'>): string {
+// ── Public API (async) ────────────────────────────────────────────────────────
+
+/** 保存会话。登录时写 Supabase，否则写 localStorage */
+export async function saveSession(
+  session: Omit<HistorySession, 'id' | 'timestamp'>
+): Promise<string> {
   const id = Date.now().toString()
-  const sessions = load()
-  sessions.unshift({ ...session, id, timestamp: Date.now() })
-  save(sessions)
+  const timestamp = Date.now()
+  const full: HistorySession = { ...session, id, timestamp }
+
+  // 尝试写服务端
+  try {
+    const res = await fetch('/api/db/sessions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, type: full.type, title: full.title, data: full }),
+    })
+    if (res.ok) return id
+    if (res.status === 401) {
+      // 未登录，降级 localStorage
+      const sessions = lsLoad()
+      sessions.unshift(full)
+      lsSave(sessions)
+      return id
+    }
+  } catch {
+    // 网络错误，降级 localStorage
+    const sessions = lsLoad()
+    sessions.unshift(full)
+    lsSave(sessions)
+  }
+
   return id
 }
 
-export function getAllSessions(): HistorySession[] {
-  return load()
+/** 获取所有会话。登录时从 Supabase，否则从 localStorage */
+export async function getAllSessions(): Promise<HistorySession[]> {
+  try {
+    const res = await fetch('/api/db/sessions')
+    if (res.ok) {
+      const rows = await res.json() as { id: string; data: HistorySession; created_at: string }[]
+      return rows.map(r => ({
+        ...r.data,
+        id: r.id,
+        timestamp: r.data.timestamp ?? new Date(r.created_at).getTime(),
+      }))
+    }
+    if (res.status === 401) return lsLoad()
+  } catch {
+    return lsLoad()
+  }
+  return lsLoad()
 }
 
-export function getSession(id: string): HistorySession | undefined {
-  return load().find(s => s.id === id)
+/** 删除单条会话 */
+export async function deleteSession(id: string): Promise<void> {
+  // 先清 localStorage（无论登录与否）
+  lsSave(lsLoad().filter(s => s.id !== id))
+  // 再尝试删服务端
+  try {
+    await fetch('/api/db/sessions', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id }),
+    })
+  } catch { /* ignore */ }
 }
 
-export function deleteSession(id: string) {
-  save(load().filter(s => s.id !== id))
+/** 清空所有会话 */
+export async function clearAllSessions(): Promise<void> {
+  // localStorage
+  if (typeof window !== 'undefined') localStorage.removeItem(LS_KEY)
+  // 服务端：逐条删除（简单实现）
+  try {
+    const sessions = await getAllSessions()
+    await Promise.all(sessions.map(s =>
+      fetch('/api/db/sessions', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: s.id }),
+      })
+    ))
+  } catch { /* ignore */ }
 }
 
-export function clearAllSessions() {
-  if (typeof window === 'undefined') return
-  localStorage.removeItem(STORAGE_KEY)
-}
+// ── Formatting ────────────────────────────────────────────────────────────────
 
-// 格式化时间显示
 export function formatTime(timestamp: number): string {
   const d = new Date(timestamp)
   const now = new Date()
   const diffDays = Math.floor((now.getTime() - d.getTime()) / 86400000)
-
-  if (diffDays === 0) return `今天 ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`
-  if (diffDays === 1) return `昨天 ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`
-  return `${d.getMonth() + 1}月${d.getDate()}日 ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`
+  const hm = `${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`
+  if (diffDays === 0) return `今天 ${hm}`
+  if (diffDays === 1) return `昨天 ${hm}`
+  return `${d.getMonth() + 1}月${d.getDate()}日 ${hm}`
 }

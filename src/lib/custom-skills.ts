@@ -1,57 +1,114 @@
-// Custom skills stored in localStorage
-// These are user-created personas that work alongside the built-in skills
+// 自定义智囊
+// 已登录 → Supabase（通过 /api/db/custom-skills）
+// 未登录 → localStorage 降级
 
 export interface CustomSkill {
-  id: string           // 'custom-{timestamp}'
+  id: string
   name: string
   emoji: string
   description: string
-  content: string      // Full generated SKILL.md content
+  content: string
   compactContent?: string
   createdAt: number
   source: 'text' | 'url'
   sourceUrl?: string
 }
 
-const STORAGE_KEY = 'nuwa_custom_skills'
+const LS_KEY = 'nuwa_custom_skills'
 
-export function getCustomSkills(): CustomSkill[] {
+// ── localStorage helpers ──────────────────────────────────────────────────────
+
+function lsLoad(): CustomSkill[] {
   if (typeof window === 'undefined') return []
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return []
-    return JSON.parse(raw) as CustomSkill[]
-  } catch {
-    return []
-  }
+  try { return JSON.parse(localStorage.getItem(LS_KEY) ?? '[]') } catch { return [] }
 }
 
-export function saveCustomSkill(skill: Omit<CustomSkill, 'id' | 'createdAt'>): CustomSkill {
+function lsSave(skills: CustomSkill[]) {
+  if (typeof window === 'undefined') return
+  localStorage.setItem(LS_KEY, JSON.stringify(skills))
+}
+
+// ── Public API (async) ────────────────────────────────────────────────────────
+
+export async function getCustomSkills(): Promise<CustomSkill[]> {
+  try {
+    const res = await fetch('/api/db/custom-skills')
+    if (res.ok) {
+      const rows = await res.json() as {
+        id: string; name: string; emoji: string; description: string
+        content: string; compact_content?: string; source: string
+        source_url?: string; created_at: string
+      }[]
+      return rows.map(r => ({
+        id: r.id,
+        name: r.name,
+        emoji: r.emoji,
+        description: r.description ?? '',
+        content: r.content,
+        compactContent: r.compact_content,
+        createdAt: new Date(r.created_at).getTime(),
+        source: (r.source ?? 'text') as 'text' | 'url',
+        sourceUrl: r.source_url,
+      }))
+    }
+    if (res.status === 401) return lsLoad()
+  } catch {
+    return lsLoad()
+  }
+  return lsLoad()
+}
+
+export async function saveCustomSkill(
+  skill: Omit<CustomSkill, 'id' | 'createdAt'>
+): Promise<CustomSkill> {
   const newSkill: CustomSkill = {
     ...skill,
     id: `custom-${Date.now()}`,
     createdAt: Date.now(),
   }
-  const all = getCustomSkills()
-  all.unshift(newSkill)
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(all))
+
+  try {
+    const res = await fetch('/api/db/custom-skills', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: newSkill.id,
+        name: newSkill.name,
+        emoji: newSkill.emoji,
+        description: newSkill.description,
+        content: newSkill.content,
+        compact_content: newSkill.compactContent,
+        source: newSkill.source,
+        source_url: newSkill.sourceUrl,
+      }),
+    })
+    if (res.ok) return newSkill
+    if (res.status === 401) {
+      const all = lsLoad()
+      all.unshift(newSkill)
+      lsSave(all)
+      return newSkill
+    }
+  } catch {
+    const all = lsLoad()
+    all.unshift(newSkill)
+    lsSave(all)
+  }
+
   return newSkill
 }
 
-export function updateCustomSkill(id: string, updates: Partial<Omit<CustomSkill, 'id' | 'createdAt'>>): void {
-  const all = getCustomSkills()
-  const idx = all.findIndex(s => s.id === id)
-  if (idx !== -1) {
-    all[idx] = { ...all[idx], ...updates }
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(all))
-  }
+export async function deleteCustomSkill(id: string): Promise<void> {
+  lsSave(lsLoad().filter(s => s.id !== id))
+  try {
+    await fetch('/api/db/custom-skills', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id }),
+    })
+  } catch { /* ignore */ }
 }
 
-export function deleteCustomSkill(id: string): void {
-  const all = getCustomSkills().filter(s => s.id !== id)
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(all))
-}
-
-export function getCustomSkillById(id: string): CustomSkill | undefined {
-  return getCustomSkills().find(s => s.id === id)
+export function getCustomSkillById(id: string): Promise<CustomSkill | undefined> {
+  return getCustomSkills().then(all => all.find(s => s.id === id))
 }
