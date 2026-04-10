@@ -4,6 +4,7 @@ import { createAnthropic } from '@ai-sdk/anthropic'
 import { streamText } from 'ai'
 import { loadCompactSkillPrompt } from '@/lib/load-skill'
 import { getSkillById } from '@/lib/skills-registry'
+import { GLOBAL_RULES } from '@/lib/global-rules'
 
 const MODELS = {
   gemini: {
@@ -93,6 +94,7 @@ export async function POST(req: NextRequest) {
     }
 
     contextMessage += `\n\n要求有实质内容：给出具体论点、真实案例或数据支撑，展开分析而非点到为止。目标长度 200-400 字。`
+    contextMessage += GLOBAL_RULES
 
     const messages = [
       { role: 'user' as const, content: systemPrompt },

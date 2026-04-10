@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { saveCustomSkill } from '@/lib/custom-skills'
+import { RULES_DISPLAY } from '@/lib/global-rules'
 
 type Step = 'input' | 'generating' | 'preview' | 'done'
 
@@ -250,6 +251,36 @@ export default function CreateSkillPage() {
           <p className="mt-2 text-xs text-white/20 max-w-sm mx-auto">
             仅支持真实历史人物和公众人物，基于公开资料推断
           </p>
+        </div>
+
+        {/* Platform rules */}
+        <div className="rounded-2xl border border-white/8 bg-white/[0.02] p-5 mb-6">
+          <h2 className="text-xs font-medium text-white/40 uppercase tracking-wider mb-4">
+            平台统一规则 · 所有智囊均遵守
+          </h2>
+          <div className="grid sm:grid-cols-2 gap-3">
+            {RULES_DISPLAY.map((rule) => (
+              <div
+                key={rule.title}
+                className={`flex gap-3 p-3 rounded-xl ${
+                  rule.interrogateOnly
+                    ? 'bg-yellow-500/5 border border-yellow-500/15'
+                    : 'bg-white/[0.03] border border-white/8'
+                }`}
+              >
+                <span className="text-lg flex-none">{rule.icon}</span>
+                <div>
+                  <div className="text-sm font-medium text-white/70 mb-0.5">
+                    {rule.title}
+                    {rule.interrogateOnly && (
+                      <span className="ml-1.5 text-xs text-yellow-400/60 font-normal">质疑团</span>
+                    )}
+                  </div>
+                  <p className="text-xs text-white/35 leading-relaxed">{rule.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="space-y-5">

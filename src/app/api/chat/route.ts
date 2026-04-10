@@ -4,6 +4,7 @@ import { createAnthropic } from '@ai-sdk/anthropic'
 import { streamText } from 'ai'
 import { loadSkillPrompt, detectLanguage } from '@/lib/load-skill'
 import { getSkillById } from '@/lib/skills-registry'
+import { GLOBAL_RULES } from '@/lib/global-rules'
 
 const MODELS = {
   gemini: {
@@ -91,7 +92,7 @@ export async function POST(req: NextRequest) {
 
     const lastUserMsg = [...cleanMessages].reverse().find(m => m.role === 'user')
     const lang = lastUserMsg ? detectLanguage(lastUserMsg.content) : 'zh'
-    const systemPrompt = skillContent ?? loadSkillPrompt(skillId, lang)
+    const systemPrompt = (skillContent ?? loadSkillPrompt(skillId, lang)) + GLOBAL_RULES
 
     const activeModel = getActiveModel()
     const provider = activeModel.provider()
@@ -101,7 +102,7 @@ export async function POST(req: NextRequest) {
     const allMessages: ChatMessage[] = systemPrompt
       ? [
           { role: 'user', content: systemPrompt },
-          { role: 'assistant', content: '好的，我已完全理解以上设定，将严格按照这个框架来回答。请提问。' },
+          { role: 'assistant', content: '好的，我已完全理解以上设定及平台规则，将严格按照这个框架来回答。请提问。' },
           ...cleanMessages,
         ]
       : cleanMessages

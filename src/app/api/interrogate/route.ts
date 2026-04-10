@@ -4,6 +4,7 @@ import { createAnthropic } from '@ai-sdk/anthropic'
 import { streamText } from 'ai'
 import { loadCompactSkillPrompt } from '@/lib/load-skill'
 import { getSkillById } from '@/lib/skills-registry'
+import { GLOBAL_RULES, INTERROGATE_EXTRA_RULE } from '@/lib/global-rules'
 
 const MODELS = {
   gemini: {
@@ -91,6 +92,7 @@ ${critiquesText}
 2. **对赌测试**：如果要验证这些承诺或预测是否可信，应该向对方提出什么样的对赌条件？（具体说明：条件、时间、赔付方式）
 3. **可信度评分**：0-10分（仅基于言论内容的准确性和逻辑性），并说明理由
 4. **最终结论**：哪些主张有依据值得参考，哪些主张存在误导需要警惕？
+5. **建设性替代方案**：如果用户真正想解决被审查内容所涉及的问题，应该去哪里找更可靠的资源、专家、书籍或课程？至少推荐 2-3 个具体来源。
 
 用中文回答，直接给出判断，不要模棱两可。`,
         },
@@ -133,7 +135,7 @@ ${critiquesText}
 
 4. **话术识别**：是否在制造恐慌、煽动焦虑、或用模糊语言规避责任？
 
-注意：只分析言论本身的逻辑和事实，不评价说话者的个人背景或学历。目标长度 200-400 字。`
+注意：只分析言论本身的逻辑和事实，不评价说话者的个人背景或学历。目标长度 200-400 字。` + GLOBAL_RULES + INTERROGATE_EXTRA_RULE
 
       messages = [
         { role: 'user', content: systemPrompt },
