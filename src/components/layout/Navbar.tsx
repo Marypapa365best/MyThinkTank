@@ -10,7 +10,7 @@ export default function Navbar() {
   const { isSignedIn } = useUser()
 
   return (
-    <nav className="fixed top-0 w-full z-50 border-b border-white/10 bg-[#0a0a0a]/80 backdrop-blur-md">
+    <nav className="fixed top-0 w-full z-50 border-b border-[#2a2a28] bg-[#141413]/90 backdrop-blur-md">
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
@@ -21,13 +21,13 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-6 text-sm text-white/60">
-          <Link href="/skills" className="hover:text-white transition-colors">智囊库</Link>
-          <Link href="/brainstorm" className="hover:text-white transition-colors">💡 头脑风暴</Link>
-          <Link href="/interrogate" className="hover:text-white transition-colors">🔍 质疑团</Link>
-          <Link href="/create-skill" className="hover:text-white transition-colors">✨ 创建智囊</Link>
-          <Link href="/history" className="hover:text-white transition-colors">📚 历史</Link>
-          <Link href="/pricing" className="hover:text-white transition-colors">定价</Link>
+        <div className="hidden md:flex items-center gap-6 text-sm text-[#b0aea5]">
+          <Link href="/skills" className="hover:text-[#f5f4ed] transition-colors">智囊库</Link>
+          <Link href="/brainstorm" className="hover:text-[#f5f4ed] transition-colors">💡 头脑风暴</Link>
+          <Link href="/interrogate" className="hover:text-[#f5f4ed] transition-colors">🔍 质疑团</Link>
+          <Link href="/create-skill" className="hover:text-[#f5f4ed] transition-colors">✨ 创建智囊</Link>
+          <Link href="/history" className="hover:text-[#f5f4ed] transition-colors">📚 历史</Link>
+          <Link href="/pricing" className="hover:text-[#f5f4ed] transition-colors">定价</Link>
         </div>
 
         {/* Auth — desktop */}
@@ -44,12 +44,12 @@ export default function Navbar() {
           ) : (
             <>
               <SignInButton mode="modal">
-                <Button variant="ghost" size="sm" className="text-white/60 hover:text-white">
+                <Button variant="ghost" size="sm" className="text-[#b0aea5] hover:text-[#f5f4ed]">
                   登录
                 </Button>
               </SignInButton>
               <Link href="/sign-up">
-                <Button size="sm" className="bg-white text-black hover:bg-white/90">
+                <Button size="sm" className="bg-[#c96442] text-[#faf9f5] hover:bg-[#d97757]">
                   免费开始
                 </Button>
               </Link>
@@ -73,23 +73,23 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden border-t border-white/10 bg-[#0a0a0a] px-4 py-4 flex flex-col gap-4 text-sm">
-          <Link href="/skills" className="text-white/60 hover:text-white">智囊库</Link>
-          <Link href="/brainstorm" className="text-white/60 hover:text-white">💡 头脑风暴</Link>
-          <Link href="/interrogate" className="text-white/60 hover:text-white">🔍 质疑团</Link>
-          <Link href="/create-skill" className="text-white/60 hover:text-white">✨ 创建智囊</Link>
-          <Link href="/history" className="text-white/60 hover:text-white">📚 历史</Link>
-          <Link href="/pricing" className="text-white/60 hover:text-white">定价</Link>
+        <div className="md:hidden border-t border-[#2a2a28] bg-[#141413] px-4 py-4 flex flex-col gap-4 text-sm">
+          <Link href="/skills" className="text-[#b0aea5] hover:text-[#f5f4ed]">智囊库</Link>
+          <Link href="/brainstorm" className="text-[#b0aea5] hover:text-[#f5f4ed]">💡 头脑风暴</Link>
+          <Link href="/interrogate" className="text-[#b0aea5] hover:text-[#f5f4ed]">🔍 质疑团</Link>
+          <Link href="/create-skill" className="text-[#b0aea5] hover:text-[#f5f4ed]">✨ 创建智囊</Link>
+          <Link href="/history" className="text-[#b0aea5] hover:text-[#f5f4ed]">📚 历史</Link>
+          <Link href="/pricing" className="text-[#b0aea5] hover:text-[#f5f4ed]">定价</Link>
           <div className="flex gap-3 pt-2">
             {isSignedIn ? (
               <UserButton />
             ) : (
               <>
                 <SignInButton mode="modal">
-                  <Button variant="ghost" size="sm">登录</Button>
+                  <Button variant="ghost" size="sm" className="text-[#b0aea5] hover:text-[#f5f4ed]">登录</Button>
                 </SignInButton>
                 <Link href="/sign-up">
-                  <Button size="sm" className="bg-white text-black">免费开始</Button>
+                  <Button size="sm" className="bg-[#c96442] text-[#faf9f5] hover:bg-[#d97757]">免费开始</Button>
                 </Link>
               </>
             )}

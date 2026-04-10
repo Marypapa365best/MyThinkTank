@@ -107,13 +107,13 @@ export default function PricingPage() {
               key={plan.name}
               className={`relative rounded-2xl p-6 flex flex-col ${
                 plan.highlight
-                  ? 'bg-white text-black'
-                  : 'bg-white/[0.03] border border-white/10 text-white'
+                  ? 'bg-[#c96442] text-[#faf9f5]'
+                  : 'bg-[#1e1e1c] border border-[#2a2a28] text-[#f5f4ed]'
               }`}
             >
               {plan.badge && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="bg-black text-white text-xs font-medium px-3 py-1 rounded-full border border-white/20">
+                  <span className="bg-[#141413] text-[#c96442] text-xs font-medium px-3 py-1 rounded-full border border-[#c96442]/40">
                     {plan.badge}
                   </span>
                 </div>
@@ -121,14 +121,14 @@ export default function PricingPage() {
 
               {/* Plan name & price */}
               <div className="mb-5">
-                <div className={`text-sm font-medium mb-3 ${plan.highlight ? 'text-black/50' : 'text-white/40'}`}>
+                <div className={`text-sm font-medium mb-3 ${plan.highlight ? 'text-[#faf9f5]/70' : 'text-[#87867f]'}`}>
                   {plan.name}
                 </div>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-bold">{plan.price}</span>
-                  <span className={`text-sm ${plan.highlight ? 'text-black/40' : 'text-white/30'}`}>{plan.period}</span>
+                  <span className={`text-sm ${plan.highlight ? 'text-[#faf9f5]/60' : 'text-[#87867f]'}`}>{plan.period}</span>
                 </div>
-                <p className={`text-sm mt-2 ${plan.highlight ? 'text-black/60' : 'text-white/40'}`}>
+                <p className={`text-sm mt-2 ${plan.highlight ? 'text-[#faf9f5]/80' : 'text-[#87867f]'}`}>
                   {plan.description}
                 </p>
               </div>
@@ -138,8 +138,8 @@ export default function PricingPage() {
                 href={plan.ctaHref}
                 className={`block text-center py-2.5 rounded-xl text-sm font-medium transition-all mb-6 ${
                   plan.highlight
-                    ? 'bg-black text-white hover:bg-black/80'
-                    : 'bg-white/[0.06] text-white hover:bg-white/10 border border-white/10'
+                    ? 'bg-[#141413] text-[#faf9f5] hover:bg-[#1e1e1c]'
+                    : 'bg-[#30302e] text-[#f5f4ed] hover:bg-[#3a3a38] border border-[#2a2a28]'
                 }`}
               >
                 {plan.cta}
@@ -151,15 +151,15 @@ export default function PricingPage() {
                   <li key={f.text} className="flex items-start gap-2.5 text-sm">
                     <span className={`mt-0.5 flex-none text-base leading-none ${
                       f.included
-                        ? plan.highlight ? 'text-black' : 'text-white/70'
-                        : plan.highlight ? 'text-black/20' : 'text-white/15'
+                        ? plan.highlight ? 'text-[#faf9f5]' : 'text-[#b0aea5]'
+                        : plan.highlight ? 'text-[#faf9f5]/25' : 'text-[#5e5d59]'
                     }`}>
                       {f.included ? '✓' : '–'}
                     </span>
                     <span className={
                       f.included
-                        ? plan.highlight ? 'text-black/80' : 'text-white/70'
-                        : plan.highlight ? 'text-black/30' : 'text-white/25'
+                        ? plan.highlight ? 'text-[#faf9f5]/90' : 'text-[#b0aea5]'
+                        : plan.highlight ? 'text-[#faf9f5]/30' : 'text-[#5e5d59]'
                     }>
                       {f.text}
                     </span>
