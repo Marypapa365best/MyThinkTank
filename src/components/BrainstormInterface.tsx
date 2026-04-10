@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { SKILLS_REGISTRY } from '@/lib/skills-registry'
 import type { BrainstormHistoryItem } from '@/app/api/brainstorm/route'
+import { saveSession } from '@/lib/history'
 
 interface TurnResult {
   skillId: string
@@ -135,6 +136,24 @@ export default function BrainstormInterface() {
           turnIndex++
         }
       }
+      // 保存到历史记录
+      setTurns(finalTurns => {
+        const completedTurns = finalTurns.filter(t => t.content && !t.content.includes('回答失败'))
+        if (completedTurns.length > 0) {
+          const skills = selectedIds.map(id => {
+            const sk = SKILLS_REGISTRY.find(s => s.id === id)
+            return { skillId: id, skillName: sk?.name ?? id, skillEmoji: sk?.emoji ?? '' }
+          })
+          saveSession({
+            type: 'brainstorm',
+            title: topic.slice(0, 60) + (topic.length > 60 ? '…' : ''),
+            topic,
+            brainstormSkills: skills,
+            turns: completedTurns.map(t => ({ skillId: t.skillId, skillName: t.skillName, skillEmoji: t.skillEmoji, content: t.content })),
+          })
+        }
+        return finalTurns
+      })
       setIsDone(true)
     } catch (e) {
       if ((e as Error).name !== 'AbortError') {

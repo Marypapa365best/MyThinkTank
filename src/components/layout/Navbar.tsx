@@ -31,6 +31,9 @@ export default function Navbar() {
           <Link href="/interrogate" className="hover:text-white transition-colors">
             🔍 质疑团
           </Link>
+          <Link href="/history" className="hover:text-white transition-colors">
+            📚 历史
+          </Link>
           <Link href="/pricing" className="hover:text-white transition-colors">
             定价
           </Link>
@@ -69,6 +72,7 @@ export default function Navbar() {
           <Link href="/skills" className="text-white/60 hover:text-white">智囊库</Link>
           <Link href="/brainstorm" className="text-white/60 hover:text-white">💡 头脑风暴</Link>
           <Link href="/interrogate" className="text-white/60 hover:text-white">🔍 质疑团</Link>
+          <Link href="/history" className="text-white/60 hover:text-white">📚 历史</Link>
           <Link href="/pricing" className="text-white/60 hover:text-white">定价</Link>
           <Link href="/about" className="text-white/60 hover:text-white">关于</Link>
           <div className="flex gap-3 pt-2">

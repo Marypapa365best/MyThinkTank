@@ -4,6 +4,7 @@ import { useRef, useEffect, useState, useCallback } from 'react'
 import { useChat } from 'ai/react'
 import { Button } from '@/components/ui/button'
 import ReactMarkdown from 'react-markdown'
+import { saveSession } from '@/lib/history'
 
 interface Props {
   skillId: string
@@ -71,6 +72,20 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
   const { messages, input, setInput, append, setMessages, isLoading } = useChat({
     api: '/api/chat',
     body: { skillId },
+    onFinish: () => {
+      // 每次 AI 回复完成后，保存当前完整对话到历史记录
+      const allMsgs = messages.map(m => ({ role: m.role as 'user' | 'assistant', content: typeof m.content === 'string' ? m.content : '' }))
+      if (allMsgs.length === 0) return
+      const firstUser = allMsgs.find(m => m.role === 'user')?.content ?? ''
+      saveSession({
+        type: 'chat',
+        title: firstUser.slice(0, 60) + (firstUser.length > 60 ? '…' : ''),
+        skillId,
+        skillName,
+        skillEmoji,
+        messages: allMsgs,
+      })
+    },
     onError: () => {
       setMessages(prev => [
         ...prev,

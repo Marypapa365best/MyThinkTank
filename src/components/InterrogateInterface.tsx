@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { SKILLS_REGISTRY } from '@/lib/skills-registry'
 import ReactMarkdown from 'react-markdown'
+import { saveSession } from '@/lib/history'
 import type { CritiqueItem } from '@/app/api/interrogate/route'
 
 interface CritiqueResult {
@@ -157,6 +158,27 @@ export default function InterrogateInterface() {
       )
 
       setSynthesis({ content: verdictContent || '（无法生成裁决）', isStreaming: false })
+
+      // 保存到历史记录
+      setCritiques(finalCritiques => {
+        const validCritiques = finalCritiques.filter(c => c.content && !c.content.includes('回答失败'))
+        if (validCritiques.length > 0) {
+          const interrogators = selectedIds.map(id => {
+            const sk = SKILLS_REGISTRY.find(s => s.id === id)
+            return { skillId: id, skillName: sk?.name ?? id, skillEmoji: sk?.emoji ?? '' }
+          })
+          saveSession({
+            type: 'interrogate',
+            title: targetName ? `审查：${targetName}` : targetContent.slice(0, 50) + '…',
+            targetName,
+            targetContent,
+            critiques: validCritiques.map(c => ({ skillId: c.skillId, skillName: c.skillName, skillEmoji: c.skillEmoji, content: c.content })),
+            synthesis: verdictContent,
+            interrogators,
+          })
+        }
+        return finalCritiques
+      })
       setIsDone(true)
     } catch (e) {
       if ((e as Error).name !== 'AbortError') {
