@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Badge } from '@/components/ui/badge'
 import { SKILLS_REGISTRY } from '@/lib/skills-registry'
 import { SkillCategory } from '@/types/skill'
 import SkillAvatar from '@/components/SkillAvatar'
@@ -17,6 +16,9 @@ const CATEGORIES: { value: 'all' | SkillCategory; label: string }[] = [
   { value: 'cn-figure', label: '🌏 政商人物' },
 ]
 
+// Rotate through surface levels for editorial depth
+const SURFACES = ['#ffffff', '#f5f4ed', '#e9e8e1']
+
 export default function SkillsPage() {
   const [activeCategory, setActiveCategory] = useState<'all' | SkillCategory>('all')
 
@@ -27,105 +29,105 @@ export default function SkillsPage() {
   return (
     <div className="min-h-screen">
 
-      {/* ── Page Header — Parchment ─────────────────────────────────────────── */}
-      <div className="bg-[#f5f4ed] pt-28 pb-10 px-4 border-b border-[#e8e6dc]">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl text-[#141413] mb-2">智囊库</h1>
-          <p className="text-[#5e5d59] text-base">
+      {/* ── Header — Surface ───────────────────────────────────────────────── */}
+      <div className="bg-[#fbf9f2] pt-32 pb-12 px-8 border-b border-[#dcc1b8]/40">
+        <div className="max-w-screen-xl mx-auto">
+          <p className="label-overline text-[#9a4021] mb-4">智囊库</p>
+          <h1 className="text-5xl text-[#1b1c18] mb-3">
+            遇见真正的<em style={{ fontStyle: 'italic' }}>思维大师</em>
+          </h1>
+          <p className="text-[#56423c] text-lg max-w-lg">
             每一位智囊均基于数十个一手资料严格提炼，通过三重验证。
           </p>
         </div>
       </div>
 
-      {/* ── Grid area — Warm Sand base ──────────────────────────────────────── */}
-      <div className="bg-[#e8e6dc] min-h-screen">
-      <div className="max-w-6xl mx-auto px-4 py-10">
+      {/* ── Grid — Surface Container ───────────────────────────────────────── */}
+      <div className="bg-[#efeee7] min-h-screen">
+        <div className="max-w-screen-xl mx-auto px-8 py-12">
 
-        {/* Category Filter */}
-        <div className="flex flex-wrap gap-2 mb-10">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat.value}
-              onClick={() => setActiveCategory(cat.value)}
-              className={`px-4 py-1.5 rounded-full text-sm transition-all border font-medium ${
-                activeCategory === cat.value
-                  ? 'bg-[#141413] text-[#f5f4ed] border-[#141413]'
-                  : 'border-[#e8e6dc] text-[#5e5d59] bg-[#faf9f5] hover:border-[#c96442] hover:text-[#c96442]'
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
+          {/* Category filter */}
+          <div className="flex flex-wrap gap-2 mb-10">
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat.value}
+                onClick={() => setActiveCategory(cat.value)}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 border ${
+                  activeCategory === cat.value
+                    ? 'bg-[#30312c] text-[#f2f1ea] border-[#30312c]'
+                    : 'border-[#dcc1b8] text-[#56423c] bg-[#fbf9f2] hover:border-[#9a4021] hover:text-[#9a4021]'
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
 
-        {/* Skills Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filtered.map((skill) => (
-            <Link
-              key={skill.id}
-              href={`/skills/${skill.id}`}
-              className="group flex flex-col p-6 rounded-xl border border-[#e8e6dc] bg-[#faf9f5] hover:border-[#d1cfc5] hover:[box-shadow:rgba(0,0,0,0.08)_0px_4px_24px] transition-all"
-            >
-              {/* Top row */}
-              <div className="flex items-start justify-between mb-4">
-                <SkillAvatar
-                  name={skill.name}
-                  emoji={skill.emoji}
-                  avatar={skill.avatar}
-                  size={52}
-                />
-                <Badge
-                  variant="outline"
-                  className={
-                    skill.tier === 'free'
-                      ? 'text-emerald-600 border-emerald-200 bg-emerald-50'
-                      : skill.tier === 'pro'
-                      ? 'text-[#c96442] border-[#e8c4b8] bg-[#fdf6f3]'
-                      : 'text-amber-600 border-amber-200 bg-amber-50'
-                  }
+          {/* Skills grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filtered.map((skill, i) => {
+              const surface = SURFACES[i % SURFACES.length]
+              return (
+                <Link
+                  key={skill.id}
+                  href={`/skills/${skill.id}`}
+                  className="group flex flex-col p-7 rounded-lg transition-all duration-300 hover:-translate-y-0.5"
+                  style={{
+                    backgroundColor: surface,
+                    boxShadow: '0px 0px 0px 1px rgba(220,193,184,0.5)',
+                  }}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLElement).style.boxShadow = '0px 0px 0px 1px rgba(154,64,33,0.3), 0px 4px 20px rgba(27,28,24,0.06)'
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLElement).style.boxShadow = '0px 0px 0px 1px rgba(220,193,184,0.5)'
+                  }}
                 >
-                  {skill.tier === 'free' ? '免费' : skill.tier === 'pro' ? 'Pro' : 'Elite'}
-                </Badge>
-              </div>
+                  {/* Top */}
+                  <div className="flex items-start justify-between mb-5">
+                    <SkillAvatar name={skill.name} emoji={skill.emoji} avatar={skill.avatar} size={52} />
+                    <span className={`label-overline text-[10px] mt-1 ${
+                      skill.tier === 'free' ? 'text-emerald-700' :
+                      skill.tier === 'pro' ? 'text-[#9a4021]' : 'text-amber-700'
+                    }`}>
+                      {skill.tier === 'free' ? 'Free' : skill.tier === 'pro' ? 'Pro' : 'Elite'}
+                    </span>
+                  </div>
 
-              {/* Name & tagline — h3 auto-Lora */}
-              <h3 className="text-lg text-[#141413] mb-0.5 group-hover:text-[#c96442] transition-colors">
-                {skill.name}
-              </h3>
-              <p className="text-xs text-[#87867f] mb-1">{skill.nameEn}</p>
-              <p className="text-sm text-[#5e5d59] mb-4 leading-relaxed flex-1">
-                {skill.tagline}
-              </p>
+                  <h3 className="text-lg text-[#1b1c18] mb-0.5 group-hover:text-[#9a4021] transition-colors">
+                    {skill.name}
+                  </h3>
+                  <p className="text-xs text-[#89726b] mb-3">{skill.nameEn}</p>
+                  <p className="text-sm text-[#56423c] leading-relaxed flex-1 mb-5">
+                    {skill.tagline}
+                  </p>
 
-              {/* Tags */}
-              <div className="flex flex-wrap gap-1.5 mb-4">
-                {skill.tags.slice(0, 3).map(tag => (
-                  <span
-                    key={tag}
-                    className="text-xs px-2.5 py-0.5 rounded-full bg-[#f0eee6] text-[#87867f]"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-1.5 mb-5">
+                    {skill.tags.slice(0, 3).map(tag => (
+                      <span key={tag} className="text-xs px-2.5 py-0.5 rounded-full bg-[#efeee7] text-[#89726b]">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
 
-              {/* Footer */}
-              <div className="flex items-center justify-between text-xs text-[#b0aea5] pt-3 border-t border-[#f0eee6]">
-                <span>📚 {skill.sourcesCount}+ 来源</span>
-                <span>截止 {skill.knowledgeCutoff}</span>
-              </div>
-            </Link>
-          ))}
+                  {/* Footer */}
+                  <div className="flex justify-between text-xs text-[#89726b] pt-4 border-t border-[#dcc1b8]/50">
+                    <span>📚 {skill.sourcesCount}+ 来源</span>
+                    <span>截止 {skill.knowledgeCutoff}</span>
+                  </div>
+                </Link>
+              )
+            })}
+          </div>
+
+          {/* Coming Soon */}
+          <div className="mt-8 p-8 rounded-lg border border-dashed border-[#dcc1b8] text-center bg-[#fbf9f2]/60">
+            <p className="text-[#89726b] text-sm">
+              🔜 更多智囊陆续上线 · 专业律师、医生、会计师即将加入
+            </p>
+          </div>
         </div>
-
-        {/* Coming Soon */}
-        <div className="mt-8 p-6 rounded-xl border border-dashed border-[#d1cfc5] text-center bg-[#f5f4ed]">
-          <p className="text-[#87867f] text-sm">
-            🔜 更多智囊陆续上线 · 专业律师、医生、会计师即将加入
-          </p>
-        </div>
-
-      </div>
       </div>
     </div>
   )

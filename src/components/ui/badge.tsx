@@ -1,45 +1,40 @@
-import { mergeProps } from "@base-ui/react/merge-props"
-import { useRender } from "@base-ui/react/use-render"
+import { mergeProps } from "@base-ui-components/react/merge-props"
+import { useRender } from "@base-ui-components/react/use-render"
 import { cva, type VariantProps } from "class-variance-authority"
-
 import { cn } from "@/lib/utils"
 
-// Anthropic/Claude design system badges — warm palette
 const badgeVariants = cva(
-  "group/badge inline-flex h-5 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-transparent px-2.5 py-0.5 text-xs font-medium tracking-[0.12px] whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:ring-[#c96442]/50 [&>svg]:pointer-events-none [&>svg]:size-3!",
+  "group/badge inline-flex h-5 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-transparent px-2.5 py-0.5 text-xs font-medium tracking-[0.06em] whitespace-nowrap transition-all [&>svg]:size-3!",
   {
     variants: {
       variant: {
-        // Terracotta — highest signal, brand moments only
+        // Brick red — high signal
         default:
-          "bg-[#c96442] text-[#faf9f5]",
+          "bg-[#9a4021] text-white",
 
-        // Warm Sand — secondary, neutral labels
+        // Warm surface — neutral
         secondary:
-          "bg-[#e8e6dc] text-[#4d4c48]",
+          "bg-[#efeee7] text-[#56423c]",
 
-        // Cream outline — most common, subtle label on light bg
+        // Blush outline — most common on light
         outline:
-          "border border-[#e8e6dc] bg-[#faf9f5] text-[#5e5d59]",
+          "border border-[#dcc1b8] bg-[#ffffff] text-[#56423c]",
 
-        // Dark outline — for use on dark section backgrounds
+        // On dark sections
         "outline-dark":
-          "border border-[#30302e] bg-transparent text-[#87867f]",
+          "border border-[#3d3e39] bg-transparent text-[#dcc1b8]",
 
-        // Ivory — very subtle on parchment
+        // Very subtle — on surface-low
         ghost:
-          "bg-[#f0eee6] text-[#87867f]",
+          "bg-[#f5f4ed] text-[#89726b]",
 
-        // Destructive
         destructive:
-          "bg-[#b53333]/10 text-[#b53333] border border-[#b53333]/20",
+          "bg-[#ba1a1a]/10 text-[#ba1a1a] border border-[#ba1a1a]/20",
 
-        link: "text-[#c96442] underline-offset-4 hover:underline",
+        link: "text-[#9a4021] underline-offset-4 hover:underline",
       },
     },
-    defaultVariants: {
-      variant: "default",
-    },
+    defaultVariants: { variant: "default" },
   }
 )
 

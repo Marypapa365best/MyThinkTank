@@ -10,52 +10,50 @@ export default function Navbar() {
   const { isSignedIn } = useUser()
 
   return (
-    <nav className="fixed top-0 w-full z-50 border-b border-[#f0eee6] bg-[#f5f4ed]/90 backdrop-blur-md">
-      <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <span className="font-serif text-xl font-medium tracking-tight text-[#141413]">
+    // Ring shadow nav — no hard border, just a whisper ring
+    <nav className="fixed top-0 w-full z-50 bg-[#fbf9f2]/85 backdrop-blur-md [box-shadow:0px_0px_0px_1px_rgba(27,28,24,0.06)]">
+      <div className="max-w-screen-xl mx-auto px-8 h-16 flex items-center justify-between">
+
+        {/* Logo — Newsreader serif */}
+        <Link href="/" className="flex items-center gap-2.5">
+          <span className="font-serif text-xl font-medium tracking-tight text-[#1b1c18]">
             我的智囊
           </span>
-          <span className="hidden sm:inline text-xs text-[#87867f] font-normal mt-0.5">
+          <span className="hidden sm:inline text-xs text-[#89726b] font-normal mt-0.5 font-sans">
             · My Think Tank
           </span>
         </Link>
 
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-6 text-sm text-[#5e5d59]">
-          <Link href="/skills" className="hover:text-[#141413] transition-colors">智囊库</Link>
-          <Link href="/brainstorm" className="hover:text-[#141413] transition-colors">💡 头脑风暴</Link>
-          <Link href="/interrogate" className="hover:text-[#141413] transition-colors">🔍 质疑团</Link>
-          <Link href="/create-skill" className="hover:text-[#141413] transition-colors">✨ 创建智囊</Link>
-          <Link href="/history" className="hover:text-[#141413] transition-colors">📚 历史</Link>
-          <Link href="/pricing" className="hover:text-[#141413] transition-colors">定价</Link>
+        {/* Desktop Nav — Inter, headline weight */}
+        <div className="hidden md:flex items-center gap-7 text-sm font-medium text-[#56423c]">
+          <Link href="/skills" className="hover:text-[#9a4021] transition-colors duration-200">智囊库</Link>
+          <Link href="/brainstorm" className="hover:text-[#9a4021] transition-colors duration-200">💡 头脑风暴</Link>
+          <Link href="/interrogate" className="hover:text-[#9a4021] transition-colors duration-200">🔍 质疑团</Link>
+          <Link href="/create-skill" className="hover:text-[#9a4021] transition-colors duration-200">✨ 创建智囊</Link>
+          <Link href="/history" className="hover:text-[#9a4021] transition-colors duration-200">📚 历史</Link>
+          <Link href="/pricing" className="hover:text-[#9a4021] transition-colors duration-200">定价</Link>
         </div>
 
-        {/* Auth — desktop */}
+        {/* Auth */}
         <div className="hidden md:flex items-center gap-3">
           {isSignedIn ? (
             <UserButton
               appearance={{
                 elements: {
                   avatarBox: 'w-8 h-8',
-                  userButtonPopoverCard: 'bg-[#faf9f5] border border-[#f0eee6] text-[#141413]',
+                  userButtonPopoverCard: 'bg-[#ffffff] border border-[#dcc1b8] text-[#1b1c18]',
                 },
               }}
             />
           ) : (
             <>
               <SignInButton mode="modal">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-[#5e5d59] hover:text-[#141413] hover:bg-[#f0eee6]"
-                >
+                <Button variant="ghost" size="sm" className="text-[#56423c]">
                   登录
                 </Button>
               </SignInButton>
               <Link href="/sign-up">
-                <Button size="sm" className="px-4">
+                <Button size="sm" className="px-5">
                   免费开始
                 </Button>
               </Link>
@@ -63,9 +61,9 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile toggle */}
         <button
-          className="md:hidden text-[#5e5d59] hover:text-[#141413]"
+          className="md:hidden text-[#56423c] hover:text-[#1b1c18]"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -77,22 +75,22 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden border-t border-[#f0eee6] bg-[#f5f4ed] px-4 py-4 flex flex-col gap-4 text-sm">
-          <Link href="/skills" className="text-[#5e5d59] hover:text-[#141413]">智囊库</Link>
-          <Link href="/brainstorm" className="text-[#5e5d59] hover:text-[#141413]">💡 头脑风暴</Link>
-          <Link href="/interrogate" className="text-[#5e5d59] hover:text-[#141413]">🔍 质疑团</Link>
-          <Link href="/create-skill" className="text-[#5e5d59] hover:text-[#141413]">✨ 创建智囊</Link>
-          <Link href="/history" className="text-[#5e5d59] hover:text-[#141413]">📚 历史</Link>
-          <Link href="/pricing" className="text-[#5e5d59] hover:text-[#141413]">定价</Link>
-          <div className="flex gap-3 pt-2">
+        <div className="md:hidden border-t border-[#dcc1b8] bg-[#fbf9f2] px-6 py-5 flex flex-col gap-4 text-sm font-medium text-[#56423c]">
+          <Link href="/skills" className="hover:text-[#9a4021]">智囊库</Link>
+          <Link href="/brainstorm" className="hover:text-[#9a4021]">💡 头脑风暴</Link>
+          <Link href="/interrogate" className="hover:text-[#9a4021]">🔍 质疑团</Link>
+          <Link href="/create-skill" className="hover:text-[#9a4021]">✨ 创建智囊</Link>
+          <Link href="/history" className="hover:text-[#9a4021]">📚 历史</Link>
+          <Link href="/pricing" className="hover:text-[#9a4021]">定价</Link>
+          <div className="flex gap-3 pt-2 border-t border-[#dcc1b8]">
             {isSignedIn ? (
               <UserButton />
             ) : (
               <>
                 <SignInButton mode="modal">
-                  <Button variant="ghost" size="sm" className="text-[#5e5d59] hover:text-[#141413]">登录</Button>
+                  <Button variant="ghost" size="sm">登录</Button>
                 </SignInButton>
                 <Link href="/sign-up">
                   <Button size="sm">免费开始</Button>

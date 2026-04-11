@@ -4,106 +4,133 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ── Design System: Anthropic/Claude Authentic ────────────────────────────────
-   Reference: DESIGN.md in project root
-   Light-first: Parchment (#f5f4ed) canvas + strategic Near Black (#141413) sections.
-   Typography: Lora (weight 400/500) for serif headings; Geist Sans for UI.
-   Brand: Terracotta (#c96442). All neutrals warm-toned. No cool blue-grays.
+/* ── Design System: Editorial Salon × Anthropic ──────────────────────────────
+   Font:     Newsreader (serif, optical sizing, italic support) + Inter (UI)
+   Palette:  Material Design 3 warm terracotta — primary #9a4021 (brick red)
+   Surface:  5-tier warm surface hierarchy — no drop shadows, ring-based depth
+   Pattern:  Light-first, strategic dark sections, uppercase tracking labels,
+             italic serif accents, bento editorial grid
 ──────────────────────────────────────────────────────────────────────────────── */
 
 @theme inline {
-  /* Font stacks */
-  --font-sans:   var(--font-sans);                              /* Geist */
-  --font-serif:  var(--font-lora), Georgia, 'Times New Roman', serif; /* Lora */
-  --font-mono:   var(--font-geist-mono);
+  /* ── Font stacks ──────────────────────────────────────────────────────── */
+  --font-sans:    var(--font-inter), 'Inter', system-ui, sans-serif;
+  --font-serif:   var(--font-newsreader), 'Newsreader', Georgia, serif;
+  --font-mono:    var(--font-geist-mono);
+  --font-heading: var(--font-newsreader), 'Newsreader', Georgia, serif;
 
-  /* Semantic color tokens → CSS vars */
-  --color-background:              var(--background);
-  --color-foreground:              var(--foreground);
-  --color-card:                    var(--card);
-  --color-card-foreground:         var(--card-foreground);
-  --color-popover:                 var(--popover);
-  --color-popover-foreground:      var(--popover-foreground);
-  --color-primary:                 var(--primary);
-  --color-primary-foreground:      var(--primary-foreground);
-  --color-secondary:               var(--secondary);
-  --color-secondary-foreground:    var(--secondary-foreground);
-  --color-muted:                   var(--muted);
-  --color-muted-foreground:        var(--muted-foreground);
-  --color-accent:                  var(--accent);
-  --color-accent-foreground:       var(--accent-foreground);
-  --color-destructive:             var(--destructive);
-  --color-border:                  var(--border);
-  --color-input:                   var(--input);
-  --color-ring:                    var(--ring);
-  --color-sidebar:                 var(--sidebar);
-  --color-sidebar-foreground:      var(--sidebar-foreground);
-  --color-sidebar-primary:         var(--sidebar-primary);
+  /* ── Semantic tokens → CSS vars ───────────────────────────────────────── */
+  --color-background:           var(--background);
+  --color-foreground:           var(--foreground);
+  --color-card:                 var(--card);
+  --color-card-foreground:      var(--card-foreground);
+  --color-popover:              var(--popover);
+  --color-popover-foreground:   var(--popover-foreground);
+  --color-primary:              var(--primary);
+  --color-primary-foreground:   var(--primary-foreground);
+  --color-secondary:            var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted:                var(--muted);
+  --color-muted-foreground:     var(--muted-foreground);
+  --color-accent:               var(--accent);
+  --color-accent-foreground:    var(--accent-foreground);
+  --color-destructive:          var(--destructive);
+  --color-border:               var(--border);
+  --color-input:                var(--input);
+  --color-ring:                 var(--ring);
+  --color-sidebar:              var(--sidebar);
+  --color-sidebar-foreground:   var(--sidebar-foreground);
+  --color-sidebar-primary:      var(--sidebar-primary);
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent:          var(--sidebar-accent);
+  --color-sidebar-accent:       var(--sidebar-accent);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border:          var(--sidebar-border);
-  --color-sidebar-ring:            var(--sidebar-ring);
+  --color-sidebar-border:       var(--sidebar-border);
+  --color-sidebar-ring:         var(--sidebar-ring);
 
-  /* Radius scale */
+  /* Radius */
   --radius-sm:  calc(var(--radius) * 0.6);
   --radius-md:  calc(var(--radius) * 0.8);
   --radius-lg:  var(--radius);
-  --radius-xl:  calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  --radius-xl:  calc(var(--radius) * 1.5);
+  --radius-2xl: calc(var(--radius) * 2);
+  --radius-3xl: calc(var(--radius) * 2.5);
 
-  /* ── Named palette tokens (use anywhere via bg-terracotta etc.) ─────────── */
-  --color-terracotta:     #c96442;
-  --color-coral:          #d97757;
-  --color-near-black:     #141413;
-  --color-dark-surface:   #30302e;
-  --color-dark-mid:       #1e1e1c;
-  --color-warm-silver:    #b0aea5;
-  --color-stone-gray:     #87867f;
-  --color-olive-gray:     #5e5d59;
-  --color-charcoal-warm:  #4d4c48;
-  --color-dark-warm:      #3d3d3a;
-  --color-parchment:      #f5f4ed;
-  --color-ivory:          #faf9f5;
-  --color-warm-sand:      #e8e6dc;
-  --color-border-cream:   #f0eee6;
-  --color-border-warm:    #e8e6dc;
-  --color-border-dark:    #30302e;
-  --color-ring-warm:      #d1cfc5;
+  /* ── M3 Warm Terracotta Palette ────────────────────────────────────────
+     Primary: Brick Red #9a4021 (deeper, more sophisticated than orange)
+     Surface: 5-tier warm cream hierarchy
+     Outline: Warm blush #dcc1b8 (the most distinctive detail)
+  ────────────────────────────────────────────────────────────────────────── */
+
+  /* Brand */
+  --color-brick:              #9a4021;   /* primary — brick red CTA */
+  --color-brick-container:    #b95837;   /* primary-container */
+  --color-brick-dim:          #ffb59d;   /* primary-fixed-dim (on dark) */
+  --color-secondary-warm:     #835242;   /* secondary warm brown */
+  --color-teal:               #006768;   /* tertiary teal (accent) */
+
+  /* Surface hierarchy (light) */
+  --color-surface:            #fbf9f2;   /* base — warmer than #f5f4ed */
+  --color-surface-lowest:     #ffffff;   /* elevated cards */
+  --color-surface-low:        #f5f4ed;   /* section floors */
+  --color-surface-mid:        #efeee7;   /* container */
+  --color-surface-high:       #e9e8e1;   /* prominent container */
+  --color-surface-highest:    #e3e3dc;   /* highest surface */
+  --color-surface-dim:        #dbdad3;   /* subdued surface */
+  --color-surface-variant:    #e3e3dc;   /* variant */
+
+  /* Text */
+  --color-on-surface:         #1b1c18;   /* primary text — warm near-black */
+  --color-on-surface-var:     #56423c;   /* secondary text — warm brown */
+  --color-outline:            #89726b;   /* tertiary text / icons */
+  --color-outline-var:        #dcc1b8;   /* borders — warm blush rose */
+
+  /* Dark section */
+  --color-inverse:            #30312c;   /* dark bg */
+  --color-inverse-on:         #f2f1ea;   /* text on dark */
+
+  /* Semantic aliases for convenience */
+  --color-terracotta:         #9a4021;   /* alias */
+  --color-near-black:         #1b1c18;
 }
 
-/* ── Light Parchment theme (PRIMARY / :root) ────────────────────────────────── */
+/* ── :root — M3 light theme ─────────────────────────────────────────────────── */
 :root {
-  --background:         #f5f4ed;   /* Parchment */
-  --foreground:         #141413;   /* Near Black */
-  --card:               #faf9f5;   /* Ivory */
-  --card-foreground:    #141413;
-  --popover:            #faf9f5;
-  --popover-foreground: #141413;
-  --primary:            #c96442;   /* Terracotta */
-  --primary-foreground: #faf9f5;
-  --secondary:          #e8e6dc;   /* Warm Sand */
-  --secondary-foreground: #4d4c48; /* Charcoal Warm */
-  --muted:              #faf9f5;
-  --muted-foreground:   #87867f;   /* Stone Gray */
-  --accent:             #c96442;
-  --accent-foreground:  #faf9f5;
-  --destructive:        #b53333;
-  --border:             #f0eee6;   /* Border Cream */
-  --input:              #f0eee6;
-  --ring:               #c96442;
-  --radius:             0.625rem;
-  /* Sidebar stays dark */
-  --sidebar:            #141413;
-  --sidebar-foreground: #f5f4ed;
-  --sidebar-primary:    #c96442;
-  --sidebar-primary-foreground: #faf9f5;
-  --sidebar-accent:     #30302e;
-  --sidebar-accent-foreground: #b0aea5;
-  --sidebar-border:     #30302e;
-  --sidebar-ring:       #c96442;
+  /* Core */
+  --background:          #fbf9f2;   /* surface — warm cream base */
+  --foreground:          #1b1c18;   /* on-surface */
+  --card:                #ffffff;   /* surface-container-lowest */
+  --card-foreground:     #1b1c18;
+  --popover:             #ffffff;
+  --popover-foreground:  #1b1c18;
+
+  /* Brand */
+  --primary:             #9a4021;   /* brick red */
+  --primary-foreground:  #ffffff;
+  --secondary:           #835242;
+  --secondary-foreground: #ffffff;
+  --accent:              #9a4021;
+  --accent-foreground:   #ffffff;
+
+  /* Surfaces / muted */
+  --muted:               #efeee7;   /* surface-container */
+  --muted-foreground:    #56423c;   /* on-surface-variant */
+
+  /* Semantic */
+  --destructive:         #ba1a1a;
+  --border:              #dcc1b8;   /* outline-variant — warm blush */
+  --input:               #dcc1b8;
+  --ring:                #9a4021;
+  --radius:              0.5rem;
+
+  /* Sidebar (dark) */
+  --sidebar:             #30312c;
+  --sidebar-foreground:  #f2f1ea;
+  --sidebar-primary:     #9a4021;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent:      #3d3e39;
+  --sidebar-accent-foreground: #dcc1b8;
+  --sidebar-border:      #3d3e39;
+  --sidebar-ring:        #9a4021;
 }
 
 @layer base {
@@ -112,46 +139,62 @@
   }
 
   body {
-    background-color: var(--background);
-    color: var(--foreground);
-    @apply font-sans;
+    background-color: #fbf9f2;
+    color: #1b1c18;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
   }
 
-  /* ── Serif heading system ─────────────────────────────────────────────────
-     Lora at weight 500, tight line-height — all h1-h6 automatically serif.
-     Use font-serif class on non-heading elements (spans, divs) that need Lora.
-  ────────────────────────────────────────────────────────────────────────── */
+  /* ── Newsreader serif heading system ─────────────────────────────────────
+     Optical sizing: smaller sizes get more contrast, larger get less — auto.
+     weight 500 for headings (editorial authority without heaviness).
+     Italic support is the signature move: use <em> or .italic inside headings.
+  ──────────────────────────────────────────────────────────────────────── */
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-lora), Georgia, 'Times New Roman', serif;
+    font-family: var(--font-newsreader), Newsreader, Georgia, serif;
     font-weight: 500;
-    line-height: 1.20;
+    font-optical-sizing: auto;
+    line-height: 1.15;
   }
-  h1 { line-height: 1.10; }
-  h2 { line-height: 1.15; }
+  h1 { line-height: 1.08; }
+  h2 { line-height: 1.12; }
+  h3 { line-height: 1.20; }
 
-  /* ── Body typography ──────────────────────────────────────────────────────*/
-  p { line-height: 1.6; }
+  p { line-height: 1.65; }
 
-  /* ── Light scrollbar (parchment sections) ─────────────────────────────── */
+  /* Editorial italic accent — use inside headings for the signature look */
+  .serif-italic {
+    font-family: var(--font-newsreader), Newsreader, Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* Overline label — uppercase + wide tracking (editorial signature) */
+  .label-overline {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  /* ── Ring shadow system (no drop shadows) ─────────────────────────────── */
+  .ring-nav    { box-shadow: 0px 0px 0px 1px rgba(27,28,24,0.06); }
+  .ring-card   { box-shadow: 0px 0px 0px 1px rgba(220,193,184,0.6); }
+  .ring-card-hover { box-shadow: 0px 0px 0px 1px rgba(154,64,33,0.25); }
+  .ring-primary { box-shadow: 0px 0px 0px 1px #9a4021; }
+
+  /* ── Dark section ─────────────────────────────────────────────────────── */
+  .dark-section {
+    background-color: #30312c;
+    color: #f2f1ea;
+  }
+
+  /* ── Warm scrollbar ───────────────────────────────────────────────────── */
   ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: #f5f4ed; }
-  ::-webkit-scrollbar-thumb { background: #e8e6dc; border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: #c96442; }
-}
-
-/* ── Section-level theme helpers ─────────────────────────────────────────────
-   .dark-section  — apply to any <section> for Near Black + ivory text
-   .light-section — explicit parchment (same as default, useful inside dark pages)
-────────────────────────────────────────────────────────────────────────────── */
-.dark-section {
-  background-color: #141413;
-  color: #faf9f5;
-}
-.dark-section ::-webkit-scrollbar-track { background: #141413; }
-.dark-section ::-webkit-scrollbar-thumb { background: #30302e; }
-.dark-section ::-webkit-scrollbar-thumb:hover { background: #c96442; }
-
-.light-section {
-  background-color: #f5f4ed;
-  color: #141413;
+  ::-webkit-scrollbar-track { background: #fbf9f2; }
+  ::-webkit-scrollbar-thumb { background: #dcc1b8; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #9a4021; }
+  .dark-section ::-webkit-scrollbar-track { background: #30312c; }
+  .dark-section ::-webkit-scrollbar-thumb { background: #3d3e39; }
 }

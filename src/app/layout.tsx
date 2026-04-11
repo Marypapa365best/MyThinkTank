@@ -1,17 +1,25 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
-import { Lora } from "next/font/google";
+import { Newsreader } from "next/font/google";
+import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import DisclaimerBanner from "@/components/DisclaimerBanner";
 
-const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
-const lora = Lora({
+// Newsreader: optical sizing + italic support — the editorial signature font
+const newsreader = Newsreader({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-lora",
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-newsreader",
+  display: "swap",
+});
+
+// Inter: clean, precise sans for UI / body text
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
   display: "swap",
 });
 
@@ -29,8 +37,8 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="zh" className={`${geist.variable} ${lora.variable}`}>
-        <body className="bg-[#f5f4ed] text-[#141413] font-sans antialiased">
+      <html lang="zh" className={`${newsreader.variable} ${inter.variable}`}>
+        <body className="bg-[#fbf9f2] text-[#1b1c18] font-sans antialiased">
           <Navbar />
           <main>{children}</main>
           <Footer />

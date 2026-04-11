@@ -1,52 +1,50 @@
 import { Button as ButtonPrimitive } from "@base-ui/react/button"
 import { cva, type VariantProps } from "class-variance-authority"
-
 import { cn } from "@/lib/utils"
 
-// Anthropic/Claude design system buttons
-// Signature: ring-based shadows, warm palette, generous radius
+// M3 Warm Terracotta button system
+// Primary: #9a4021 (brick red — deeper, more sophisticated than orange)
+// Ring-based shadows — no drop shadows
 const buttonVariants = cva(
-  // Base: shared across all variants
-  "group/button inline-flex shrink-0 items-center justify-center gap-1.5 rounded-xl border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all duration-150 outline-none select-none focus-visible:ring-2 focus-visible:ring-[#c96442]/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:ring-2 aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button inline-flex shrink-0 items-center justify-center gap-1.5 rounded-lg border border-transparent text-sm font-medium whitespace-nowrap transition-all duration-200 outline-none select-none focus-visible:ring-2 focus-visible:ring-[#9a4021]/40 active:translate-y-px disabled:pointer-events-none disabled:opacity-40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
-        // ── Terracotta: primary CTA — the only chromatic button
+        // Brick red — primary CTA
         default:
-          "bg-[#c96442] text-[#faf9f5] hover:bg-[#d97757] [box-shadow:0px_0px_0px_0px_#c96442,0px_0px_0px_1px_#b85a3a] hover:[box-shadow:0px_0px_0px_0px_#d97757,0px_0px_0px_1px_#c96442]",
+          "bg-[#9a4021] text-white hover:bg-[#b95837] [box-shadow:0px_0px_0px_1px_#7e2c0e] hover:[box-shadow:0px_0px_0px_1px_#9a4021]",
 
-        // ── Warm Sand: secondary workhorse — warm, unassuming
+        // Warm surface — secondary
         secondary:
-          "bg-[#e8e6dc] text-[#4d4c48] hover:bg-[#dddbd0] [box-shadow:0px_0px_0px_0px_#e8e6dc,0px_0px_0px_1px_#d1cfc5] hover:[box-shadow:0px_0px_0px_0px_#dddbd0,0px_0px_0px_1px_#c2c0b6]",
+          "bg-[#efeee7] text-[#1b1c18] hover:bg-[#e3e3dc] [box-shadow:0px_0px_0px_1px_#dcc1b8] hover:[box-shadow:0px_0px_0px_1px_#c9a898]",
 
-        // ── Cream outline: border-only, elevated on hover
+        // Blush outline
         outline:
-          "border border-[#e8e6dc] bg-[#faf9f5] text-[#4d4c48] hover:bg-[#f0eee6] hover:border-[#d1cfc5] [box-shadow:0px_0px_0px_0px_#faf9f5,0px_0px_0px_1px_#e8e6dc] hover:[box-shadow:0px_0px_0px_0px_#f0eee6,0px_0px_0px_1px_#d1cfc5]",
+          "border border-[#dcc1b8] bg-[#ffffff] text-[#56423c] hover:bg-[#f5f4ed] hover:border-[#c9a898]",
 
-        // ── Ghost: transparent, subtle warm hover
+        // Ghost warm
         ghost:
-          "text-[#5e5d59] hover:bg-[#f0eee6] hover:text-[#141413]",
+          "text-[#56423c] hover:bg-[#efeee7] hover:text-[#1b1c18]",
 
-        // ── Dark Charcoal: inverted, for use on light sections needing dark button
+        // Dark — for light-section dark emphasis
         dark:
-          "bg-[#141413] text-[#b0aea5] hover:bg-[#30302e] border border-[#30302e] [box-shadow:0px_0px_0px_0px_#141413,0px_0px_0px_1px_#30302e]",
+          "bg-[#30312c] text-[#f2f1ea] hover:bg-[#3d3e39] border border-[#3d3e39]",
 
-        // ── Destructive: warm red
+        // Destructive
         destructive:
-          "bg-[#b53333]/10 text-[#b53333] hover:bg-[#b53333]/20 border border-[#b53333]/20",
+          "bg-[#ba1a1a]/10 text-[#ba1a1a] border border-[#ba1a1a]/20 hover:bg-[#ba1a1a]/15",
 
-        // ── Link: terracotta underline
-        link: "text-[#c96442] underline-offset-4 hover:underline",
+        link: "text-[#9a4021] underline-offset-4 hover:underline",
       },
       size: {
-        xs:      "h-6 gap-1 rounded-lg px-2 text-xs [&_svg:not([class*='size-'])]:size-3",
-        sm:      "h-8 gap-1 rounded-lg px-2.5 text-xs [&_svg:not([class*='size-'])]:size-3.5",
-        default: "h-9 px-3",
-        lg:      "h-11 gap-2 px-5 text-base rounded-xl",
-        xl:      "h-12 gap-2 px-7 text-base rounded-xl",
+        xs:      "h-6 gap-1 rounded px-2 text-xs",
+        sm:      "h-8 gap-1 rounded-md px-3 text-xs",
+        default: "h-9 px-4",
+        lg:      "h-11 gap-2 rounded-xl px-5 text-base",
+        xl:      "h-12 gap-2 rounded-xl px-7 text-base",
         icon:    "size-9",
-        "icon-sm": "size-8 rounded-lg",
-        "icon-xs": "size-6 rounded-lg [&_svg:not([class*='size-'])]:size-3",
+        "icon-sm": "size-8 rounded-md",
+        "icon-xs": "size-6 rounded [&_svg:not([class*='size-'])]:size-3",
       },
     },
     defaultVariants: {
