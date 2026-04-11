@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown'
 import { saveSession } from '@/lib/history'
 import type { CritiqueItem } from '@/app/api/interrogate/route'
 import { getCustomSkills, type CustomSkill } from '@/lib/custom-skills'
+import SkillAvatar from '@/components/SkillAvatar'
 
 interface SkillEntry {
   id: string
@@ -304,7 +305,12 @@ export default function InterrogateInterface() {
                             : 'border-white/10 bg-white/[0.03] text-white/60 hover:border-white/25 hover:text-white hover:bg-white/[0.06]'
                       }`}
                     >
-                      <span className="text-base">{skill.emoji}</span>
+                      <SkillAvatar
+                        name={skill.name}
+                        emoji={skill.emoji}
+                        avatar={(skill as { avatar?: string }).avatar}
+                        size={24}
+                      />
                       <span className="truncate">{skill.name}</span>
                       {selected && (
                         <span className="ml-auto text-red-400/60 text-xs">✓</span>

@@ -14,6 +14,7 @@ export const SKILLS_REGISTRY: Skill[] = [
     sourcesCount: 50,
     knowledgeCutoff: '2026-04',
     emoji: '💰',
+    avatar: '/avatars/warren-buffett.png',
     tags: ['投资', '价值投资', '商业分析', '决策'],
     available: true,
   },

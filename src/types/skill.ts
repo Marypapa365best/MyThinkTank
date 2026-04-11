@@ -12,7 +12,8 @@ export interface Skill {
   tier: SkillTier         // 需要什么订阅等级才能访问
   sourcesCount: number    // 基于多少一手资料
   knowledgeCutoff: string // 知识截止日期
-  emoji: string           // 头像 emoji
+  emoji: string           // 头像 emoji（无真实头像时的 fallback）
+  avatar?: string         // 真实头像图片路径（/avatars/xxx.png），可选
   tags: string[]
   available: boolean      // 是否上线
 }

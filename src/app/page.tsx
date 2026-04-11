@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { SKILLS_REGISTRY } from '@/lib/skills-registry'
+import SkillAvatar from '@/components/SkillAvatar'
 
 const FEATURED_SKILLS = SKILLS_REGISTRY.slice(0, 6)
 
@@ -113,7 +114,12 @@ export default function HomePage() {
                 className="group p-6 rounded-xl border border-[#e8e6dc] bg-[#faf9f5] hover:border-[#d1cfc5] hover:[box-shadow:rgba(0,0,0,0.08)_0px_4px_24px] transition-all"
               >
                 <div className="flex items-start justify-between mb-4">
-                  <span className="text-3xl">{skill.emoji}</span>
+                  <SkillAvatar
+                    name={skill.name}
+                    emoji={skill.emoji}
+                    avatar={skill.avatar}
+                    size={48}
+                  />
                   <Badge
                     variant="outline"
                     className={

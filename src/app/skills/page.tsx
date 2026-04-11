@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
 import { SKILLS_REGISTRY } from '@/lib/skills-registry'
 import { SkillCategory } from '@/types/skill'
+import SkillAvatar from '@/components/SkillAvatar'
 
 const CATEGORIES: { value: 'all' | SkillCategory; label: string }[] = [
   { value: 'all', label: '全部' },
@@ -67,7 +68,12 @@ export default function SkillsPage() {
             >
               {/* Top row */}
               <div className="flex items-start justify-between mb-4">
-                <span className="text-4xl">{skill.emoji}</span>
+                <SkillAvatar
+                  name={skill.name}
+                  emoji={skill.emoji}
+                  avatar={skill.avatar}
+                  size={52}
+                />
                 <Badge
                   variant="outline"
                   className={

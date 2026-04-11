@@ -5,6 +5,7 @@ import { SKILLS_REGISTRY } from '@/lib/skills-registry'
 import type { BrainstormHistoryItem } from '@/app/api/brainstorm/route'
 import { saveSession } from '@/lib/history'
 import { getCustomSkills, type CustomSkill } from '@/lib/custom-skills'
+import SkillAvatar from '@/components/SkillAvatar'
 
 interface SkillEntry {
   id: string
@@ -252,16 +253,21 @@ export default function BrainstormInterface() {
                       disabled={disabled}
                       className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border text-sm transition-all ${
                         selected
-                          ? 'border-white/40 bg-white/10 text-white'
+                          ? 'border-[#c96442]/60 bg-[#c96442]/10 text-white'
                           : disabled
                             ? 'border-white/5 bg-white/[0.02] text-white/20 cursor-not-allowed'
                             : 'border-white/10 bg-white/[0.03] text-white/60 hover:border-white/25 hover:text-white hover:bg-white/[0.06]'
                       }`}
                     >
-                      <span className="text-base">{skill.emoji}</span>
+                      <SkillAvatar
+                        name={skill.name}
+                        emoji={skill.emoji}
+                        avatar={(skill as { avatar?: string }).avatar}
+                        size={24}
+                      />
                       <span className="truncate">{skill.name}</span>
                       {selected && (
-                        <span className="ml-auto text-white/60 text-xs">
+                        <span className="ml-auto text-[#c96442] text-xs font-medium">
                           #{selectedIds.indexOf(skill.id) + 1}
                         </span>
                       )}
