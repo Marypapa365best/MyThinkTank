@@ -76,13 +76,13 @@ export default function SkillsPage() {
                 >
                   {/* Top */}
                   <div className="flex items-start justify-between mb-5">
-                    <SkillAvatar name={skill.name} emoji={skill.emoji} avatar={skill.avatar} size={52} />
                     <span className={`label-overline text-[10px] mt-1 ${
                       skill.tier === 'free' ? 'text-emerald-700' :
                       skill.tier === 'pro' ? 'text-[#9a4021]' : 'text-amber-700'
                     }`}>
                       {skill.tier === 'free' ? 'Free' : skill.tier === 'pro' ? 'Pro' : 'Elite'}
                     </span>
+                    <SkillAvatar name={skill.name} emoji={skill.emoji} avatar={skill.avatar} size={72} />
                   </div>
 
                   <h3 className="text-lg text-[#1b1c18] mb-0.5 group-hover:text-[#9a4021] transition-colors">
