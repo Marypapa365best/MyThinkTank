@@ -14,10 +14,7 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <span
-            className="text-xl font-medium tracking-tight text-[#141413]"
-            style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
-          >
+          <span className="font-serif text-xl font-medium tracking-tight text-[#141413]">
             我的智囊
           </span>
           <span className="hidden sm:inline text-xs text-[#87867f] font-normal mt-0.5">
@@ -58,11 +55,7 @@ export default function Navbar() {
                 </Button>
               </SignInButton>
               <Link href="/sign-up">
-                <Button
-                  size="sm"
-                  className="bg-[#c96442] text-[#faf9f5] hover:bg-[#d97757] rounded-xl px-4"
-                  style={{ boxShadow: '0px 0px 0px 0px #c96442, 0px 0px 0px 1px #c96442' }}
-                >
+                <Button size="sm" className="px-4">
                   免费开始
                 </Button>
               </Link>
@@ -102,7 +95,7 @@ export default function Navbar() {
                   <Button variant="ghost" size="sm" className="text-[#5e5d59] hover:text-[#141413]">登录</Button>
                 </SignInButton>
                 <Link href="/sign-up">
-                  <Button size="sm" className="bg-[#c96442] text-[#faf9f5] hover:bg-[#d97757] rounded-xl">免费开始</Button>
+                  <Button size="sm">免费开始</Button>
                 </Link>
               </>
             )}

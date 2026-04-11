@@ -7,10 +7,7 @@ export default function Footer() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Brand */}
           <div className="text-center sm:text-left">
-            <p
-              className="text-sm font-medium text-[#b0aea5]"
-              style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
-            >
+            <p className="font-serif text-sm font-medium text-[#b0aea5]">
               我的智囊
             </p>
             <p className="text-xs text-[#5e5d59] mt-0.5">思维框架模拟工具，非任何人物授权</p>

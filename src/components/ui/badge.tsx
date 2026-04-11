@@ -4,21 +4,37 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
+// Anthropic/Claude design system badges — warm palette
 const badgeVariants = cva(
-  "group/badge inline-flex h-5 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-4xl border border-transparent px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-all focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3!",
+  "group/badge inline-flex h-5 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-transparent px-2.5 py-0.5 text-xs font-medium tracking-[0.12px] whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:ring-[#c96442]/50 [&>svg]:pointer-events-none [&>svg]:size-3!",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground [a]:hover:bg-primary/80",
+        // Terracotta — highest signal, brand moments only
+        default:
+          "bg-[#c96442] text-[#faf9f5]",
+
+        // Warm Sand — secondary, neutral labels
         secondary:
-          "bg-secondary text-secondary-foreground [a]:hover:bg-secondary/80",
-        destructive:
-          "bg-destructive/10 text-destructive focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:focus-visible:ring-destructive/40 [a]:hover:bg-destructive/20",
+          "bg-[#e8e6dc] text-[#4d4c48]",
+
+        // Cream outline — most common, subtle label on light bg
         outline:
-          "border-border text-foreground [a]:hover:bg-muted [a]:hover:text-muted-foreground",
+          "border border-[#e8e6dc] bg-[#faf9f5] text-[#5e5d59]",
+
+        // Dark outline — for use on dark section backgrounds
+        "outline-dark":
+          "border border-[#30302e] bg-transparent text-[#87867f]",
+
+        // Ivory — very subtle on parchment
         ghost:
-          "hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50",
-        link: "text-primary underline-offset-4 hover:underline",
+          "bg-[#f0eee6] text-[#87867f]",
+
+        // Destructive
+        destructive:
+          "bg-[#b53333]/10 text-[#b53333] border border-[#b53333]/20",
+
+        link: "text-[#c96442] underline-offset-4 hover:underline",
       },
     },
     defaultVariants: {
@@ -36,16 +52,11 @@ function Badge({
   return useRender({
     defaultTagName: "span",
     props: mergeProps<"span">(
-      {
-        className: cn(badgeVariants({ variant }), className),
-      },
+      { className: cn(badgeVariants({ variant }), className) },
       props
     ),
     render,
-    state: {
-      slot: "badge",
-      variant,
-    },
+    state: { slot: "badge", variant },
   })
 }
 

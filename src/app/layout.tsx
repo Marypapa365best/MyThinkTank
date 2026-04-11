@@ -1,12 +1,19 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import { Lora } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import DisclaimerBanner from "@/components/DisclaimerBanner";
 
-const geist = Geist({ subsets: ["latin"] });
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
+const lora = Lora({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-lora",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "我的智囊 · My Think Tank",
@@ -22,10 +29,8 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="zh">
-        <body
-          className={`${geist.className} bg-[#f5f4ed] text-[#141413] antialiased`}
-        >
+      <html lang="zh" className={`${geist.variable} ${lora.variable}`}>
+        <body className="bg-[#f5f4ed] text-[#141413] font-sans antialiased">
           <Navbar />
           <main>{children}</main>
           <Footer />
