@@ -24,10 +24,10 @@ export default function SkillsPage() {
     : SKILLS_REGISTRY.filter(s => s.category === activeCategory && s.available)
 
   return (
-    <div className="min-h-screen bg-[#f5f4ed]">
+    <div className="min-h-screen">
 
       {/* ── Page Header — Parchment ─────────────────────────────────────────── */}
-      <div className="bg-[#f5f4ed] pt-28 pb-10 px-4 border-b border-[#f0eee6]">
+      <div className="bg-[#f5f4ed] pt-28 pb-10 px-4 border-b border-[#e8e6dc]">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-4xl text-[#141413] mb-2">智囊库</h1>
           <p className="text-[#5e5d59] text-base">
@@ -36,6 +36,8 @@ export default function SkillsPage() {
         </div>
       </div>
 
+      {/* ── Grid area — Warm Sand base ──────────────────────────────────────── */}
+      <div className="bg-[#e8e6dc] min-h-screen">
       <div className="max-w-6xl mx-auto px-4 py-10">
 
         {/* Category Filter */}
@@ -61,7 +63,7 @@ export default function SkillsPage() {
             <Link
               key={skill.id}
               href={`/skills/${skill.id}`}
-              className="group flex flex-col p-6 rounded-xl border border-[#f0eee6] bg-[#faf9f5] hover:border-[#e8e6dc] hover:[box-shadow:rgba(0,0,0,0.06)_0px_4px_24px] transition-all"
+              className="group flex flex-col p-6 rounded-xl border border-[#e8e6dc] bg-[#faf9f5] hover:border-[#d1cfc5] hover:[box-shadow:rgba(0,0,0,0.08)_0px_4px_24px] transition-all"
             >
               {/* Top row */}
               <div className="flex items-start justify-between mb-4">
@@ -111,12 +113,13 @@ export default function SkillsPage() {
         </div>
 
         {/* Coming Soon */}
-        <div className="mt-8 p-6 rounded-xl border border-dashed border-[#e8e6dc] text-center bg-[#faf9f5]">
+        <div className="mt-8 p-6 rounded-xl border border-dashed border-[#d1cfc5] text-center bg-[#f5f4ed]">
           <p className="text-[#87867f] text-sm">
             🔜 更多智囊陆续上线 · 专业律师、医生、会计师即将加入
           </p>
         </div>
 
+      </div>
       </div>
     </div>
   )

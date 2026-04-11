@@ -89,8 +89,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── SECTION 3: Featured Skills — LIGHT (Parchment / Ivory cards) ────── */}
-      <section className="bg-[#f5f4ed] py-20 px-4">
+      {/* ── SECTION 3: Featured Skills — WARM SAND base / Ivory cards ─────── */}
+      <section className="bg-[#e8e6dc] py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-end justify-between mb-10">
             <div>
@@ -99,7 +99,7 @@ export default function HomePage() {
             </div>
             <Link
               href="/skills"
-              className="text-sm text-[#87867f] hover:text-[#c96442] transition-colors"
+              className="text-sm text-[#5e5d59] hover:text-[#c96442] transition-colors"
             >
               查看全部 →
             </Link>
@@ -110,7 +110,7 @@ export default function HomePage() {
               <Link
                 key={skill.id}
                 href={`/skills/${skill.id}`}
-                className="group p-6 rounded-xl border border-[#f0eee6] bg-[#faf9f5] hover:border-[#e8e6dc] hover:[box-shadow:rgba(0,0,0,0.06)_0px_4px_24px] transition-all"
+                className="group p-6 rounded-xl border border-[#e8e6dc] bg-[#faf9f5] hover:border-[#d1cfc5] hover:[box-shadow:rgba(0,0,0,0.08)_0px_4px_24px] transition-all"
               >
                 <div className="flex items-start justify-between mb-4">
                   <span className="text-3xl">{skill.emoji}</span>
