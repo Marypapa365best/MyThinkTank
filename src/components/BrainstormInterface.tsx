@@ -213,7 +213,7 @@ export default function BrainstormInterface() {
   const canStart = selectedIds.length >= 2 && topic.trim().length > 0 && !isRunning
 
   return (
-    <div className="min-h-screen pt-24 pb-20 px-4">
+    <div className="min-h-screen bg-[#141413] text-[#f5f4ed] pt-24 pb-20 px-4">
       <div className="max-w-4xl mx-auto">
 
         {/* Header */}

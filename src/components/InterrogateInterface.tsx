@@ -237,7 +237,7 @@ export default function InterrogateInterface() {
   const canStart = selectedIds.length > 0 && targetContent.trim().length > 20 && !isRunning
 
   return (
-    <div className="min-h-screen pt-24 pb-20 px-4">
+    <div className="min-h-screen bg-[#141413] text-[#f5f4ed] pt-24 pb-20 px-4">
       <div className="max-w-4xl mx-auto">
 
         {/* Header */}
@@ -320,7 +320,7 @@ export default function InterrogateInterface() {
               <button
                 onClick={startInterrogation}
                 disabled={!canStart}
-                className="px-8 py-3 bg-red-500 text-white text-sm font-medium rounded-xl hover:bg-red-400 transition-all disabled:opacity-30 disabled:cursor-not-allowed disabled:bg-white disabled:text-black"
+                className="px-8 py-3 bg-red-500 text-white text-sm font-medium rounded-xl hover:bg-red-400 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
               >
                 {selectedIds.length === 0
                   ? '请选择至少 1 位审问者'
