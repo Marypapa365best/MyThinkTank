@@ -71,17 +71,8 @@ export default function SkillsPage() {
                 <Link
                   key={skill.id}
                   href={`/skills/${skill.id}`}
-                  className="group flex flex-col p-7 rounded-lg transition-all duration-300 hover:-translate-y-0.5"
-                  style={{
-                    backgroundColor: surface,
-                    boxShadow: '0px 0px 0px 1px rgba(220,193,184,0.5)',
-                  }}
-                  onMouseEnter={e => {
-                    (e.currentTarget as HTMLElement).style.boxShadow = '0px 0px 0px 1px rgba(154,64,33,0.3), 0px 4px 20px rgba(27,28,24,0.06)'
-                  }}
-                  onMouseLeave={e => {
-                    (e.currentTarget as HTMLElement).style.boxShadow = '0px 0px 0px 1px rgba(220,193,184,0.5)'
-                  }}
+                  className="group flex flex-col p-7 rounded-lg transition-all duration-300 hover:-translate-y-0.5 [box-shadow:0px_0px_0px_1px_rgba(220,193,184,0.5)] hover:[box-shadow:0px_0px_0px_1px_rgba(154,64,33,0.3),_0px_4px_20px_rgba(27,28,24,0.06)]"
+                  style={{ backgroundColor: surface }}
                 >
                   {/* Top */}
                   <div className="flex items-start justify-between mb-5">
