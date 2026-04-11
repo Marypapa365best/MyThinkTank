@@ -7,7 +7,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import DisclaimerBanner from "@/components/DisclaimerBanner";
 
-// Newsreader: optical sizing + italic support — the editorial signature font
+// Newsreader: optical sizing + italic — editorial signature for Latin text
 const newsreader = Newsreader({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600"],
@@ -16,7 +16,7 @@ const newsreader = Newsreader({
   display: "swap",
 });
 
-// Inter: clean, precise sans for UI / body text
+// Inter: clean sans-serif for UI / body text
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -38,6 +38,16 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="zh" className={`${newsreader.variable} ${inter.variable}`}>
+        <head>
+          {/* Noto Serif SC — 思源宋体: Google Fonts CDN handles CJK unicode-range
+              subsetting automatically, only downloads characters on screen */}
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600&display=swap"
+            rel="stylesheet"
+          />
+        </head>
         <body className="bg-[#fbf9f2] text-[#1b1c18] font-sans antialiased">
           <Navbar />
           <main>{children}</main>

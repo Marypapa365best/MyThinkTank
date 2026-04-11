@@ -14,10 +14,12 @@
 
 @theme inline {
   /* ── Font stacks ──────────────────────────────────────────────────────── */
-  --font-sans:    var(--font-inter), 'Inter', system-ui, sans-serif;
-  --font-serif:   var(--font-newsreader), 'Newsreader', Georgia, serif;
+  /* Chinese: Noto Serif SC (思源宋体) → Latin: Newsreader → fallback: Georgia
+     Browser picks Noto Serif SC for CJK glyphs, Newsreader for Latin glyphs */
+  --font-sans:    var(--font-inter), 'Inter', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  --font-serif:   'Noto Serif SC', var(--font-newsreader), 'Newsreader', Georgia, serif;
   --font-mono:    var(--font-geist-mono);
-  --font-heading: var(--font-newsreader), 'Newsreader', Georgia, serif;
+  --font-heading: 'Noto Serif SC', var(--font-newsreader), 'Newsreader', Georgia, serif;
 
   /* ── Semantic tokens → CSS vars ───────────────────────────────────────── */
   --color-background:           var(--background);
@@ -151,7 +153,7 @@
      Italic support is the signature move: use <em> or .italic inside headings.
   ──────────────────────────────────────────────────────────────────────── */
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-newsreader), Newsreader, Georgia, serif;
+    font-family: 'Noto Serif SC', var(--font-newsreader), Newsreader, Georgia, serif;
     font-weight: 500;
     font-optical-sizing: auto;
     line-height: 1.15;
@@ -164,7 +166,7 @@
 
   /* Editorial italic accent — use inside headings for the signature look */
   .serif-italic {
-    font-family: var(--font-newsreader), Newsreader, Georgia, serif;
+    font-family: 'Noto Serif SC', var(--font-newsreader), Newsreader, Georgia, serif;
     font-style: italic;
     font-weight: 400;
   }
