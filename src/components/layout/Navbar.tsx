@@ -2,12 +2,16 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { UserButton, SignInButton, useUser } from '@clerk/nextjs'
 import { Button } from '@/components/ui/button'
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const { isSignedIn } = useUser()
+  const pathname = usePathname()
+
+  const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/')
 
   return (
     // Ring shadow nav — no hard border, just a whisper ring
@@ -26,12 +30,30 @@ export default function Navbar() {
 
         {/* Desktop Nav — Inter, headline weight */}
         <div className="hidden md:flex items-center gap-7 text-sm font-medium text-[#56423c]">
-          <Link href="/skills" className="hover:text-[#9a4021] transition-colors duration-200">智囊库</Link>
-          <Link href="/brainstorm" className="hover:text-[#9a4021] transition-colors duration-200"><span aria-hidden="true">💡</span> 头脑风暴</Link>
-          <Link href="/interrogate" className="hover:text-[#9a4021] transition-colors duration-200"><span aria-hidden="true">🔍</span> 质疑团</Link>
-          <Link href="/create-skill" className="hover:text-[#9a4021] transition-colors duration-200"><span aria-hidden="true">✨</span> 创建智囊</Link>
-          <Link href="/history" className="hover:text-[#9a4021] transition-colors duration-200"><span aria-hidden="true">📚</span> 历史</Link>
-          <Link href="/pricing" className="hover:text-[#9a4021] transition-colors duration-200">定价</Link>
+          <Link href="/skills" className={`relative pb-1 hover:text-[#9a4021] transition-colors duration-200 ${isActive('/skills') ? 'text-[#9a4021]' : ''}`}>
+            智囊库
+            {isActive('/skills') && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#9a4021]"></div>}
+          </Link>
+          <Link href="/brainstorm" className={`relative pb-1 hover:text-[#9a4021] transition-colors duration-200 ${isActive('/brainstorm') ? 'text-[#9a4021]' : ''}`}>
+            <span aria-hidden="true">💡</span> 头脑风暴
+            {isActive('/brainstorm') && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#9a4021]"></div>}
+          </Link>
+          <Link href="/interrogate" className={`relative pb-1 hover:text-[#9a4021] transition-colors duration-200 ${isActive('/interrogate') ? 'text-[#9a4021]' : ''}`}>
+            <span aria-hidden="true">🔍</span> 质疑团
+            {isActive('/interrogate') && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#9a4021]"></div>}
+          </Link>
+          <Link href="/create-skill" className={`relative pb-1 hover:text-[#9a4021] transition-colors duration-200 ${isActive('/create-skill') ? 'text-[#9a4021]' : ''}`}>
+            <span aria-hidden="true">✨</span> 创建智囊
+            {isActive('/create-skill') && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#9a4021]"></div>}
+          </Link>
+          <Link href="/history" className={`relative pb-1 hover:text-[#9a4021] transition-colors duration-200 ${isActive('/history') ? 'text-[#9a4021]' : ''}`}>
+            <span aria-hidden="true">📚</span> 历史
+            {isActive('/history') && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#9a4021]"></div>}
+          </Link>
+          <Link href="/pricing" className={`relative pb-1 hover:text-[#9a4021] transition-colors duration-200 ${isActive('/pricing') ? 'text-[#9a4021]' : ''}`}>
+            定价
+            {isActive('/pricing') && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#9a4021]"></div>}
+          </Link>
         </div>
 
         {/* Auth */}
@@ -81,12 +103,30 @@ export default function Navbar() {
       {/* Mobile menu */}
       {menuOpen && (
         <div id="mobile-menu" className="md:hidden border-t border-[#dcc1b8] bg-[#fbf9f2] px-6 py-5 flex flex-col gap-4 text-sm font-medium text-[#56423c]">
-          <Link href="/skills" className="hover:text-[#9a4021]">智囊库</Link>
-          <Link href="/brainstorm" className="hover:text-[#9a4021]"><span aria-hidden="true">💡</span> 头脑风暴</Link>
-          <Link href="/interrogate" className="hover:text-[#9a4021]"><span aria-hidden="true">🔍</span> 质疑团</Link>
-          <Link href="/create-skill" className="hover:text-[#9a4021]"><span aria-hidden="true">✨</span> 创建智囊</Link>
-          <Link href="/history" className="hover:text-[#9a4021]"><span aria-hidden="true">📚</span> 历史</Link>
-          <Link href="/pricing" className="hover:text-[#9a4021]">定价</Link>
+          <Link href="/skills" className={`flex items-center gap-2 hover:text-[#9a4021] transition-colors ${isActive('/skills') ? 'text-[#9a4021]' : ''}`}>
+            <span className={`inline-block w-1 h-1 rounded-full transition-colors ${isActive('/skills') ? 'bg-[#9a4021]' : 'bg-transparent'}`}></span>
+            智囊库
+          </Link>
+          <Link href="/brainstorm" className={`flex items-center gap-2 hover:text-[#9a4021] transition-colors ${isActive('/brainstorm') ? 'text-[#9a4021]' : ''}`}>
+            <span className={`inline-block w-1 h-1 rounded-full transition-colors ${isActive('/brainstorm') ? 'bg-[#9a4021]' : 'bg-transparent'}`}></span>
+            <span aria-hidden="true">💡</span> 头脑风暴
+          </Link>
+          <Link href="/interrogate" className={`flex items-center gap-2 hover:text-[#9a4021] transition-colors ${isActive('/interrogate') ? 'text-[#9a4021]' : ''}`}>
+            <span className={`inline-block w-1 h-1 rounded-full transition-colors ${isActive('/interrogate') ? 'bg-[#9a4021]' : 'bg-transparent'}`}></span>
+            <span aria-hidden="true">🔍</span> 质疑团
+          </Link>
+          <Link href="/create-skill" className={`flex items-center gap-2 hover:text-[#9a4021] transition-colors ${isActive('/create-skill') ? 'text-[#9a4021]' : ''}`}>
+            <span className={`inline-block w-1 h-1 rounded-full transition-colors ${isActive('/create-skill') ? 'bg-[#9a4021]' : 'bg-transparent'}`}></span>
+            <span aria-hidden="true">✨</span> 创建智囊
+          </Link>
+          <Link href="/history" className={`flex items-center gap-2 hover:text-[#9a4021] transition-colors ${isActive('/history') ? 'text-[#9a4021]' : ''}`}>
+            <span className={`inline-block w-1 h-1 rounded-full transition-colors ${isActive('/history') ? 'bg-[#9a4021]' : 'bg-transparent'}`}></span>
+            <span aria-hidden="true">📚</span> 历史
+          </Link>
+          <Link href="/pricing" className={`flex items-center gap-2 hover:text-[#9a4021] transition-colors ${isActive('/pricing') ? 'text-[#9a4021]' : ''}`}>
+            <span className={`inline-block w-1 h-1 rounded-full transition-colors ${isActive('/pricing') ? 'bg-[#9a4021]' : 'bg-transparent'}`}></span>
+            定价
+          </Link>
           <div className="flex gap-3 pt-2 border-t border-[#dcc1b8]">
             {isSignedIn ? (
               <UserButton />
