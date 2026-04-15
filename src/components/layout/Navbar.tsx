@@ -75,7 +75,7 @@ export default function Navbar() {
                 </Button>
               </SignInButton>
               <Link href="/sign-up">
-                <Button size="sm" className="px-5">
+                <Button size="sm" className="px-5 text-white">
                   免费开始
                 </Button>
               </Link>
