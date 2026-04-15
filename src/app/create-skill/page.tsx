@@ -363,7 +363,7 @@ export default function CreateSkillPage() {
             <button
               onClick={generate}
               disabled={rawText.trim().length < 50}
-              className="px-8 py-3 bg-[#9a4021] text-[#1b1c18] text-sm font-medium rounded-xl hover:bg-[#9a4021]/90 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+              className="px-8 py-3 bg-[#9a4021] text-white text-sm font-medium rounded-xl hover:bg-[#9a4021]/90 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
             >
               {rawText.trim().length < 50
                 ? `还需 ${50 - rawText.trim().length} 字`

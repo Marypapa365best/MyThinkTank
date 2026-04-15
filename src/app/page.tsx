@@ -43,7 +43,7 @@ export default function HomePage() {
 
           <div className="flex flex-wrap gap-3">
             <Link href="/skills" className="group">
-              <Button size="xl" className="group-hover:shadow-lg group-hover:[box-shadow:0px_8px_24px_rgba(154,64,33,0.15)] transition-all">免费开始咨询</Button>
+              <Button size="xl" className="text-white group-hover:shadow-lg group-hover:[box-shadow:0px_8px_24px_rgba(154,64,33,0.15)] transition-all">免费开始咨询</Button>
             </Link>
             <Link href="/about" className="group">
               <Button size="xl" variant="outline" className="group-hover:bg-[#fbf9f2] group-hover:border-[#9a4021] transition-all">了解方法论</Button>
