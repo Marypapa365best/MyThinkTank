@@ -95,7 +95,7 @@ export default function HomePage() {
                   className="group flex flex-col p-7 rounded-lg transition-all duration-300 hover:-translate-y-1 will-change-transform [box-shadow:0px_0px_0px_1px_rgba(220,193,184,0.5)] hover:[box-shadow:0px_0px_0px_1px_rgba(154,64,33,0.5),_0px_8px_24px_rgba(27,28,24,0.1)] hover:bg-[#fdfcfb]"
                   style={{ backgroundColor: surface }}
                 >
-                  <div className="flex items-stretch gap-4 mb-5" style={{ minHeight: 120 }}>
+                  <div className="flex items-stretch gap-4 mb-5" style={{ minHeight: 96 }}>
                     <div className="flex flex-col justify-between flex-1">
                       <span className={`label-overline text-[10px] ${
                         skill.tier === 'free' ? 'text-emerald-700' :
@@ -114,7 +114,7 @@ export default function HomePage() {
                       name={skill.name}
                       emoji={skill.emoji}
                       avatar={skill.avatar}
-                      size={120}
+                      size={96}
                     />
                   </div>
                   <p className="text-sm text-[#1b1c18] leading-relaxed flex-1 mb-5">
