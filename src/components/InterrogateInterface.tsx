@@ -297,7 +297,7 @@ export default function InterrogateInterface() {
                       key={skill.id}
                       onClick={() => toggleSkill(skill.id)}
                       disabled={disabled}
-                      className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border text-sm transition-all ${
+                      className={`flex flex-col items-center gap-2 px-3 py-3 rounded-xl border text-sm transition-all ${
                         selected
                           ? 'border-red-500/40 bg-red-600/10 text-[#1b1c18]'
                           : disabled
@@ -309,11 +309,11 @@ export default function InterrogateInterface() {
                         name={skill.name}
                         emoji={skill.emoji}
                         avatar={(skill as { avatar?: string }).avatar}
-                        size={24}
+                        size={36}
                       />
-                      <span className="truncate">{skill.name}</span>
+                      <span className="text-xs text-center">{skill.name}</span>
                       {selected && (
-                        <span className="ml-auto text-red-600/60 text-xs">✓</span>
+                        <span className="text-red-600/60 text-xs font-bold">✓</span>
                       )}
                     </button>
                   )

@@ -251,7 +251,7 @@ export default function BrainstormInterface() {
                       key={skill.id}
                       onClick={() => toggleSkill(skill.id)}
                       disabled={disabled}
-                      className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border text-sm transition-all ${
+                      className={`flex flex-col items-center gap-2 px-3 py-3 rounded-xl border text-sm transition-all ${
                         selected
                           ? 'border-[#c96442]/60 bg-[#c96442]/10 text-[#1b1c18]'
                           : disabled
@@ -263,11 +263,11 @@ export default function BrainstormInterface() {
                         name={skill.name}
                         emoji={skill.emoji}
                         avatar={(skill as { avatar?: string }).avatar}
-                        size={24}
+                        size={36}
                       />
-                      <span className="truncate">{skill.name}</span>
+                      <span className="text-xs text-center">{skill.name}</span>
                       {selected && (
-                        <span className="ml-auto text-[#c96442] text-xs font-medium">
+                        <span className="text-[#c96442] text-xs font-medium">
                           #{selectedIds.indexOf(skill.id) + 1}
                         </span>
                       )}
