@@ -93,21 +93,12 @@ export default function SkillsPage() {
                     </div>
                     <SkillAvatar name={skill.name} emoji={skill.emoji} avatar={skill.avatar} size={96} />
                   </div>
-                  <p className="text-sm text-[#56423c] leading-relaxed flex-1 mb-5">
+                  <p className="text-sm text-[#1b1c18] leading-relaxed flex-1 mb-5">
                     {skill.tagline}
                   </p>
 
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-1.5 mb-5">
-                    {skill.tags.slice(0, 3).map(tag => (
-                      <span key={tag} className="text-xs px-2.5 py-0.5 rounded-full bg-[#efeee7] text-[#89726b] group-hover:bg-[#9a4021]/10 group-hover:text-[#9a4021] transition-colors">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
                   {/* Footer */}
-                  <div className="flex justify-between text-xs text-[#89726b] pt-4 border-t border-[#dcc1b8]/50">
+                  <div className="flex items-center justify-between text-xs text-[#89726b] pt-4 border-t border-[#dcc1b8]/50">
                     <span>📚 {skill.sourcesCount}+ 来源</span>
                     <span>截止 {skill.knowledgeCutoff}</span>
                   </div>
