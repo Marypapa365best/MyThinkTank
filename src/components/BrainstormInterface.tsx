@@ -251,12 +251,12 @@ export default function BrainstormInterface() {
                       key={skill.id}
                       onClick={() => toggleSkill(skill.id)}
                       disabled={disabled}
-                      className={`flex flex-col items-center gap-3 px-4 py-4 rounded-lg text-sm transition-all ${
+                      className={`flex flex-col items-center gap-3 px-4 py-4 rounded-lg border-2 text-sm transition-all ${
                         selected
-                          ? 'bg-[#243137] text-[#bd9f67] shadow-lg shadow-[#bd9f67]/30'
+                          ? 'bg-white border-[#9a4021] text-[#1b1c18] shadow-md shadow-[#9a4021]/20'
                           : disabled
-                            ? 'bg-[#243137] text-[#bd9f67]/40 cursor-not-allowed'
-                            : 'bg-[#243137] text-[#bd9f67] hover:shadow-md hover:shadow-[#bd9f67]/40 hover:scale-105'
+                            ? 'bg-[#fbf9f2] border-[#dcc1b8]/30 text-[#89726b]/50 cursor-not-allowed'
+                            : 'bg-white border-[#dcc1b8] text-[#56423c] hover:border-[#9a4021] hover:text-[#1b1c18] hover:shadow-sm hover:shadow-[#9a4021]/15 hover:scale-105'
                       }`}
                     >
                       <SkillAvatar
@@ -267,7 +267,7 @@ export default function BrainstormInterface() {
                       />
                       <span className="text-xs text-center font-medium">{skill.name}</span>
                       {selected && (
-                        <span className="text-[#bd9f67] text-sm font-medium">
+                        <span className="text-[#9a4021] text-sm font-medium">
                           #{selectedIds.indexOf(skill.id) + 1}
                         </span>
                       )}
