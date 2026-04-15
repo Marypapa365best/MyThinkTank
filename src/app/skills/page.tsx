@@ -76,7 +76,7 @@ export default function SkillsPage() {
                   style={{ backgroundColor: surface }}
                 >
                   {/* Top */}
-                  <div className="flex items-stretch gap-4 mb-5" style={{ minHeight: 120 }}>
+                  <div className="flex items-stretch gap-4 mb-5" style={{ minHeight: 96 }}>
                     <div className="flex flex-col justify-between flex-1">
                       <span className={`label-overline text-[10px] ${
                         skill.tier === 'free' ? 'text-emerald-700' :
@@ -91,7 +91,7 @@ export default function SkillsPage() {
                         <p className="text-xs text-[#89726b] mt-0.5">{skill.nameEn}</p>
                       </div>
                     </div>
-                    <SkillAvatar name={skill.name} emoji={skill.emoji} avatar={skill.avatar} size={120} />
+                    <SkillAvatar name={skill.name} emoji={skill.emoji} avatar={skill.avatar} size={96} />
                   </div>
                   <p className="text-sm text-[#56423c] leading-relaxed flex-1 mb-5">
                     {skill.tagline}
