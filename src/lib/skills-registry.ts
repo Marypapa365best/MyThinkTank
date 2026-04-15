@@ -45,6 +45,7 @@ export const SKILLS_REGISTRY: Skill[] = [
     sourcesCount: 45,
     knowledgeCutoff: '2026-04',
     emoji: '🚀',
+    avatar: '/avatars/elon-musk.png',
     tags: ['创业', '工程思维', '第一性原理', '创新'],
     available: true,
   },
