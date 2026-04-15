@@ -25,15 +25,15 @@ export default function SkillAvatar({
   if (avatar) {
     return (
       <div
-        className={`${base} [box-shadow:rgba(0,0,0,0.12)_0px_4px_12px] bg-white`}
+        className={`${base} [box-shadow:rgba(0,0,0,0.12)_0px_4px_12px]`}
         style={{ width: size, height: size }}
       >
         <Image
           src={avatar}
           alt={name}
-          width={size * 2}
-          height={size * 2}
-          className="w-full h-full object-contain"
+          width={size * 3}
+          height={size * 3}
+          className="w-full h-full object-cover object-center"
         />
       </div>
     )
