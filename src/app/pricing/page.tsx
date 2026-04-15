@@ -94,38 +94,38 @@ export default function PricingPage() {
     <div className="min-h-screen">
 
       {/* ── Header — LIGHT ─────────────────────────────────────────────────── */}
-      <div className="bg-[#f5f4ed] pt-28 pb-16 px-4 border-b border-[#f0eee6]">
+      <div className="bg-[#fbf9f2] pt-32 pb-20 px-4">
         <div className="max-w-5xl mx-auto text-center">
+          <p className="text-xs text-[#9a4021] mb-4 tracking-wider uppercase font-medium">定价方案</p>
           <h1
-            className="text-4xl text-[#141413] mb-3"
+            className="text-5xl text-[#1b1c18] mb-4"
             style={serifStyle}
           >
-            简单透明的定价
+            为各种需求设计的简单定价
           </h1>
-          <p className="text-[#5e5d59] text-base max-w-md mx-auto leading-relaxed">
-            从免费版开始，随时升级。不绑定，不套路。
+          <p className="text-[#56423c] text-base max-w-lg mx-auto leading-relaxed">
+            从免费版开始探索智囊力量，随时升级获得更多功能。无隐藏费用，随时取消。
           </p>
         </div>
       </div>
 
-      {/* ── Plans — DARK ───────────────────────────────────────────────────── */}
-      <div className="bg-[#141413] py-16 px-4">
+      {/* ── Plans — LIGHT ───────────────────────────────────────────────────── */}
+      <div className="bg-[#fbf9f2] py-20 px-4">
         <div className="max-w-5xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-5 mb-6">
+          <div className="grid md:grid-cols-3 gap-6 mb-8">
             {PLANS.map((plan) => (
               <div
                 key={plan.name}
-                className={`relative rounded-2xl p-6 flex flex-col ${
+                className={`relative rounded-2xl p-8 flex flex-col transition-all duration-300 ${
                   plan.highlight
-                    ? 'bg-[#faf9f5] text-[#141413]'
-                    : 'bg-[#1e1e1c] border border-[#30302e] text-[#f5f4ed]'
+                    ? 'bg-white border border-[#dcc1b8] text-[#1b1c18] shadow-lg hover:shadow-xl hover:-translate-y-1'
+                    : 'bg-[#efeee7] border border-[#dcc1b8]/40 text-[#1b1c18] hover:border-[#dcc1b8] hover:shadow-md'
                 }`}
-                style={plan.highlight ? { boxShadow: 'rgba(0,0,0,0.12) 0px 8px 32px' } : {}}
               >
                 {plan.badge && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <span className="bg-[#c96442] text-[#faf9f5] text-xs font-medium px-3 py-1 rounded-full">
-                      {plan.badge}
+                    <span className="bg-[#9a4021] text-white text-xs font-medium px-4 py-1.5 rounded-full shadow-sm">
+                      ⭐ {plan.badge}
                     </span>
                   </div>
                 )}
@@ -133,7 +133,7 @@ export default function PricingPage() {
                 {/* Plan name & price */}
                 <div className="mb-5">
                   <div className={`text-xs font-medium mb-3 tracking-wide uppercase ${
-                    plan.highlight ? 'text-[#87867f]' : 'text-[#5e5d59]'
+                    plan.highlight ? 'text-[#89726b]' : 'text-[#56423c]'
                   }`}>
                     {plan.name}
                   </div>
@@ -144,12 +144,12 @@ export default function PricingPage() {
                     >
                       {plan.price}
                     </span>
-                    <span className={`text-sm ${plan.highlight ? 'text-[#87867f]' : 'text-[#5e5d59]'}`}>
+                    <span className={`text-sm ${plan.highlight ? 'text-[#89726b]' : 'text-[#56423c]'}`}>
                       {plan.period}
                     </span>
                   </div>
                   <p className={`text-sm mt-2 leading-relaxed ${
-                    plan.highlight ? 'text-[#5e5d59]' : 'text-[#87867f]'
+                    plan.highlight ? 'text-[#56423c]' : 'text-[#89726b]'
                   }`}>
                     {plan.description}
                   </p>
@@ -158,10 +158,10 @@ export default function PricingPage() {
                 {/* CTA */}
                 <Link
                   href={plan.ctaHref}
-                  className={`block text-center py-2.5 rounded-xl text-sm font-medium transition-all mb-6 ${
+                  className={`block text-center py-3 rounded-xl text-sm font-medium transition-all mb-6 ${
                     plan.highlight
-                      ? 'bg-[#c96442] text-[#faf9f5] hover:bg-[#d97757]'
-                      : 'bg-[#30302e] text-[#b0aea5] hover:bg-[#3a3a38] border border-[#3a3a38]'
+                      ? 'bg-[#9a4021] text-white hover:bg-[#9a4021]/90 shadow-sm'
+                      : 'border border-[#dcc1b8] text-[#56423c] hover:text-[#9a4021] hover:border-[#9a4021] hover:bg-[#fbf9f2]'
                   }`}
                 >
                   {plan.cta}
@@ -173,15 +173,15 @@ export default function PricingPage() {
                     <li key={f.text} className="flex items-start gap-2.5 text-sm">
                       <span className={`mt-0.5 flex-none text-base leading-none ${
                         f.included
-                          ? plan.highlight ? 'text-[#c96442]' : 'text-[#c96442]'
-                          : plan.highlight ? 'text-[#d1cfc5]' : 'text-[#3a3a38]'
+                          ? plan.highlight ? 'text-[#9a4021]' : 'text-[#9a4021]'
+                          : plan.highlight ? 'text-[#dcc1b8]' : 'text-[#89726b]'
                       }`}>
                         {f.included ? '✓' : '–'}
                       </span>
                       <span className={
                         f.included
-                          ? plan.highlight ? 'text-[#141413]' : 'text-[#b0aea5]'
-                          : plan.highlight ? 'text-[#c2c0b6]' : 'text-[#3a3a38]'
+                          ? plan.highlight ? 'text-[#1b1c18]' : 'text-[#89726b]'
+                          : plan.highlight ? 'text-[#dcc1b8]' : 'text-[#89726b]'
                       }>
                         {f.text}
                       </span>
@@ -192,44 +192,45 @@ export default function PricingPage() {
             ))}
           </div>
 
-          <p className="text-center text-[#5e5d59] text-xs">
+          <p className="text-center text-[#56423c] text-xs">
             所有价格含税 · 年付享 8 折优惠 · 汇率变动时价格可能调整
           </p>
         </div>
       </div>
 
       {/* ── FAQ — LIGHT ────────────────────────────────────────────────────── */}
-      <div className="bg-[#f5f4ed] py-20 px-4">
+      <div className="bg-[#fbf9f2] py-24 px-4">
         <div className="max-w-2xl mx-auto">
+          <p className="text-xs text-[#9a4021] mb-4 tracking-wider uppercase font-medium text-center">FAQ</p>
           <h2
-            className="text-2xl text-[#141413] mb-10 text-center"
+            className="text-3xl text-[#1b1c18] mb-14 text-center"
             style={serifStyle}
           >
             常见问题
           </h2>
-          <div className="space-y-6">
+          <div className="space-y-8">
             {FAQ.map((item) => (
-              <div key={item.q} className="border-b border-[#f0eee6] pb-6">
+              <div key={item.q} className="border-b border-[#dcc1b8]/30 pb-8">
                 <h3
-                  className="text-sm font-medium text-[#141413] mb-2"
+                  className="text-base font-semibold text-[#1b1c18] mb-3"
                   style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
                 >
                   {item.q}
                 </h3>
-                <p className="text-sm text-[#5e5d59] leading-relaxed">{item.a}</p>
+                <p className="text-sm text-[#56423c] leading-relaxed text-opacity-80">{item.a}</p>
               </div>
             ))}
           </div>
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center mt-16">
-          <p className="text-[#87867f] text-sm mb-4">还有疑问？</p>
+        <div className="text-center mt-20">
+          <p className="text-[#89726b] text-sm mb-5">还有其他疑问？</p>
           <a
             href="mailto:hello@mythinkank.ai"
-            className="text-[#c96442] hover:text-[#d97757] text-sm underline underline-offset-4 transition-colors"
+            className="text-[#9a4021] hover:text-[#9a4021]/80 text-sm font-medium underline underline-offset-4 transition-colors"
           >
-            发邮件给我们
+            📧 发邮件给我们
           </a>
         </div>
       </div>
