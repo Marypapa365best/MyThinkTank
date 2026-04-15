@@ -258,14 +258,14 @@ export default function InterrogateInterface() {
           <div className="space-y-6">
             {/* Target Input */}
             <div className="rounded-2xl border border-[#dcc1b8] bg-[#fbf9f2] p-6 space-y-4">
-              <h2 className="text-sm font-medium text-white/50 uppercase tracking-wider">被审查对象</h2>
+              <h2 className="text-sm font-medium text-[#1b1c18]/50 uppercase tracking-wider">被审查对象</h2>
 
               <input
                 type="text"
                 value={targetName}
                 onChange={e => setTargetName(e.target.value)}
                 placeholder='对象名称（选填，如 "某AI教父"、"某创投博主"）'
-                className="w-full bg-white/[0.04] border border-[#dcc1b8] rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/20 focus:outline-none focus:border-white/25 transition-colors"
+                className="w-full bg-white border border-[#dcc1b8] rounded-xl px-4 py-2.5 text-sm text-[#1b1c18] placeholder-[#89726b] focus:outline-none focus:border-[#9a4021] transition-colors"
               />
 
               <textarea
@@ -273,7 +273,7 @@ export default function InterrogateInterface() {
                 onChange={e => setTargetContent(e.target.value)}
                 placeholder={`粘贴被审查的言论、文章或主张…\n\n例如：\n"AI将在3年内取代90%的程序员，现在学编程已经没有意义了。掌握提示词工程才是未来，我的课程将帮助你月入10万…"`}
                 rows={7}
-                className="w-full bg-white/[0.04] border border-[#dcc1b8] rounded-xl px-4 py-3 text-sm text-white placeholder-white/20 resize-none focus:outline-none focus:border-white/25 transition-colors"
+                className="w-full bg-white border border-[#dcc1b8] rounded-xl px-4 py-3 text-sm text-[#1b1c18] placeholder-[#89726b] resize-none focus:outline-none focus:border-[#9a4021] transition-colors"
               />
               <div className="text-right text-xs text-[#89726b]">
                 {targetContent.length} 字
@@ -283,10 +283,10 @@ export default function InterrogateInterface() {
             {/* Interrogator Selector */}
             <div>
               <div className="flex items-center justify-between mb-3">
-                <h2 className="text-sm font-medium text-white/50 uppercase tracking-wider">
+                <h2 className="text-sm font-medium text-[#1b1c18]/50 uppercase tracking-wider">
                   选择审问者
                 </h2>
-                <span className="text-xs text-white/25">最多 {MAX_INTERROGATORS} 位</span>
+                <span className="text-xs text-[#1b1c18]/25">最多 {MAX_INTERROGATORS} 位</span>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
                 {allSkills.map(skill => {
@@ -299,10 +299,10 @@ export default function InterrogateInterface() {
                       disabled={disabled}
                       className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border text-sm transition-all ${
                         selected
-                          ? 'border-red-500/40 bg-red-500/10 text-white'
+                          ? 'border-red-500/40 bg-red-600/10 text-[#1b1c18]'
                           : disabled
                             ? 'border-white/5 bg-[#fbf9f2] text-[#89726b] cursor-not-allowed'
-                            : 'border-[#dcc1b8] bg-[#efeee7] text-[#56423c] hover:border-white/25 hover:text-white hover:bg-white/[0.06]'
+                            : 'border-[#dcc1b8] bg-[#efeee7] text-[#56423c] hover:border-[#9a4021] hover:text-[#1b1c18] hover:bg-white/[0.06]'
                       }`}
                     >
                       <SkillAvatar
@@ -313,7 +313,7 @@ export default function InterrogateInterface() {
                       />
                       <span className="truncate">{skill.name}</span>
                       {selected && (
-                        <span className="ml-auto text-red-400/60 text-xs">✓</span>
+                        <span className="ml-auto text-red-600/60 text-xs">✓</span>
                       )}
                     </button>
                   )
@@ -326,7 +326,7 @@ export default function InterrogateInterface() {
               <button
                 onClick={startInterrogation}
                 disabled={!canStart}
-                className="px-8 py-3 bg-red-500 text-white text-sm font-medium rounded-xl hover:bg-red-400 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                className="px-8 py-3 bg-red-600 text-[#1b1c18] text-sm font-medium rounded-xl hover:bg-red-400 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
               >
                 {selectedIds.length === 0
                   ? '请选择至少 1 位审问者'
@@ -352,18 +352,18 @@ export default function InterrogateInterface() {
               <div key={i} className="rounded-2xl border border-[#dcc1b8] bg-[#fbf9f2] p-5">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="text-xl">{critique.skillEmoji}</span>
-                  <span className="text-sm font-medium text-white/80">{critique.skillName}</span>
+                  <span className="text-sm font-medium text-[#1b1c18]/80">{critique.skillName}</span>
                   <span className="text-xs text-[#89726b] ml-1">的质疑</span>
                   {critique.isStreaming && (
                     <span className="ml-auto text-xs text-[#89726b] animate-pulse">分析中…</span>
                   )}
                 </div>
-                <div className="text-sm text-white/75 leading-relaxed">
+                <div className="text-sm text-[#1b1c18]/75 leading-relaxed">
                   {critique.content ? (
                     <ReactMarkdown
                       components={{
                         p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
-                        strong: ({ children }) => <strong className="font-semibold text-white">{children}</strong>,
+                        strong: ({ children }) => <strong className="font-semibold text-[#1b1c18]">{children}</strong>,
                         ul: ({ children }) => <ul className="list-disc pl-4 space-y-1">{children}</ul>,
                         li: ({ children }) => <li>{children}</li>,
                       }}
@@ -371,7 +371,7 @@ export default function InterrogateInterface() {
                       {critique.content}
                     </ReactMarkdown>
                   ) : (
-                    <span className="text-white/25 animate-pulse">思考中…</span>
+                    <span className="text-[#1b1c18]/25 animate-pulse">思考中…</span>
                   )}
                   {critique.isStreaming && critique.content && (
                     <span className="inline-block w-0.5 h-3.5 bg-white/50 ml-0.5 animate-pulse align-middle" />
@@ -390,7 +390,7 @@ export default function InterrogateInterface() {
                     <span className="ml-auto text-xs text-yellow-500/40 animate-pulse">裁决中…</span>
                   )}
                 </div>
-                <div className="text-sm text-white/80 leading-relaxed">
+                <div className="text-sm text-[#1b1c18]/80 leading-relaxed">
                   {synthesis.content ? (
                     <ReactMarkdown
                       components={{
@@ -405,7 +405,7 @@ export default function InterrogateInterface() {
                       {synthesis.content}
                     </ReactMarkdown>
                   ) : (
-                    <span className="text-white/25 animate-pulse">汇总中…</span>
+                    <span className="text-[#1b1c18]/25 animate-pulse">汇总中…</span>
                   )}
                   {synthesis.isStreaming && synthesis.content && (
                     <span className="inline-block w-0.5 h-3.5 bg-yellow-400/60 ml-0.5 animate-pulse align-middle" />
@@ -425,14 +425,14 @@ export default function InterrogateInterface() {
               {isRunning ? (
                 <button
                   onClick={() => { abortRef.current?.abort(); setIsRunning(false) }}
-                  className="px-6 py-2.5 border border-[#dcc1b8]/50 text-[#56423c] text-sm rounded-xl hover:text-white hover:border-white/40 transition-all"
+                  className="px-6 py-2.5 border border-[#dcc1b8]/50 text-[#56423c] text-sm rounded-xl hover:text-[#1b1c18] hover:border-[#dcc1b8] transition-all"
                 >
                   停止审查
                 </button>
               ) : (
                 <button
                   onClick={reset}
-                  className="px-6 py-2.5 border border-[#dcc1b8]/50 text-[#56423c] text-sm rounded-xl hover:text-white hover:border-white/40 transition-all"
+                  className="px-6 py-2.5 border border-[#dcc1b8]/50 text-[#56423c] text-sm rounded-xl hover:text-[#1b1c18] hover:border-[#dcc1b8] transition-all"
                 >
                   重新审查
                 </button>

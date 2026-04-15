@@ -256,7 +256,7 @@ export default function BrainstormInterface() {
                           ? 'border-[#c96442]/60 bg-[#c96442]/10 text-[#1b1c18]'
                           : disabled
                             ? 'border-white/5 bg-[#fbf9f2] text-[#89726b] cursor-not-allowed'
-                            : 'border-[#dcc1b8] bg-[#efeee7] text-[#56423c] hover:border-white/25 hover:text-white hover:bg-white/[0.06]'
+                            : 'border-[#dcc1b8] bg-[#efeee7] text-[#56423c] hover:border-white/25 hover:text-[#1b1c18] hover:bg-white/[0.06]'
                       }`}
                     >
                       <SkillAvatar
@@ -287,7 +287,7 @@ export default function BrainstormInterface() {
                 onChange={e => setTopic(e.target.value)}
                 placeholder="例如：AI 会彻底颠覆价值投资吗？创业者该优先追求规模还是盈利？"
                 rows={3}
-                className="w-full bg-white/[0.04] border border-[#dcc1b8] rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 resize-none focus:outline-none focus:border-white/25 transition-colors"
+                className="w-full bg-white/[0.04] border border-[#dcc1b8] rounded-xl px-4 py-3 text-sm text-[#1b1c18] placeholder-white/25 resize-none focus:outline-none focus:border-white/25 transition-colors"
               />
             </div>
 
@@ -314,12 +314,12 @@ export default function BrainstormInterface() {
             {/* Topic Header */}
             <div className="mb-6 p-4 rounded-xl bg-[#efeee7] border border-[#dcc1b8] text-center">
               <div className="text-xs text-[#56423c] mb-1">话题</div>
-              <div className="text-white/80 text-sm">{topic}</div>
+              <div className="text-[#1b1c18] text-sm">{topic}</div>
               <div className="flex justify-center gap-2 mt-3">
                 {selectedIds.map(id => {
                   const s = allSkills.find(sk => sk.id === id)!
                   return (
-                    <span key={id} className="text-xs px-2 py-0.5 rounded-full bg-white/[0.06] text-white/50">
+                    <span key={id} className="text-xs px-2 py-0.5 rounded-full bg-white/[0.06] text-[#56423c]">
                       {s.emoji} {s.name}
                     </span>
                   )
@@ -346,7 +346,7 @@ export default function BrainstormInterface() {
                     {/* Content */}
                     <div className="flex-1">
                       <div className="text-xs text-[#56423c] mb-1.5">{turn.skillName}</div>
-                      <div className="text-sm text-white/80 leading-relaxed whitespace-pre-wrap">
+                      <div className="text-sm text-[#1b1c18] leading-relaxed whitespace-pre-wrap">
                         {turn.content || (turn.isStreaming ? (
                           <span className="text-[#89726b] animate-pulse">思考中…</span>
                         ) : '')}
@@ -373,7 +373,7 @@ export default function BrainstormInterface() {
               {isRunning ? (
                 <button
                   onClick={stopBrainstorm}
-                  className="px-6 py-2.5 border border-[#dcc1b8]/50 text-[#56423c] text-sm rounded-xl hover:text-white hover:border-white/40 transition-all"
+                  className="px-6 py-2.5 border border-[#dcc1b8]/50 text-[#56423c] text-sm rounded-xl hover:text-[#1b1c18] hover:border-white/40 transition-all"
                 >
                   停止
                 </button>
@@ -381,14 +381,14 @@ export default function BrainstormInterface() {
                 <>
                   <button
                     onClick={reset}
-                    className="px-6 py-2.5 border border-[#dcc1b8]/50 text-[#56423c] text-sm rounded-xl hover:text-white hover:border-white/40 transition-all"
+                    className="px-6 py-2.5 border border-[#dcc1b8]/50 text-[#56423c] text-sm rounded-xl hover:text-[#1b1c18] hover:border-white/40 transition-all"
                   >
                     重新设置
                   </button>
                   <button
                     onClick={startBrainstorm}
                     disabled={isRunning}
-                    className="px-6 py-2.5 bg-white/10 text-white text-sm rounded-xl hover:bg-white/15 transition-all"
+                    className="px-6 py-2.5 bg-white/10 text-[#1b1c18] text-sm rounded-xl hover:bg-white/15 transition-all"
                   >
                     🔄 换个话题再辩
                   </button>

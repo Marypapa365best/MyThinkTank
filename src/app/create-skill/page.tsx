@@ -112,7 +112,7 @@ export default function CreateSkillPage() {
           <div className="flex justify-center gap-3">
             <button
               onClick={() => router.push('/brainstorm')}
-              className="px-5 py-2.5 bg-[#9a4021] text-white text-sm font-medium rounded-xl hover:bg-[#9a4021]/90 transition-all"
+              className="px-5 py-2.5 bg-[#9a4021] text-[#1b1c18] text-sm font-medium rounded-xl hover:bg-[#9a4021]/90 transition-all"
             >
               💡 去头脑风暴
             </button>
@@ -215,7 +215,7 @@ export default function CreateSkillPage() {
                 </button>
                 <button
                   onClick={saveSkill}
-                  className="flex-1 py-2.5 bg-[#9a4021] text-white text-sm font-medium rounded-xl hover:bg-[#9a4021]/90 transition-all"
+                  className="flex-1 py-2.5 bg-[#9a4021] text-[#1b1c18] text-sm font-medium rounded-xl hover:bg-[#9a4021]/90 transition-all"
                 >
                   保存智囊
                 </button>
@@ -328,7 +328,7 @@ export default function CreateSkillPage() {
                   <button
                     onClick={fetchUrl}
                     disabled={urlLoading || !urlInput.trim()}
-                    className="px-4 py-2.5 bg-[#9a4021] text-white text-sm rounded-xl hover:bg-[#9a4021]/90 transition-all disabled:opacity-30 disabled:cursor-not-allowed whitespace-nowrap"
+                    className="px-4 py-2.5 bg-[#9a4021] text-[#1b1c18] text-sm rounded-xl hover:bg-[#9a4021]/90 transition-all disabled:opacity-30 disabled:cursor-not-allowed whitespace-nowrap"
                   >
                     {urlLoading ? '抓取中…' : '抓取'}
                   </button>
@@ -363,7 +363,7 @@ export default function CreateSkillPage() {
             <button
               onClick={generate}
               disabled={rawText.trim().length < 50}
-              className="px-8 py-3 bg-[#9a4021] text-white text-sm font-medium rounded-xl hover:bg-[#9a4021]/90 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+              className="px-8 py-3 bg-[#9a4021] text-[#1b1c18] text-sm font-medium rounded-xl hover:bg-[#9a4021]/90 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
             >
               {rawText.trim().length < 50
                 ? `还需 ${50 - rawText.trim().length} 字`

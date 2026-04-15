@@ -12,7 +12,7 @@ const buttonVariants = cva(
       variant: {
         // Brick red — primary CTA
         default:
-          "bg-[#9a4021] text-white hover:bg-[#b95837] [box-shadow:0px_0px_0px_1px_#7e2c0e] hover:[box-shadow:0px_0px_0px_1px_#9a4021]",
+          "bg-[#9a4021] text-[#1b1c18] hover:bg-[#b95837] [box-shadow:0px_0px_0px_1px_#7e2c0e] hover:[box-shadow:0px_0px_0px_1px_#9a4021]",
 
         // Warm surface — secondary
         secondary:

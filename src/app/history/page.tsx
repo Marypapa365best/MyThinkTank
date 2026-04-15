@@ -41,7 +41,7 @@ export default function HistoryPage() {
   if (loading) {
     return (
       <div className="min-h-screen pt-24 flex items-center justify-center">
-        <p className="text-white/30 text-sm animate-pulse">加载中…</p>
+        <p className="text-[#89726b] text-sm animate-pulse">加载中…</p>
       </div>
     )
   }
@@ -53,19 +53,19 @@ export default function HistoryPage() {
         <div className="mb-8 flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold">📚 历史记录</h1>
-            <p className="text-white/40 text-sm mt-1">共 {sessions.length} 条对话</p>
+            <p className="text-[#1b1c18]/40 text-sm mt-1">共 {sessions.length} 条对话</p>
           </div>
           {sessions.length > 0 && (
             <div className="flex items-center gap-3">
               <button
                 onClick={() => downloadAllMarkdown(sessions)}
-                className="text-xs text-white/40 hover:text-white transition-colors px-3 py-1.5 border border-white/10 rounded-lg hover:border-white/25"
+                className="text-xs text-[#1b1c18]/40 hover:text-[#1b1c18] transition-colors px-3 py-1.5 border border-[#dcc1b8] rounded-lg hover:border-[#9a4021]/25"
               >
                 ↓ 全部导出 .md
               </button>
               <button
                 onClick={handleClear}
-                className="text-xs text-white/30 hover:text-red-400 transition-colors"
+                className="text-xs text-[#89726b] hover:text-red-400 transition-colors"
               >
                 清空全部
               </button>
@@ -75,7 +75,7 @@ export default function HistoryPage() {
 
         {/* Empty state */}
         {sessions.length === 0 && (
-          <div className="text-center py-20 text-white/30">
+          <div className="text-center py-20 text-[#89726b]">
             <div className="text-4xl mb-3">🗂️</div>
             <p>暂无历史记录</p>
             <p className="text-xs mt-2">完成一次对话后会自动保存</p>
@@ -93,49 +93,49 @@ export default function HistoryPage() {
                 <span className="text-xl mt-0.5">{TYPE_ICON[s.type]}</span>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs text-white/40">{TYPE_LABEL[s.type]}</span>
+                    <span className="text-xs text-[#1b1c18]/40">{TYPE_LABEL[s.type]}</span>
                     {s.type === 'chat' && s.skillEmoji && (
-                      <span className="text-xs text-white/50">{s.skillEmoji} {s.skillName}</span>
+                      <span className="text-xs text-[#56423c]">{s.skillEmoji} {s.skillName}</span>
                     )}
                     {s.type === 'brainstorm' && s.brainstormSkills && (
-                      <span className="text-xs text-white/50">
+                      <span className="text-xs text-[#56423c]">
                         {s.brainstormSkills.map(sk => sk.skillEmoji).join(' ')}
                       </span>
                     )}
                     {s.type === 'interrogate' && s.targetName && (
-                      <span className="text-xs text-white/50">审查：{s.targetName}</span>
+                      <span className="text-xs text-[#56423c]">审查：{s.targetName}</span>
                     )}
                   </div>
-                  <p className="text-sm text-white/80 truncate">{s.title}</p>
-                  <p className="text-xs text-white/30 mt-1">{formatTime(s.timestamp)}</p>
+                  <p className="text-sm text-[#1b1c18]/80 truncate">{s.title}</p>
+                  <p className="text-xs text-[#89726b] mt-1">{formatTime(s.timestamp)}</p>
                 </div>
                 <div className="flex items-center gap-2 ml-2 shrink-0">
                   <button
                     onClick={e => { e.stopPropagation(); downloadMarkdown(s) }}
-                    className="text-white/25 hover:text-white/70 text-xs transition-colors px-1.5 py-0.5 rounded border border-white/10 hover:border-white/25"
+                    className="text-[#1b1c18]/25 hover:text-[#56423c] text-xs transition-colors px-1.5 py-0.5 rounded border border-[#dcc1b8] hover:border-[#9a4021]/25"
                     title="下载 Markdown"
                   >
                     .md
                   </button>
                   <button
                     onClick={e => { e.stopPropagation(); printSession(s) }}
-                    className="text-white/25 hover:text-white/70 text-xs transition-colors px-1.5 py-0.5 rounded border border-white/10 hover:border-white/25"
+                    className="text-[#1b1c18]/25 hover:text-[#56423c] text-xs transition-colors px-1.5 py-0.5 rounded border border-[#dcc1b8] hover:border-[#9a4021]/25"
                     title="导出 PDF"
                   >
                     PDF
                   </button>
                   <button
                     onClick={e => handleDelete(s.id, e)}
-                    className="text-white/20 hover:text-red-400 text-xs transition-colors px-1"
+                    className="text-[#1b1c18]/20 hover:text-red-400 text-xs transition-colors px-1"
                   >
                     删除
                   </button>
-                  <span className="text-white/30 text-xs">{expanded === s.id ? '▲' : '▼'}</span>
+                  <span className="text-[#89726b] text-xs">{expanded === s.id ? '▲' : '▼'}</span>
                 </div>
               </div>
 
               {expanded === s.id && (
-                <div className="border-t border-white/10 p-4 space-y-4">
+                <div className="border-t border-[#dcc1b8] p-4 space-y-4">
                   <SessionDetail session={s} />
                 </div>
               )}
@@ -152,8 +152,8 @@ function SessionDetail({ session: s }: { session: HistorySession }) {
     return (
       <div className="space-y-3">
         {s.messages.map((m, i) => (
-          <div key={i} className={`text-sm ${m.role === 'user' ? 'text-white/60' : 'text-white/90'}`}>
-            <span className="text-xs text-white/30 mr-2">{m.role === 'user' ? '你' : (s.skillEmoji ?? '') + ' ' + (s.skillName ?? '')}</span>
+          <div key={i} className={`text-sm ${m.role === 'user' ? 'text-[#56423c]' : 'text-[#1b1c18]/90'}`}>
+            <span className="text-xs text-[#89726b] mr-2">{m.role === 'user' ? '你' : (s.skillEmoji ?? '') + ' ' + (s.skillName ?? '')}</span>
             <span className="whitespace-pre-wrap">{m.content}</span>
           </div>
         ))}
@@ -163,11 +163,11 @@ function SessionDetail({ session: s }: { session: HistorySession }) {
   if (s.type === 'brainstorm' && s.turns) {
     return (
       <div className="space-y-4">
-        <p className="text-xs text-white/40">话题：{s.topic}</p>
+        <p className="text-xs text-[#1b1c18]/40">话题：{s.topic}</p>
         {s.turns.map((t, i) => (
           <div key={i}>
-            <div className="text-xs text-white/40 mb-1">{t.skillEmoji} {t.skillName}</div>
-            <p className="text-sm text-white/80 whitespace-pre-wrap">{t.content}</p>
+            <div className="text-xs text-[#1b1c18]/40 mb-1">{t.skillEmoji} {t.skillName}</div>
+            <p className="text-sm text-[#1b1c18]/80 whitespace-pre-wrap">{t.content}</p>
           </div>
         ))}
       </div>
@@ -178,20 +178,20 @@ function SessionDetail({ session: s }: { session: HistorySession }) {
       <div className="space-y-4">
         {s.targetContent && (
           <div>
-            <p className="text-xs text-white/40 mb-1">审查内容</p>
-            <p className="text-sm text-white/50 whitespace-pre-wrap line-clamp-4">{s.targetContent}</p>
+            <p className="text-xs text-[#1b1c18]/40 mb-1">审查内容</p>
+            <p className="text-sm text-[#56423c] whitespace-pre-wrap line-clamp-4">{s.targetContent}</p>
           </div>
         )}
         {s.critiques?.map((c, i) => (
           <div key={i}>
-            <div className="text-xs text-white/40 mb-1">{c.skillEmoji} {c.skillName} 的质疑</div>
-            <p className="text-sm text-white/80 whitespace-pre-wrap">{c.content}</p>
+            <div className="text-xs text-[#1b1c18]/40 mb-1">{c.skillEmoji} {c.skillName} 的质疑</div>
+            <p className="text-sm text-[#1b1c18]/80 whitespace-pre-wrap">{c.content}</p>
           </div>
         ))}
         {s.synthesis && (
           <div className="border-t border-yellow-500/20 pt-3">
             <div className="text-xs text-yellow-400/60 mb-1">⚖️ 综合裁决</div>
-            <p className="text-sm text-white/80 whitespace-pre-wrap">{s.synthesis}</p>
+            <p className="text-sm text-[#1b1c18]/80 whitespace-pre-wrap">{s.synthesis}</p>
           </div>
         )}
       </div>

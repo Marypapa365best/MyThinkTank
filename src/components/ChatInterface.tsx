@@ -208,7 +208,7 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
             <div
               className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
                 msg.role === 'user'
-                  ? 'bg-[#9a4021] text-white rounded-tr-sm'
+                  ? 'bg-[#9a4021] text-[#1b1c18] rounded-tr-sm'
                   : 'bg-[#efeee7] border border-[#dcc1b8]/50 text-[#1b1c18] rounded-tl-sm'
               }`}
             >
@@ -259,7 +259,7 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
               title={isRecording ? '点击停止录音' : '点击开始语音输入'}
               className={`flex-none w-10 h-10 rounded-xl flex items-center justify-center transition-all disabled:opacity-30 ${
                 isRecording
-                  ? 'bg-red-500 text-white animate-pulse'
+                  ? 'bg-red-500 text-[#1b1c18] animate-pulse'
                   : 'bg-[#efeee7] border border-[#dcc1b8] text-[#89726b] hover:text-[#9a4021] hover:border-[#9a4021]'
               }`}
             >

@@ -29,9 +29,9 @@ export default function DisclaimerBanner() {
           <p className="text-sm font-medium text-white/90 mb-1">使用须知</p>
           <p className="text-xs text-white/45 leading-relaxed">
             本平台所有智囊均基于公开资料推断，模拟其思维框架，
-            <strong className="text-white/60">并非本人授权或认可</strong>，内容仅供参考，
+            <strong className="text-[#56423c]">并非本人授权或认可</strong>，内容仅供参考，
             不构成投资、法律或医疗建议。继续使用即表示你同意我们的{' '}
-            <Link href="/terms" className="underline underline-offset-2 text-white/60 hover:text-white transition-colors">
+            <Link href="/terms" className="underline underline-offset-2 text-[#56423c] hover:text-[#1b1c18] transition-colors">
               服务条款
             </Link>。
           </p>

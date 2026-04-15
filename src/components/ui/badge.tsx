@@ -10,7 +10,7 @@ const badgeVariants = cva(
       variant: {
         // Brick red — high signal
         default:
-          "bg-[#9a4021] text-white",
+          "bg-[#9a4021] text-[#1b1c18]",
 
         // Warm surface — neutral
         secondary:
