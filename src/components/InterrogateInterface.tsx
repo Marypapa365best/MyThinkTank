@@ -297,12 +297,12 @@ export default function InterrogateInterface() {
                       key={skill.id}
                       onClick={() => toggleSkill(skill.id)}
                       disabled={disabled}
-                      className={`flex flex-col items-center gap-3 px-4 py-4 rounded-lg border-2 text-sm transition-all ${
+                      className={`flex flex-col items-center gap-3 px-4 py-4 rounded-lg text-sm transition-all ${
                         selected
-                          ? 'bg-[#243137] border-[#bd9f67] text-[#bd9f67] shadow-lg shadow-[#bd9f67]/20'
+                          ? 'bg-[#243137] text-[#bd9f67] shadow-lg shadow-[#bd9f67]/30'
                           : disabled
-                            ? 'bg-[#243137] border-[#bd9f67]/20 text-[#bd9f67]/40 cursor-not-allowed'
-                            : 'bg-[#243137] border-[#bd9f67]/40 text-[#bd9f67] hover:border-[#bd9f67] hover:shadow-md hover:shadow-[#bd9f67]/30 hover:scale-105'
+                            ? 'bg-[#243137] text-[#bd9f67]/40 cursor-not-allowed'
+                            : 'bg-[#243137] text-[#bd9f67] hover:shadow-md hover:shadow-[#bd9f67]/40 hover:scale-105'
                       }`}
                     >
                       <SkillAvatar

@@ -25,7 +25,7 @@ export default function SkillAvatar({
   if (avatar) {
     return (
       <div
-        className={`${base} border-2 border-[#e8e6dc] [box-shadow:rgba(0,0,0,0.08)_0px_2px_8px]`}
+        className={`${base} [box-shadow:rgba(0,0,0,0.12)_0px_4px_12px]`}
         style={{ width: size, height: size }}
       >
         <Image
@@ -42,7 +42,7 @@ export default function SkillAvatar({
   // Emoji fallback
   return (
     <div
-      className={`${base} bg-[#e3dfd6] border-2 border-[#dcc1b8] flex items-center justify-center flex-none`}
+      className={`${base} bg-[#e3dfd6] flex items-center justify-center flex-none`}
       style={{ width: size, height: size, fontSize: size * 0.5 }}
     >
       {emoji}
