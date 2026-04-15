@@ -66,45 +66,50 @@ export default function SkillsPage() {
 
           {/* Skills grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filtered.map((skill, i) => {
-              const surface = SURFACES[i % SURFACES.length]
-              return (
-                <Link
-                  key={skill.id}
-                  href={`/skills/${skill.id}`}
-                  className="group flex flex-col p-7 rounded-lg transition-all duration-300 hover:-translate-y-1 will-change-transform [box-shadow:0px_0px_0px_1px_rgba(220,193,184,0.5)] hover:[box-shadow:0px_0px_0px_1px_rgba(154,64,33,0.5),_0px_8px_24px_rgba(27,28,24,0.1)] hover:bg-[#fdfcfb]"
-                  style={{ backgroundColor: surface }}
-                >
-                  {/* Top */}
-                  <div className="flex items-stretch gap-4 mb-5" style={{ minHeight: 96 }}>
-                    <div className="flex flex-col justify-between flex-1">
-                      <span className={`label-overline text-[10px] ${
-                        skill.tier === 'free' ? 'text-emerald-700' :
-                        skill.tier === 'pro' ? 'text-[#9a4021]' : 'text-amber-700'
-                      }`}>
-                        {skill.tier === 'free' ? 'Free' : skill.tier === 'pro' ? 'Pro' : 'Elite'}
-                      </span>
-                      <div>
-                        <h3 className="text-lg text-[#1b1c18] group-hover:text-[#9a4021] transition-colors leading-tight">
-                          {skill.name}
-                        </h3>
-                        <p className="text-xs text-[#89726b] mt-0.5">{skill.nameEn}</p>
-                      </div>
+            {filtered.map((skill, i) => (
+              <Link
+                key={skill.id}
+                href={`/skills/${skill.id}`}
+                className="group flex flex-col p-7 rounded-lg transition-all duration-300 hover:-translate-y-1 will-change-transform bg-white [box-shadow:0px_0px_0px_1px_rgba(220,193,184,0.5)] hover:[box-shadow:0px_0px_0px_1px_rgba(154,64,33,0.5),_0px_8px_24px_rgba(27,28,24,0.1)] hover:bg-[#fdfcfb]"
+              >
+                {/* Top */}
+                <div className="flex items-stretch gap-4 mb-5" style={{ minHeight: 96 }}>
+                  <div className="flex flex-col justify-between flex-1">
+                    <span className={`label-overline text-[10px] ${
+                      skill.tier === 'free' ? 'text-emerald-700' :
+                      skill.tier === 'pro' ? 'text-[#9a4021]' : 'text-amber-700'
+                    }`}>
+                      {skill.tier === 'free' ? 'Free' : skill.tier === 'pro' ? 'Pro' : 'Elite'}
+                    </span>
+                    <div>
+                      <h3 className="text-lg text-[#1b1c18] group-hover:text-[#9a4021] transition-colors leading-tight">
+                        {skill.name}
+                      </h3>
+                      <p className="text-xs text-[#89726b] mt-0.5">{skill.nameEn}</p>
                     </div>
-                    <SkillAvatar name={skill.name} emoji={skill.emoji} avatar={skill.avatar} size={96} />
                   </div>
-                  <p className="text-sm text-[#1b1c18] leading-relaxed flex-1 mb-5">
-                    {skill.tagline}
-                  </p>
+                  <SkillAvatar name={skill.name} emoji={skill.emoji} avatar={skill.avatar} size={96} />
+                </div>
+                <p className="text-sm text-[#1b1c18] leading-relaxed flex-1 mb-5">
+                  {skill.tagline}
+                </p>
 
-                  {/* Footer */}
-                  <div className="flex items-center justify-between text-xs text-[#89726b] pt-4 border-t border-[#dcc1b8]/50">
-                    <span>📚 {skill.sourcesCount}+ 来源</span>
-                    <span>截止 {skill.knowledgeCutoff}</span>
-                  </div>
-                </Link>
-              )
-            })}
+                {/* Tags */}
+                <div className="flex flex-wrap gap-1.5 mb-5">
+                  {skill.tags.slice(0, 3).map(tag => (
+                    <span key={tag} className="text-xs px-2.5 py-0.5 rounded-full bg-[#efeee7] text-[#89726b] group-hover:bg-[#9a4021]/10 group-hover:text-[#9a4021] transition-colors">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Footer */}
+                <div className="flex items-center justify-between text-xs text-[#89726b] pt-4 border-t border-[#dcc1b8]/50">
+                  <span>📚 {skill.sourcesCount}+ 来源</span>
+                  <span>截止 {skill.knowledgeCutoff}</span>
+                </div>
+              </Link>
+            ))}
           </div>
 
           {/* Coming Soon */}
