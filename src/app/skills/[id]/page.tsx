@@ -13,15 +13,15 @@ export default async function SkillChatPage({
   if (!skill) notFound()
 
   return (
-    <div className="flex flex-col h-screen pt-16">
+    <div className="flex flex-col h-screen pt-16 bg-[#fbf9f2] text-[#1b1c18]">
       {/* Skill Header Bar */}
-      <div className="flex-none border-b border-[#30302e] bg-[#141413] px-4 py-3">
+      <div className="flex-none border-b border-[#dcc1b8]/40 bg-[#fbf9f2] px-4 py-3">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <span className="text-2xl">{skill.emoji}</span>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="font-sans font-semibold text-sm text-[#f5f4ed]">{skill.name}</h1>
+                <h1 className="font-sans font-semibold text-sm text-[#1b1c18]">{skill.name}</h1>
                 <Badge
                   variant="outline-dark"
                   className={
@@ -33,10 +33,10 @@ export default async function SkillChatPage({
                   {skill.tier === 'free' ? '免费' : skill.tier === 'pro' ? 'Pro' : 'Elite'}
                 </Badge>
               </div>
-              <p className="text-xs text-[#87867f]">{skill.tagline}</p>
+              <p className="text-xs text-[#89726b]">{skill.tagline}</p>
             </div>
           </div>
-          <div className="text-xs text-[#5e5d59] text-right hidden sm:block">
+          <div className="text-xs text-[#89726b] text-right hidden sm:block">
             <div>📚 {skill.sourcesCount}+ 来源</div>
             <div>截止 {skill.knowledgeCutoff}</div>
           </div>
@@ -44,8 +44,8 @@ export default async function SkillChatPage({
       </div>
 
       {/* Disclaimer */}
-      <div className="flex-none bg-[#1e1e1c] border-b border-[#30302e] px-4 py-2">
-        <p className="max-w-3xl mx-auto text-xs text-[#5e5d59] text-center">
+      <div className="flex-none bg-[#efeee7] border-b border-[#dcc1b8]/40 px-4 py-2">
+        <p className="max-w-3xl mx-auto text-xs text-[#56423c] text-center">
           以下内容基于公开资料推断，代表思维框架而非本人观点，不构成投资/法律/医疗建议。
         </p>
       </div>

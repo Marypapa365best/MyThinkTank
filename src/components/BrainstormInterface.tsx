@@ -214,17 +214,17 @@ export default function BrainstormInterface() {
   const canStart = selectedIds.length >= 2 && topic.trim().length > 0 && !isRunning
 
   return (
-    <div className="min-h-screen bg-[#141413] text-[#f5f4ed] pt-24 pb-20 px-4">
+    <div className="min-h-screen bg-[#fbf9f2] text-[#1b1c18] pt-24 pb-20 px-4">
       <div className="max-w-4xl mx-auto">
 
         {/* Header */}
         <div className="mb-10 text-center">
           <div className="text-4xl mb-3">💡</div>
-          <h1 className="text-3xl font-bold mb-2">头脑风暴</h1>
-          <p className="text-white/40 text-sm max-w-md mx-auto">
+          <h1 className="text-3xl font-bold mb-2 text-[#1b1c18]">头脑风暴</h1>
+          <p className="text-[#56423c] text-sm max-w-md mx-auto">
             选择 2–3 位智囊，输入话题，让他们相互辩论，碰撞出不同视角的火花
           </p>
-          <p className="mt-3 text-xs text-white/20 max-w-sm mx-auto">
+          <p className="mt-3 text-xs text-[#89726b] max-w-sm mx-auto">
             以下内容基于公开资料推断，代表各人物的思维框架，非本人观点
           </p>
         </div>
@@ -235,10 +235,10 @@ export default function BrainstormInterface() {
             {/* Skill Selector */}
             <div>
               <div className="flex items-center justify-between mb-3">
-                <h2 className="text-sm font-medium text-white/60 uppercase tracking-wider">
+                <h2 className="text-sm font-medium text-[#56423c] uppercase tracking-wider">
                   选择参与者
                 </h2>
-                <span className="text-xs text-white/30">
+                <span className="text-xs text-[#89726b]">
                   已选 {selectedIds.length} / {MAX_SKILLS}
                 </span>
               </div>
@@ -253,10 +253,10 @@ export default function BrainstormInterface() {
                       disabled={disabled}
                       className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border text-sm transition-all ${
                         selected
-                          ? 'border-[#c96442]/60 bg-[#c96442]/10 text-white'
+                          ? 'border-[#c96442]/60 bg-[#c96442]/10 text-[#1b1c18]'
                           : disabled
-                            ? 'border-white/5 bg-white/[0.02] text-white/20 cursor-not-allowed'
-                            : 'border-white/10 bg-white/[0.03] text-white/60 hover:border-white/25 hover:text-white hover:bg-white/[0.06]'
+                            ? 'border-white/5 bg-[#fbf9f2] text-[#89726b] cursor-not-allowed'
+                            : 'border-[#dcc1b8] bg-[#efeee7] text-[#56423c] hover:border-white/25 hover:text-white hover:bg-white/[0.06]'
                       }`}
                     >
                       <SkillAvatar
@@ -279,7 +279,7 @@ export default function BrainstormInterface() {
 
             {/* Topic Input */}
             <div>
-              <h2 className="text-sm font-medium text-white/60 uppercase tracking-wider mb-3">
+              <h2 className="text-sm font-medium text-[#56423c] uppercase tracking-wider mb-3">
                 辩论话题
               </h2>
               <textarea
@@ -287,7 +287,7 @@ export default function BrainstormInterface() {
                 onChange={e => setTopic(e.target.value)}
                 placeholder="例如：AI 会彻底颠覆价值投资吗？创业者该优先追求规模还是盈利？"
                 rows={3}
-                className="w-full bg-white/[0.04] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 resize-none focus:outline-none focus:border-white/25 transition-colors"
+                className="w-full bg-white/[0.04] border border-[#dcc1b8] rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 resize-none focus:outline-none focus:border-white/25 transition-colors"
               />
             </div>
 
@@ -312,8 +312,8 @@ export default function BrainstormInterface() {
         {turns.length > 0 && (
           <div className="space-y-1">
             {/* Topic Header */}
-            <div className="mb-6 p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
-              <div className="text-xs text-white/40 mb-1">话题</div>
+            <div className="mb-6 p-4 rounded-xl bg-[#efeee7] border border-[#dcc1b8] text-center">
+              <div className="text-xs text-[#56423c] mb-1">话题</div>
               <div className="text-white/80 text-sm">{topic}</div>
               <div className="flex justify-center gap-2 mt-3">
                 {selectedIds.map(id => {
@@ -334,7 +334,7 @@ export default function BrainstormInterface() {
               return (
                 <div key={i}>
                   {isFirstInRound && (
-                    <div className="text-center text-xs text-white/20 py-4">
+                    <div className="text-center text-xs text-[#89726b] py-4">
                       ── 第 {round} 轮 ──
                     </div>
                   )}
@@ -345,10 +345,10 @@ export default function BrainstormInterface() {
                     </div>
                     {/* Content */}
                     <div className="flex-1">
-                      <div className="text-xs text-white/40 mb-1.5">{turn.skillName}</div>
+                      <div className="text-xs text-[#56423c] mb-1.5">{turn.skillName}</div>
                       <div className="text-sm text-white/80 leading-relaxed whitespace-pre-wrap">
                         {turn.content || (turn.isStreaming ? (
-                          <span className="text-white/30 animate-pulse">思考中…</span>
+                          <span className="text-[#89726b] animate-pulse">思考中…</span>
                         ) : '')}
                         {turn.isStreaming && turn.content && (
                           <span className="inline-block w-0.5 h-3.5 bg-white/60 ml-0.5 animate-pulse align-middle" />
@@ -361,7 +361,7 @@ export default function BrainstormInterface() {
             })}
 
             {isDone && (
-              <div className="text-center text-xs text-white/20 py-4">
+              <div className="text-center text-xs text-[#89726b] py-4">
                 ── 辩论结束 ──
               </div>
             )}
@@ -373,7 +373,7 @@ export default function BrainstormInterface() {
               {isRunning ? (
                 <button
                   onClick={stopBrainstorm}
-                  className="px-6 py-2.5 border border-white/20 text-white/60 text-sm rounded-xl hover:text-white hover:border-white/40 transition-all"
+                  className="px-6 py-2.5 border border-[#dcc1b8]/50 text-[#56423c] text-sm rounded-xl hover:text-white hover:border-white/40 transition-all"
                 >
                   停止
                 </button>
@@ -381,7 +381,7 @@ export default function BrainstormInterface() {
                 <>
                   <button
                     onClick={reset}
-                    className="px-6 py-2.5 border border-white/20 text-white/60 text-sm rounded-xl hover:text-white hover:border-white/40 transition-all"
+                    className="px-6 py-2.5 border border-[#dcc1b8]/50 text-[#56423c] text-sm rounded-xl hover:text-white hover:border-white/40 transition-all"
                   >
                     重新设置
                   </button>

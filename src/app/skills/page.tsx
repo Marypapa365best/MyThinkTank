@@ -16,8 +16,8 @@ const CATEGORIES: { value: 'all' | SkillCategory; label: string }[] = [
   { value: 'cn-figure', label: '🌏 政商人物' },
 ]
 
-// Rotate through surface levels for editorial depth
-const SURFACES = ['#ffffff', '#f5f4ed', '#e9e8e1']
+// Rotate through surface levels for editorial depth — wider spacing for visual hierarchy
+const SURFACES = ['#ffffff', '#f0ede6', '#e3dfd6']
 
 export default function SkillsPage() {
   const [activeCategory, setActiveCategory] = useState<'all' | SkillCategory>('all')
@@ -30,7 +30,7 @@ export default function SkillsPage() {
     <div className="min-h-screen">
 
       {/* ── Header — Surface ───────────────────────────────────────────────── */}
-      <div className="bg-[#fbf9f2] pt-32 pb-12 px-8 border-b border-[#dcc1b8]/40">
+      <div className="bg-[#fbf9f2] pt-32 pb-12 px-8 lg:px-16 border-b border-[#dcc1b8]/40">
         <div className="max-w-screen-xl mx-auto">
           <p className="label-overline text-[#9a4021] mb-4">智囊库</p>
           <h1 className="text-5xl text-[#1b1c18] mb-3">
@@ -44,7 +44,7 @@ export default function SkillsPage() {
 
       {/* ── Grid — Surface Container ───────────────────────────────────────── */}
       <div className="bg-[#efeee7] min-h-screen">
-        <div className="max-w-screen-xl mx-auto px-8 py-12">
+        <div className="max-w-screen-xl mx-auto px-8 lg:px-16 py-12">
 
           {/* Category filter */}
           <div className="flex flex-wrap gap-2 mb-10">
@@ -52,10 +52,11 @@ export default function SkillsPage() {
               <button
                 key={cat.value}
                 onClick={() => setActiveCategory(cat.value)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 border ${
+                aria-pressed={activeCategory === cat.value}
+                className={`px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border ${
                   activeCategory === cat.value
-                    ? 'bg-[#30312c] text-[#f2f1ea] border-[#30312c]'
-                    : 'border-[#dcc1b8] text-[#56423c] bg-[#fbf9f2] hover:border-[#9a4021] hover:text-[#9a4021]'
+                    ? 'bg-[#30312c] text-[#f2f1ea] border-[#30312c] shadow-md hover:shadow-lg'
+                    : 'border-[#dcc1b8] text-[#56423c] bg-[#fbf9f2] hover:border-[#9a4021] hover:text-[#9a4021] hover:bg-white hover:shadow-sm'
                 }`}
               >
                 {cat.label}
@@ -71,24 +72,27 @@ export default function SkillsPage() {
                 <Link
                   key={skill.id}
                   href={`/skills/${skill.id}`}
-                  className="group flex flex-col p-7 rounded-lg transition-all duration-300 hover:-translate-y-0.5 [box-shadow:0px_0px_0px_1px_rgba(220,193,184,0.5)] hover:[box-shadow:0px_0px_0px_1px_rgba(154,64,33,0.3),_0px_4px_20px_rgba(27,28,24,0.06)]"
+                  className="group flex flex-col p-7 rounded-lg transition-all duration-300 hover:-translate-y-1 will-change-transform [box-shadow:0px_0px_0px_1px_rgba(220,193,184,0.5)] hover:[box-shadow:0px_0px_0px_1px_rgba(154,64,33,0.5),_0px_8px_24px_rgba(27,28,24,0.1)] hover:bg-[#fdfcfb]"
                   style={{ backgroundColor: surface }}
                 >
                   {/* Top */}
-                  <div className="flex items-start justify-between mb-5">
-                    <span className={`label-overline text-[10px] mt-1 ${
-                      skill.tier === 'free' ? 'text-emerald-700' :
-                      skill.tier === 'pro' ? 'text-[#9a4021]' : 'text-amber-700'
-                    }`}>
-                      {skill.tier === 'free' ? 'Free' : skill.tier === 'pro' ? 'Pro' : 'Elite'}
-                    </span>
-                    <SkillAvatar name={skill.name} emoji={skill.emoji} avatar={skill.avatar} size={72} />
+                  <div className="flex items-stretch gap-4 mb-5" style={{ minHeight: 120 }}>
+                    <div className="flex flex-col justify-between flex-1">
+                      <span className={`label-overline text-[10px] ${
+                        skill.tier === 'free' ? 'text-emerald-700' :
+                        skill.tier === 'pro' ? 'text-[#9a4021]' : 'text-amber-700'
+                      }`}>
+                        {skill.tier === 'free' ? 'Free' : skill.tier === 'pro' ? 'Pro' : 'Elite'}
+                      </span>
+                      <div>
+                        <h3 className="text-lg text-[#1b1c18] group-hover:text-[#9a4021] transition-colors leading-tight">
+                          {skill.name}
+                        </h3>
+                        <p className="text-xs text-[#89726b] mt-0.5">{skill.nameEn}</p>
+                      </div>
+                    </div>
+                    <SkillAvatar name={skill.name} emoji={skill.emoji} avatar={skill.avatar} size={120} />
                   </div>
-
-                  <h3 className="text-lg text-[#1b1c18] mb-0.5 group-hover:text-[#9a4021] transition-colors">
-                    {skill.name}
-                  </h3>
-                  <p className="text-xs text-[#89726b] mb-3">{skill.nameEn}</p>
                   <p className="text-sm text-[#56423c] leading-relaxed flex-1 mb-5">
                     {skill.tagline}
                   </p>
@@ -96,7 +100,7 @@ export default function SkillsPage() {
                   {/* Tags */}
                   <div className="flex flex-wrap gap-1.5 mb-5">
                     {skill.tags.slice(0, 3).map(tag => (
-                      <span key={tag} className="text-xs px-2.5 py-0.5 rounded-full bg-[#efeee7] text-[#89726b]">
+                      <span key={tag} className="text-xs px-2.5 py-0.5 rounded-full bg-[#efeee7] text-[#89726b] group-hover:bg-[#9a4021]/10 group-hover:text-[#9a4021] transition-colors">
                         {tag}
                       </span>
                     ))}

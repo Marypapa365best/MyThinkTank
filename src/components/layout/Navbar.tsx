@@ -27,10 +27,10 @@ export default function Navbar() {
         {/* Desktop Nav — Inter, headline weight */}
         <div className="hidden md:flex items-center gap-7 text-sm font-medium text-[#56423c]">
           <Link href="/skills" className="hover:text-[#9a4021] transition-colors duration-200">智囊库</Link>
-          <Link href="/brainstorm" className="hover:text-[#9a4021] transition-colors duration-200">💡 头脑风暴</Link>
-          <Link href="/interrogate" className="hover:text-[#9a4021] transition-colors duration-200">🔍 质疑团</Link>
-          <Link href="/create-skill" className="hover:text-[#9a4021] transition-colors duration-200">✨ 创建智囊</Link>
-          <Link href="/history" className="hover:text-[#9a4021] transition-colors duration-200">📚 历史</Link>
+          <Link href="/brainstorm" className="hover:text-[#9a4021] transition-colors duration-200"><span aria-hidden="true">💡</span> 头脑风暴</Link>
+          <Link href="/interrogate" className="hover:text-[#9a4021] transition-colors duration-200"><span aria-hidden="true">🔍</span> 质疑团</Link>
+          <Link href="/create-skill" className="hover:text-[#9a4021] transition-colors duration-200"><span aria-hidden="true">✨</span> 创建智囊</Link>
+          <Link href="/history" className="hover:text-[#9a4021] transition-colors duration-200"><span aria-hidden="true">📚</span> 历史</Link>
           <Link href="/pricing" className="hover:text-[#9a4021] transition-colors duration-200">定价</Link>
         </div>
 
@@ -63,8 +63,11 @@ export default function Navbar() {
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden text-[#56423c] hover:text-[#1b1c18]"
+          className="md:hidden text-[#56423c] hover:text-[#1b1c18] p-2 -mr-2"
           onClick={() => setMenuOpen(!menuOpen)}
+          aria-label={menuOpen ? '关闭导航菜单' : '打开导航菜单'}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             {menuOpen
@@ -77,12 +80,12 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden border-t border-[#dcc1b8] bg-[#fbf9f2] px-6 py-5 flex flex-col gap-4 text-sm font-medium text-[#56423c]">
+        <div id="mobile-menu" className="md:hidden border-t border-[#dcc1b8] bg-[#fbf9f2] px-6 py-5 flex flex-col gap-4 text-sm font-medium text-[#56423c]">
           <Link href="/skills" className="hover:text-[#9a4021]">智囊库</Link>
-          <Link href="/brainstorm" className="hover:text-[#9a4021]">💡 头脑风暴</Link>
-          <Link href="/interrogate" className="hover:text-[#9a4021]">🔍 质疑团</Link>
-          <Link href="/create-skill" className="hover:text-[#9a4021]">✨ 创建智囊</Link>
-          <Link href="/history" className="hover:text-[#9a4021]">📚 历史</Link>
+          <Link href="/brainstorm" className="hover:text-[#9a4021]"><span aria-hidden="true">💡</span> 头脑风暴</Link>
+          <Link href="/interrogate" className="hover:text-[#9a4021]"><span aria-hidden="true">🔍</span> 质疑团</Link>
+          <Link href="/create-skill" className="hover:text-[#9a4021]"><span aria-hidden="true">✨</span> 创建智囊</Link>
+          <Link href="/history" className="hover:text-[#9a4021]"><span aria-hidden="true">📚</span> 历史</Link>
           <Link href="/pricing" className="hover:text-[#9a4021]">定价</Link>
           <div className="flex gap-3 pt-2 border-t border-[#dcc1b8]">
             {isSignedIn ? (

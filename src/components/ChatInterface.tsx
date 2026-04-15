@@ -163,27 +163,27 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
   }, [isRecording, setInput])
 
   return (
-    <div className="flex flex-col h-full max-w-3xl mx-auto w-full">
+    <div className="flex flex-col h-full bg-[#fbf9f2] max-w-3xl mx-auto w-full">
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6">
+      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6 bg-[#fbf9f2]">
         {messages.length === 0 && (
-          <div className="flex flex-col items-center justify-center h-full gap-8 text-center">
+          <div className="flex flex-col items-center justify-center h-full gap-10 text-center">
             <div>
-              <div className="text-6xl mb-4">{skillEmoji}</div>
-              <h2 className="text-xl font-semibold mb-2">与 {skillName} 对话</h2>
-              <p className="text-sm text-white/40 max-w-sm">
+              <div className="text-7xl mb-6">{skillEmoji}</div>
+              <h2 className="text-2xl font-semibold text-[#1b1c18] mb-3">与 {skillName} 对话</h2>
+              <p className="text-sm text-[#56423c] max-w-sm leading-relaxed">
                 提出你的问题，获得基于严格研究提炼的思维框架洞见
               </p>
             </div>
             {/* Suggested Questions */}
-            <div className="flex flex-col gap-2 w-full max-w-md">
+            <div className="flex flex-col gap-3 w-full max-w-lg">
               {suggestions.map((q) => (
                 <button
                   key={q}
                   onClick={() => sendMessage(q)}
-                  className="text-left px-4 py-3 rounded-xl border border-white/10 text-sm text-white/60 hover:text-white hover:border-white/25 hover:bg-white/5 transition-all"
+                  className="group text-left px-5 py-4 rounded-xl border border-[#dcc1b8] bg-gradient-to-r from-white to-[#fffbf7] text-sm text-[#1b1c18] hover:text-[#9a4021] hover:border-[#9a4021] hover:from-[#fffbf7] hover:to-[#fef8f2] transition-all duration-300 [box-shadow:0px_0px_0px_1px_rgba(220,193,184,0.3)] hover:[box-shadow:0px_0px_0px_1px_rgba(154,64,33,0.3),_0px_2px_12px_rgba(27,28,24,0.05)]"
                 >
-                  {q}
+                  <span className="font-medium">{q}</span>
                 </button>
               ))}
             </div>
@@ -196,10 +196,10 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
             className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
           >
             {/* Avatar */}
-            <div className={`flex-none w-8 h-8 rounded-full flex items-center justify-center text-sm ${
+            <div className={`flex-none w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
               msg.role === 'user'
-                ? 'bg-white text-black'
-                : 'bg-white/10 text-white'
+                ? 'bg-[#9a4021] text-white'
+                : 'bg-[#efeee7] text-[#56423c] border border-[#dcc1b8]'
             }`}>
               {msg.role === 'user' ? '你' : skillEmoji}
             </div>
@@ -208,21 +208,21 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
             <div
               className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
                 msg.role === 'user'
-                  ? 'bg-white text-black rounded-tr-sm'
-                  : 'bg-white/[0.06] text-white/90 rounded-tl-sm'
+                  ? 'bg-[#9a4021] text-white rounded-tr-sm'
+                  : 'bg-[#efeee7] border border-[#dcc1b8]/50 text-[#1b1c18] rounded-tl-sm'
               }`}
             >
               {msg.role === 'assistant' ? (
                 <ReactMarkdown
                   components={{
                     p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
-                    strong: ({ children }) => <strong className="font-semibold text-white">{children}</strong>,
+                    strong: ({ children }) => <strong className="font-semibold text-[#1b1c18]">{children}</strong>,
                     ul: ({ children }) => <ul className="list-disc pl-4 space-y-1 mb-2">{children}</ul>,
                     ol: ({ children }) => <ol className="list-decimal pl-4 space-y-1 mb-2">{children}</ol>,
                     li: ({ children }) => <li>{children}</li>,
-                    h3: ({ children }) => <h3 className="font-semibold text-white mt-3 mb-1">{children}</h3>,
+                    h3: ({ children }) => <h3 className="font-semibold text-[#1b1c18] mt-3 mb-1">{children}</h3>,
                     blockquote: ({ children }) => (
-                      <blockquote className="border-l-2 border-white/20 pl-3 text-white/60 italic my-2">{children}</blockquote>
+                      <blockquote className="border-l-2 border-[#dcc1b8] pl-3 text-[#56423c] italic my-2">{children}</blockquote>
                     ),
                   }}
                 >
@@ -237,10 +237,10 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
 
         {isLoading && messages[messages.length - 1]?.role === 'user' && (
           <div className="flex gap-3">
-            <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-sm">
+            <div className="w-8 h-8 rounded-full bg-[#efeee7] border border-[#dcc1b8] flex items-center justify-center text-sm">
               {skillEmoji}
             </div>
-            <div className="px-4 py-3 rounded-2xl rounded-tl-sm bg-white/[0.06] text-white/40 text-sm">
+            <div className="px-4 py-3 rounded-2xl rounded-tl-sm bg-[#efeee7] border border-[#dcc1b8]/50 text-[#56423c] text-sm">
               <span className="animate-pulse">思考中…</span>
             </div>
           </div>
@@ -249,7 +249,7 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
       </div>
 
       {/* Input Area */}
-      <div className="flex-none border-t border-white/10 px-4 py-4">
+      <div className="flex-none border-t border-[#dcc1b8]/40 bg-[#fbf9f2] px-4 py-4">
         <div className="flex gap-2 items-end">
           {/* 语音按钮 */}
           {voiceSupported && (
@@ -260,16 +260,14 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
               className={`flex-none w-10 h-10 rounded-xl flex items-center justify-center transition-all disabled:opacity-30 ${
                 isRecording
                   ? 'bg-red-500 text-white animate-pulse'
-                  : 'bg-white/[0.05] border border-white/10 text-white/50 hover:text-white hover:border-white/25'
+                  : 'bg-[#efeee7] border border-[#dcc1b8] text-[#89726b] hover:text-[#9a4021] hover:border-[#9a4021]'
               }`}
             >
               {isRecording ? (
-                // 停止图标
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                   <rect x="6" y="6" width="12" height="12" rx="2"/>
                 </svg>
               ) : (
-                // 麦克风图标
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
                   <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
@@ -286,7 +284,7 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
             onKeyDown={handleKeyDown}
             placeholder={isRecording ? '正在聆听…' : `问 ${skillName} 任何问题…`}
             rows={1}
-            className="flex-1 bg-white/[0.05] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 resize-none focus:outline-none focus:border-white/25 transition-colors"
+            className="flex-1 bg-white border border-[#dcc1b8] rounded-xl px-4 py-3 text-sm text-[#1b1c18] placeholder-[#89726b] resize-none focus:outline-none focus:border-[#9a4021] transition-colors"
             style={{ maxHeight: '120px' }}
             disabled={isLoading}
           />
@@ -294,12 +292,12 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
             onClick={() => sendMessage(input)}
             disabled={!input.trim() || isLoading}
             size="sm"
-            className="bg-white text-black hover:bg-white/90 h-10 px-4 flex-none disabled:opacity-30"
+            className="h-10 px-4 flex-none"
           >
             发送
           </Button>
         </div>
-        <p className="text-xs text-white/20 mt-2 text-center">
+        <p className="text-xs text-[#89726b] mt-2 text-center leading-relaxed">
           Enter 发送 · Shift+Enter 换行
           {voiceSupported && ' · 🎤 支持语音输入'}
         </p>

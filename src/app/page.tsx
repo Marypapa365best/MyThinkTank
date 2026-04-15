@@ -17,7 +17,7 @@ export default function HomePage() {
     <div className="flex flex-col min-h-screen">
 
       {/* ── SECTION 1: Hero — Surface (#fbf9f2) ──────────────────────────────── */}
-      <section className="bg-[#fbf9f2] pt-36 pb-24 px-8">
+      <section className="bg-[#fbf9f2] pt-36 pb-32 px-8 lg:px-16">
         <div className="max-w-screen-xl mx-auto">
 
           {/* Overline label — editorial signature */}
@@ -36,39 +36,39 @@ export default function HomePage() {
             </em>
           </h1>
 
-          <p className="text-xl text-[#56423c] max-w-xl mb-12 leading-relaxed">
+          <p className="text-xl text-[#56423c] max-w-[65ch] mb-16 leading-relaxed">
             巴菲特的投资框架、马斯克的第一性原理——
             每一个智囊都基于数十年公开记录严格提炼，而非用户想象。
           </p>
 
           <div className="flex flex-wrap gap-3">
-            <Link href="/skills">
-              <Button size="xl">免费开始咨询</Button>
+            <Link href="/skills" className="group">
+              <Button size="xl" className="group-hover:shadow-lg group-hover:[box-shadow:0px_8px_24px_rgba(154,64,33,0.15)] transition-all">免费开始咨询</Button>
             </Link>
-            <Link href="/about">
-              <Button size="xl" variant="outline">了解方法论</Button>
+            <Link href="/about" className="group">
+              <Button size="xl" variant="outline" className="group-hover:bg-[#fbf9f2] group-hover:border-[#9a4021] transition-all">了解方法论</Button>
             </Link>
           </div>
         </div>
       </section>
 
       {/* ── SECTION 2: Stats — Dark (#30312c) ────────────────────────────────── */}
-      <section className="bg-[#30312c] py-14 px-8">
-        <div className="max-w-screen-xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+      <section className="bg-[#30312c] py-16 px-8 lg:px-16 border-t border-[#3d3e39]">
+        <div className="max-w-screen-xl mx-auto grid grid-cols-2 md:grid-cols-4 divide-x divide-[#3d3e39]">
           {STATS.map((stat) => (
-            <div key={stat.label} className="border-l border-[#3d3e39] pl-6 first:border-l-0 first:pl-0">
-              <div className="font-serif text-4xl text-[#f2f1ea] font-medium mb-1">
-                {stat.value}
-              </div>
-              <div className="text-sm text-[#f2f1ea]/80 mb-0.5">{stat.label}</div>
-              <div className="text-xs text-[#dcc1b8]/60 font-sans tracking-wide">{stat.sub}</div>
+            <div key={stat.label} className="px-8 first:pl-0 last:pr-0">
+              <p className="label-overline text-[#dcc1b8]/50 mb-3">{stat.sub}</p>
+              <p className="font-serif text-[#f2f1ea] leading-none">
+                <span className="text-2xl">{stat.value}</span>
+                <span className="text-sm text-[#f2f1ea]/60 ml-2">{stat.label}</span>
+              </p>
             </div>
           ))}
         </div>
       </section>
 
       {/* ── SECTION 3: Featured Skills — Editorial Bento ─────────────────────── */}
-      <section className="bg-[#efeee7] py-20 px-8">
+      <section className="bg-[#efeee7] py-28 px-8 lg:px-16">
         <div className="max-w-screen-xl mx-auto">
 
           <div className="flex items-end justify-between mb-12">
@@ -78,7 +78,7 @@ export default function HomePage() {
                 每一位都经过<em style={{ fontStyle: 'italic' }}>严格</em>研究
               </h2>
             </div>
-            <Link href="/skills" className="text-sm font-medium text-[#56423c] hover:text-[#9a4021] transition-colors flex items-center gap-1">
+            <Link href="/skills" className="text-sm font-medium text-[#56423c] hover:text-[#9a4021] hover:underline underline-offset-2 transition-colors flex items-center gap-1">
               查看全部 →
             </Link>
           </div>
@@ -86,35 +86,38 @@ export default function HomePage() {
           {/* 3-column skill card grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {FEATURED_SKILLS.map((skill, i) => {
-              // Alternate surface levels for visual rhythm
-              const surface = i % 3 === 0 ? '#f5f4ed' : i % 3 === 1 ? '#ffffff' : '#e9e8e1'
+              // Alternate surface levels for visual rhythm — wider spacing for editorial depth
+              const surface = i % 3 === 0 ? '#f0ede6' : i % 3 === 1 ? '#ffffff' : '#e3dfd6'
               return (
                 <Link
                   key={skill.id}
                   href={`/skills/${skill.id}`}
-                  className="group flex flex-col p-7 rounded-lg transition-all duration-300 hover:-translate-y-0.5 [box-shadow:0px_0px_0px_1px_rgba(220,193,184,0.5)] hover:[box-shadow:0px_0px_0px_1px_rgba(154,64,33,0.3),_0px_4px_20px_rgba(27,28,24,0.06)]"
+                  className="group flex flex-col p-7 rounded-lg transition-all duration-300 hover:-translate-y-1 will-change-transform [box-shadow:0px_0px_0px_1px_rgba(220,193,184,0.5)] hover:[box-shadow:0px_0px_0px_1px_rgba(154,64,33,0.5),_0px_8px_24px_rgba(27,28,24,0.1)] hover:bg-[#fdfcfb]"
                   style={{ backgroundColor: surface }}
                 >
-                  <div className="flex items-start justify-between mb-5">
-                    <span className={`label-overline text-[10px] mt-1 ${
-                      skill.tier === 'free' ? 'text-emerald-700' :
-                      skill.tier === 'pro' ? 'text-[#9a4021]' : 'text-amber-700'
-                    }`}>
-                      {skill.tier === 'free' ? 'Free' : skill.tier === 'pro' ? 'Pro' : 'Elite'}
-                    </span>
+                  <div className="flex items-stretch gap-4 mb-5" style={{ minHeight: 120 }}>
+                    <div className="flex flex-col justify-between flex-1">
+                      <span className={`label-overline text-[10px] ${
+                        skill.tier === 'free' ? 'text-emerald-700' :
+                        skill.tier === 'pro' ? 'text-[#9a4021]' : 'text-amber-700'
+                      }`}>
+                        {skill.tier === 'free' ? 'Free' : skill.tier === 'pro' ? 'Pro' : 'Elite'}
+                      </span>
+                      <div>
+                        <h3 className="text-lg text-[#1b1c18] group-hover:text-[#9a4021] transition-colors leading-tight">
+                          {skill.name}
+                        </h3>
+                        <p className="text-xs text-[#89726b] mt-0.5">{skill.nameEn}</p>
+                      </div>
+                    </div>
                     <SkillAvatar
                       name={skill.name}
                       emoji={skill.emoji}
                       avatar={skill.avatar}
-                      size={72}
+                      size={120}
                     />
                   </div>
-
-                  <h3 className="text-lg text-[#1b1c18] mb-1 group-hover:text-[#9a4021] transition-colors">
-                    {skill.name}
-                  </h3>
-                  <p className="text-xs text-[#89726b] mb-3">{skill.nameEn}</p>
-                  <p className="text-sm text-[#56423c] leading-relaxed flex-1 mb-5">
+                  <p className="text-sm text-[#1b1c18] leading-relaxed flex-1 mb-5">
                     {skill.tagline}
                   </p>
 
@@ -130,7 +133,7 @@ export default function HomePage() {
       </section>
 
       {/* ── SECTION 4: How it Works — Dark ───────────────────────────────────── */}
-      <section className="bg-[#30312c] py-24 px-8">
+      <section className="bg-[#30312c] py-32 px-8 lg:px-16">
         <div className="max-w-screen-xl mx-auto">
           <p className="label-overline text-[#dcc1b8] mb-4 text-center">使用方法</p>
           <h2 className="text-4xl text-[#f2f1ea] text-center mb-16">
@@ -142,7 +145,7 @@ export default function HomePage() {
               { step: '02', title: '直接提问', desc: '像和真人对话一样，用自然语言描述你的问题或决策困境' },
               { step: '03', title: '获得洞见', desc: '基于40+一手资料提炼的思维框架，给出有深度、有态度的专业判断' },
             ].map((item) => (
-              <div key={item.step} className="border-l border-[#3d3e39] pl-8">
+              <div key={item.step} className="border-l-2 border-[#9a4021]/20 pl-8 hover:border-[#9a4021]/40 transition-colors">
                 <div className="font-serif text-5xl text-[#3d3e39] font-medium mb-5 leading-none">
                   {item.step}
                 </div>
@@ -155,7 +158,7 @@ export default function HomePage() {
       </section>
 
       {/* ── SECTION 5: Manifesto — Surface-low ───────────────────────────────── */}
-      <section className="bg-[#f5f4ed] py-24 px-8 border-t border-[#dcc1b8]/40">
+      <section className="bg-[#f5f4ed] py-32 px-8 lg:px-16 border-t border-[#dcc1b8]/40">
         <div className="max-w-screen-xl mx-auto grid md:grid-cols-2 gap-16 items-center">
           <div>
             <p className="label-overline text-[#9a4021] mb-5">我们的立场</p>
@@ -176,11 +179,11 @@ export default function HomePage() {
           </div>
 
           {/* Pull quote */}
-          <div className="border-l-2 border-[#9a4021] pl-10">
-            <p className="font-serif text-3xl italic font-light text-[#1b1c18] leading-snug mb-6">
+          <div className="border-t-2 border-[#9a4021] pt-8 hover:border-[#9a4021] transition-all">
+            <p className="font-serif text-4xl italic font-light text-[#1b1c18] leading-snug mb-6 hover:text-[#9a4021]/80 transition-colors">
               &ldquo;精确是优雅的基础。每一个智囊框架，都应服务于决策，而非娱乐。&rdquo;
             </p>
-            <cite className="label-overline text-[#89726b] not-italic">
+            <cite className="label-overline text-[#89726b] not-italic tracking-wide">
               — 我的智囊 · 设计宣言
             </cite>
           </div>

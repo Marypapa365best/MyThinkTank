@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Newsreader } from "next/font/google";
+import { Piazzolla } from "next/font/google";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
@@ -7,12 +7,10 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import DisclaimerBanner from "@/components/DisclaimerBanner";
 
-// Newsreader: optical sizing + italic — editorial signature for Latin text
-const newsreader = Newsreader({
+// Piazzolla: variable serif, optical sizing, strong italic — editorial signature for Latin text
+const piazzolla = Piazzolla({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  style: ["normal", "italic"],
-  variable: "--font-newsreader",
+  variable: "--font-piazzolla",
   display: "swap",
 });
 
@@ -37,7 +35,7 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="zh" className={`${newsreader.variable} ${inter.variable}`}>
+      <html lang="zh" className={`${piazzolla.variable} ${inter.variable}`}>
         <head>
           {/* Noto Serif SC — 思源宋体: Google Fonts CDN handles CJK unicode-range
               subsetting automatically, only downloads characters on screen */}

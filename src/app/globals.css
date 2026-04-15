@@ -17,9 +17,9 @@
   /* Chinese: Noto Serif SC (思源宋体) → Latin: Newsreader → fallback: Georgia
      Browser picks Noto Serif SC for CJK glyphs, Newsreader for Latin glyphs */
   --font-sans:    var(--font-inter), 'Inter', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
-  --font-serif:   'Noto Serif SC', var(--font-newsreader), 'Newsreader', Georgia, serif;
+  --font-serif:   'Noto Serif SC', var(--font-piazzolla), 'Piazzolla', Georgia, serif;
   --font-mono:    var(--font-geist-mono);
-  --font-heading: 'Noto Serif SC', var(--font-newsreader), 'Newsreader', Georgia, serif;
+  --font-heading: 'Noto Serif SC', var(--font-piazzolla), 'Piazzolla', Georgia, serif;
 
   /* ── Semantic tokens → CSS vars ───────────────────────────────────────── */
   --color-background:           var(--background);
@@ -153,20 +153,20 @@
      Italic support is the signature move: use <em> or .italic inside headings.
   ──────────────────────────────────────────────────────────────────────── */
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Noto Serif SC', var(--font-newsreader), Newsreader, Georgia, serif;
+    font-family: 'Noto Serif SC', var(--font-newsreader), Piazzolla, Georgia, serif;
     font-weight: 500;
     font-optical-sizing: auto;
     line-height: 1.15;
   }
-  h1 { line-height: 1.08; }
-  h2 { line-height: 1.12; }
-  h3 { line-height: 1.20; }
+  h1 { line-height: 1.15; }
+  h2 { line-height: 1.18; }
+  h3 { line-height: 1.25; }
 
   p { line-height: 1.65; }
 
   /* Editorial italic accent — use inside headings for the signature look */
   .serif-italic {
-    font-family: 'Noto Serif SC', var(--font-newsreader), Newsreader, Georgia, serif;
+    font-family: 'Noto Serif SC', var(--font-newsreader), Piazzolla, Georgia, serif;
     font-style: italic;
     font-weight: 400;
   }
@@ -185,6 +185,15 @@
   .ring-card   { box-shadow: 0px 0px 0px 1px rgba(220,193,184,0.6); }
   .ring-card-hover { box-shadow: 0px 0px 0px 1px rgba(154,64,33,0.25); }
   .ring-primary { box-shadow: 0px 0px 0px 1px #9a4021; }
+
+  /* ── Focus ring visibility ────────────────────────────────────────────── */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid #9a4021;
+    outline-offset: 2px;
+  }
 
   /* ── Dark section ─────────────────────────────────────────────────────── */
   .dark-section {

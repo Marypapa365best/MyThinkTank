@@ -42,8 +42,8 @@ export default function SkillAvatar({
   // Emoji fallback
   return (
     <div
-      className={`${base} bg-[#f0eee6] flex items-center justify-center`}
-      style={{ width: size, height: size, fontSize: size * 0.45 }}
+      className={`${base} bg-[#e3dfd6] border-2 border-[#dcc1b8] flex items-center justify-center flex-none`}
+      style={{ width: size, height: size, fontSize: size * 0.5 }}
     >
       {emoji}
     </div>

@@ -238,17 +238,17 @@ export default function InterrogateInterface() {
   const canStart = selectedIds.length > 0 && targetContent.trim().length > 20 && !isRunning
 
   return (
-    <div className="min-h-screen bg-[#141413] text-[#f5f4ed] pt-24 pb-20 px-4">
+    <div className="min-h-screen bg-[#fbf9f2] text-[#1b1c18] pt-24 pb-20 px-4">
       <div className="max-w-4xl mx-auto">
 
         {/* Header */}
         <div className="mb-10 text-center">
           <div className="text-4xl mb-3">🔍</div>
           <h1 className="text-3xl font-bold mb-2">质疑团</h1>
-          <p className="text-white/40 text-sm max-w-md mx-auto">
+          <p className="text-[#56423c] text-sm max-w-md mx-auto">
             粘贴任何人的言论，让顶级智囊联合审查——只评判事实与逻辑，不搞人身攻击
           </p>
-          <p className="mt-3 text-xs text-white/20 max-w-sm mx-auto">
+          <p className="mt-3 text-xs text-[#89726b] max-w-sm mx-auto">
             以下内容基于公开资料推断，代表各人物的思维框架，非本人观点
           </p>
         </div>
@@ -257,7 +257,7 @@ export default function InterrogateInterface() {
         {!hasStarted && (
           <div className="space-y-6">
             {/* Target Input */}
-            <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 space-y-4">
+            <div className="rounded-2xl border border-[#dcc1b8] bg-[#fbf9f2] p-6 space-y-4">
               <h2 className="text-sm font-medium text-white/50 uppercase tracking-wider">被审查对象</h2>
 
               <input
@@ -265,7 +265,7 @@ export default function InterrogateInterface() {
                 value={targetName}
                 onChange={e => setTargetName(e.target.value)}
                 placeholder='对象名称（选填，如 "某AI教父"、"某创投博主"）'
-                className="w-full bg-white/[0.04] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/20 focus:outline-none focus:border-white/25 transition-colors"
+                className="w-full bg-white/[0.04] border border-[#dcc1b8] rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/20 focus:outline-none focus:border-white/25 transition-colors"
               />
 
               <textarea
@@ -273,9 +273,9 @@ export default function InterrogateInterface() {
                 onChange={e => setTargetContent(e.target.value)}
                 placeholder={`粘贴被审查的言论、文章或主张…\n\n例如：\n"AI将在3年内取代90%的程序员，现在学编程已经没有意义了。掌握提示词工程才是未来，我的课程将帮助你月入10万…"`}
                 rows={7}
-                className="w-full bg-white/[0.04] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/20 resize-none focus:outline-none focus:border-white/25 transition-colors"
+                className="w-full bg-white/[0.04] border border-[#dcc1b8] rounded-xl px-4 py-3 text-sm text-white placeholder-white/20 resize-none focus:outline-none focus:border-white/25 transition-colors"
               />
-              <div className="text-right text-xs text-white/20">
+              <div className="text-right text-xs text-[#89726b]">
                 {targetContent.length} 字
               </div>
             </div>
@@ -301,8 +301,8 @@ export default function InterrogateInterface() {
                         selected
                           ? 'border-red-500/40 bg-red-500/10 text-white'
                           : disabled
-                            ? 'border-white/5 bg-white/[0.02] text-white/20 cursor-not-allowed'
-                            : 'border-white/10 bg-white/[0.03] text-white/60 hover:border-white/25 hover:text-white hover:bg-white/[0.06]'
+                            ? 'border-white/5 bg-[#fbf9f2] text-[#89726b] cursor-not-allowed'
+                            : 'border-[#dcc1b8] bg-[#efeee7] text-[#56423c] hover:border-white/25 hover:text-white hover:bg-white/[0.06]'
                       }`}
                     >
                       <SkillAvatar
@@ -342,20 +342,20 @@ export default function InterrogateInterface() {
         {hasStarted && (
           <div className="space-y-4">
             {/* Target Summary */}
-            <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10">
-              <div className="text-xs text-white/30 mb-1">审查对象{targetName ? `：${targetName}` : ''}</div>
-              <div className="text-sm text-white/60 line-clamp-3">{targetContent}</div>
+            <div className="p-4 rounded-xl bg-[#efeee7] border border-[#dcc1b8]">
+              <div className="text-xs text-[#89726b] mb-1">审查对象{targetName ? `：${targetName}` : ''}</div>
+              <div className="text-sm text-[#56423c] line-clamp-3">{targetContent}</div>
             </div>
 
             {/* Critiques */}
             {critiques.map((critique, i) => (
-              <div key={i} className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <div key={i} className="rounded-2xl border border-[#dcc1b8] bg-[#fbf9f2] p-5">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="text-xl">{critique.skillEmoji}</span>
                   <span className="text-sm font-medium text-white/80">{critique.skillName}</span>
-                  <span className="text-xs text-white/30 ml-1">的质疑</span>
+                  <span className="text-xs text-[#89726b] ml-1">的质疑</span>
                   {critique.isStreaming && (
-                    <span className="ml-auto text-xs text-white/30 animate-pulse">分析中…</span>
+                    <span className="ml-auto text-xs text-[#89726b] animate-pulse">分析中…</span>
                   )}
                 </div>
                 <div className="text-sm text-white/75 leading-relaxed">
@@ -415,7 +415,7 @@ export default function InterrogateInterface() {
             )}
 
             {isDone && (
-              <div className="text-center text-xs text-white/20 py-2">── 审查完毕 ──</div>
+              <div className="text-center text-xs text-[#89726b] py-2">── 审查完毕 ──</div>
             )}
 
             <div ref={bottomRef} />
@@ -425,14 +425,14 @@ export default function InterrogateInterface() {
               {isRunning ? (
                 <button
                   onClick={() => { abortRef.current?.abort(); setIsRunning(false) }}
-                  className="px-6 py-2.5 border border-white/20 text-white/60 text-sm rounded-xl hover:text-white hover:border-white/40 transition-all"
+                  className="px-6 py-2.5 border border-[#dcc1b8]/50 text-[#56423c] text-sm rounded-xl hover:text-white hover:border-white/40 transition-all"
                 >
                   停止审查
                 </button>
               ) : (
                 <button
                   onClick={reset}
-                  className="px-6 py-2.5 border border-white/20 text-white/60 text-sm rounded-xl hover:text-white hover:border-white/40 transition-all"
+                  className="px-6 py-2.5 border border-[#dcc1b8]/50 text-[#56423c] text-sm rounded-xl hover:text-white hover:border-white/40 transition-all"
                 >
                   重新审查
                 </button>
