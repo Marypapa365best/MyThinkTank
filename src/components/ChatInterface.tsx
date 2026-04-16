@@ -208,7 +208,7 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
             <div
               className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
                 msg.role === 'user'
-                  ? 'bg-[#9a4021] text-[#1b1c18] rounded-tr-sm'
+                  ? 'bg-[#9a4021] text-white rounded-tr-sm'
                   : 'bg-[#efeee7] border border-[#dcc1b8]/50 text-[#1b1c18] rounded-tl-sm'
               }`}
             >
@@ -292,7 +292,7 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
             onClick={() => sendMessage(input)}
             disabled={!input.trim() || isLoading}
             size="sm"
-            className="h-10 px-4 flex-none"
+            className="h-10 px-4 flex-none text-white"
           >
             发送
           </Button>
