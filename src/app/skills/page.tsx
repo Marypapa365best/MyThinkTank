@@ -32,7 +32,7 @@ export default function SkillsPage() {
       {/* ── Header — Surface ───────────────────────────────────────────────── */}
       <div className="bg-[#fbf9f2] pt-32 pb-12 px-8 lg:px-16 border-b border-[#dcc1b8]/40">
         <div className="max-w-screen-xl mx-auto">
-          <p className="label-overline text-[#9a4021] mb-4">智囊库</p>
+          <p className="label-overline text-[#f97316] mb-4">智囊库</p>
           <h1 className="text-5xl text-[#1b1c18] mb-3">
             遇见真正的<em style={{ fontStyle: 'italic' }}>思维大师</em>
           </h1>
@@ -56,7 +56,7 @@ export default function SkillsPage() {
                 className={`px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border ${
                   activeCategory === cat.value
                     ? 'bg-[#30312c] text-[#f2f1ea] border-[#30312c] shadow-md hover:shadow-lg'
-                    : 'border-[#dcc1b8] text-[#56423c] bg-[#fbf9f2] hover:border-[#9a4021] hover:text-[#9a4021] hover:bg-white hover:shadow-sm'
+                    : 'border-[#dcc1b8] text-[#56423c] bg-[#fbf9f2] hover:border-[#f97316] hover:text-[#f97316] hover:bg-white hover:shadow-sm'
                 }`}
               >
                 {cat.label}
@@ -77,12 +77,12 @@ export default function SkillsPage() {
                   <div className="flex flex-col justify-between flex-1">
                     <span className={`label-overline text-[10px] ${
                       skill.tier === 'free' ? 'text-emerald-700' :
-                      skill.tier === 'pro' ? 'text-[#9a4021]' : 'text-amber-700'
+                      skill.tier === 'pro' ? 'text-[#f97316]' : 'text-amber-700'
                     }`}>
                       {skill.tier === 'free' ? 'Free' : skill.tier === 'pro' ? 'Pro' : 'Elite'}
                     </span>
                     <div>
-                      <h3 className="text-lg text-[#1b1c18] group-hover:text-[#9a4021] transition-colors leading-tight">
+                      <h3 className="text-lg text-[#1b1c18] group-hover:text-[#f97316] transition-colors leading-tight">
                         {skill.name}
                       </h3>
                       <p className="text-xs text-[#89726b] mt-0.5">{skill.nameEn}</p>
@@ -97,7 +97,7 @@ export default function SkillsPage() {
                 {/* Tags */}
                 <div className="flex flex-wrap gap-1.5 mb-5">
                   {skill.tags.slice(0, 3).map(tag => (
-                    <span key={tag} className="text-xs px-2.5 py-0.5 rounded-full bg-[#efeee7] text-[#89726b] group-hover:bg-[#9a4021]/10 group-hover:text-[#9a4021] transition-colors">
+                    <span key={tag} className="text-xs px-2.5 py-0.5 rounded-full bg-[#efeee7] text-[#89726b] group-hover:bg-[#f97316]/10 group-hover:text-[#f97316] transition-colors">
                       {tag}
                     </span>
                   ))}

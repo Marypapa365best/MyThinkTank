@@ -96,7 +96,7 @@ export default function PricingPage() {
       {/* ── Header — LIGHT ─────────────────────────────────────────────────── */}
       <div className="bg-[#fbf9f2] pt-32 pb-20 px-4">
         <div className="max-w-5xl mx-auto text-center">
-          <p className="text-xs text-[#9a4021] mb-4 tracking-wider uppercase font-medium">定价方案</p>
+          <p className="text-xs text-[#f97316] mb-4 tracking-wider uppercase font-medium">定价方案</p>
           <h1
             className="text-5xl text-[#1b1c18] mb-4"
             style={serifStyle}
@@ -124,7 +124,7 @@ export default function PricingPage() {
               >
                 {plan.badge && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <span className="bg-[#9a4021] text-white text-xs font-medium px-4 py-1.5 rounded-full shadow-sm">
+                    <span className="bg-[#f97316] text-white text-xs font-medium px-4 py-1.5 rounded-full shadow-sm">
                       ⭐ {plan.badge}
                     </span>
                   </div>
@@ -160,8 +160,8 @@ export default function PricingPage() {
                   href={plan.ctaHref}
                   className={`block text-center py-3 rounded-xl text-sm font-medium transition-all mb-6 ${
                     plan.highlight
-                      ? 'bg-[#9a4021] text-white hover:bg-[#9a4021]/90 shadow-sm'
-                      : 'border border-[#dcc1b8] text-[#56423c] hover:text-[#9a4021] hover:border-[#9a4021] hover:bg-[#fbf9f2]'
+                      ? 'bg-[#f97316] text-white hover:bg-[#f97316]/90 shadow-sm'
+                      : 'border border-[#dcc1b8] text-[#56423c] hover:text-[#f97316] hover:border-[#f97316] hover:bg-[#fbf9f2]'
                   }`}
                 >
                   {plan.cta}
@@ -173,7 +173,7 @@ export default function PricingPage() {
                     <li key={f.text} className="flex items-start gap-2.5 text-sm">
                       <span className={`mt-0.5 flex-none text-base leading-none ${
                         f.included
-                          ? plan.highlight ? 'text-[#9a4021]' : 'text-[#9a4021]'
+                          ? plan.highlight ? 'text-[#f97316]' : 'text-[#f97316]'
                           : plan.highlight ? 'text-[#dcc1b8]' : 'text-[#89726b]'
                       }`}>
                         {f.included ? '✓' : '–'}
@@ -201,7 +201,7 @@ export default function PricingPage() {
       {/* ── FAQ — LIGHT ────────────────────────────────────────────────────── */}
       <div className="bg-[#fbf9f2] py-24 px-4">
         <div className="max-w-2xl mx-auto">
-          <p className="text-xs text-[#9a4021] mb-4 tracking-wider uppercase font-medium text-center">FAQ</p>
+          <p className="text-xs text-[#f97316] mb-4 tracking-wider uppercase font-medium text-center">FAQ</p>
           <h2
             className="text-3xl text-[#1b1c18] mb-14 text-center"
             style={serifStyle}
@@ -228,7 +228,7 @@ export default function PricingPage() {
           <p className="text-[#89726b] text-sm mb-5">还有其他疑问？</p>
           <a
             href="mailto:hello@mythinkank.ai"
-            className="text-[#9a4021] hover:text-[#9a4021]/80 text-sm font-medium underline underline-offset-4 transition-colors"
+            className="text-[#f97316] hover:text-[#f97316]/80 text-sm font-medium underline underline-offset-4 transition-colors"
           >
             📧 发邮件给我们
           </a>

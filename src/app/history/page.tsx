@@ -59,7 +59,7 @@ export default function HistoryPage() {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => downloadAllMarkdown(sessions)}
-                className="text-xs text-[#1b1c18]/40 hover:text-[#1b1c18] transition-colors px-3 py-1.5 border border-[#dcc1b8] rounded-lg hover:border-[#9a4021]/25"
+                className="text-xs text-[#1b1c18]/40 hover:text-[#1b1c18] transition-colors px-3 py-1.5 border border-[#dcc1b8] rounded-lg hover:border-[#f97316]/25"
               >
                 ↓ 全部导出 .md
               </button>
@@ -112,14 +112,14 @@ export default function HistoryPage() {
                 <div className="flex items-center gap-2 ml-2 shrink-0">
                   <button
                     onClick={e => { e.stopPropagation(); downloadMarkdown(s) }}
-                    className="text-[#1b1c18]/25 hover:text-[#56423c] text-xs transition-colors px-1.5 py-0.5 rounded border border-[#dcc1b8] hover:border-[#9a4021]/25"
+                    className="text-[#1b1c18]/25 hover:text-[#56423c] text-xs transition-colors px-1.5 py-0.5 rounded border border-[#dcc1b8] hover:border-[#f97316]/25"
                     title="下载 Markdown"
                   >
                     .md
                   </button>
                   <button
                     onClick={e => { e.stopPropagation(); printSession(s) }}
-                    className="text-[#1b1c18]/25 hover:text-[#56423c] text-xs transition-colors px-1.5 py-0.5 rounded border border-[#dcc1b8] hover:border-[#9a4021]/25"
+                    className="text-[#1b1c18]/25 hover:text-[#56423c] text-xs transition-colors px-1.5 py-0.5 rounded border border-[#dcc1b8] hover:border-[#f97316]/25"
                     title="导出 PDF"
                   >
                     PDF

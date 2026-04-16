@@ -253,10 +253,10 @@ export default function BrainstormInterface() {
                       disabled={disabled}
                       className={`flex flex-col items-center gap-3 px-4 py-4 rounded-lg text-sm transition-all ${
                         selected
-                          ? 'bg-white text-[#1b1c18] shadow-lg shadow-[#9a4021]/25'
+                          ? 'bg-white text-[#1b1c18] shadow-lg shadow-[#f97316]/25'
                           : disabled
                             ? 'bg-[#fbf9f2] text-[#89726b]/50 cursor-not-allowed'
-                            : 'bg-white text-[#56423c] shadow-md shadow-black/10 hover:text-[#1b1c18] hover:shadow-lg hover:shadow-[#9a4021]/20 hover:scale-105'
+                            : 'bg-white text-[#56423c] shadow-md shadow-black/10 hover:text-[#1b1c18] hover:shadow-lg hover:shadow-[#f97316]/20 hover:scale-105'
                       }`}
                     >
                       <SkillAvatar
@@ -267,7 +267,7 @@ export default function BrainstormInterface() {
                       />
                       <span className="text-xs text-center font-medium">{skill.name}</span>
                       {selected && (
-                        <span className="text-[#9a4021] text-sm font-medium">
+                        <span className="text-[#f97316] text-sm font-medium">
                           #{selectedIds.indexOf(skill.id) + 1}
                         </span>
                       )}

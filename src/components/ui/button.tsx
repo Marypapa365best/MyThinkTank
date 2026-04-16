@@ -3,16 +3,16 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 // M3 Warm Terracotta button system
-// Primary: #9a4021 (brick red — deeper, more sophisticated than orange)
+// Primary: #f97316 (brick red — deeper, more sophisticated than orange)
 // Ring-based shadows — no drop shadows
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center gap-1.5 rounded-lg border border-transparent text-sm font-medium whitespace-nowrap transition-all duration-200 outline-none select-none focus-visible:ring-2 focus-visible:ring-[#9a4021]/40 active:translate-y-px disabled:pointer-events-none disabled:opacity-40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button inline-flex shrink-0 items-center justify-center gap-1.5 rounded-lg border border-transparent text-sm font-medium whitespace-nowrap transition-all duration-200 outline-none select-none focus-visible:ring-2 focus-visible:ring-[#f97316]/40 active:translate-y-px disabled:pointer-events-none disabled:opacity-40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
         // Brick red — primary CTA
         default:
-          "bg-[#9a4021] text-[#1b1c18] hover:bg-[#b95837] [box-shadow:0px_0px_0px_1px_#7e2c0e] hover:[box-shadow:0px_0px_0px_1px_#9a4021]",
+          "bg-[#f97316] text-[#1b1c18] hover:bg-[#b95837] [box-shadow:0px_0px_0px_1px_#7e2c0e] hover:[box-shadow:0px_0px_0px_1px_#f97316]",
 
         // Warm surface — secondary
         secondary:
@@ -34,7 +34,7 @@ const buttonVariants = cva(
         destructive:
           "bg-[#ba1a1a]/10 text-[#ba1a1a] border border-[#ba1a1a]/20 hover:bg-[#ba1a1a]/15",
 
-        link: "text-[#9a4021] underline-offset-4 hover:underline",
+        link: "text-[#f97316] underline-offset-4 hover:underline",
       },
       size: {
         xs:      "h-6 gap-1 rounded px-2 text-xs",
