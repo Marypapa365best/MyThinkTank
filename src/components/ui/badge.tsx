@@ -10,7 +10,7 @@ const badgeVariants = cva(
       variant: {
         // Brick red — high signal
         default:
-          "bg-[#f97316] text-[#1b1c18]",
+          "bg-[#d97757] text-[#1b1c18]",
 
         // Warm surface — neutral
         secondary:
@@ -31,7 +31,7 @@ const badgeVariants = cva(
         destructive:
           "bg-[#ba1a1a]/10 text-[#ba1a1a] border border-[#ba1a1a]/20",
 
-        link: "text-[#f97316] underline-offset-4 hover:underline",
+        link: "text-[#d97757] underline-offset-4 hover:underline",
       },
     },
     defaultVariants: { variant: "default" },

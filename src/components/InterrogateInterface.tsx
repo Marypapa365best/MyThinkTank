@@ -265,7 +265,7 @@ export default function InterrogateInterface() {
                 value={targetName}
                 onChange={e => setTargetName(e.target.value)}
                 placeholder='对象名称（选填，如 "某AI教父"、"某创投博主"）'
-                className="w-full bg-white border border-[#dcc1b8] rounded-xl px-4 py-2.5 text-sm text-[#1b1c18] placeholder-[#89726b] focus:outline-none focus:border-[#f97316] transition-colors"
+                className="w-full bg-white border border-[#dcc1b8] rounded-xl px-4 py-2.5 text-sm text-[#1b1c18] placeholder-[#89726b] focus:outline-none focus:border-[#d97757] transition-colors"
               />
 
               <textarea
@@ -273,7 +273,7 @@ export default function InterrogateInterface() {
                 onChange={e => setTargetContent(e.target.value)}
                 placeholder={`粘贴被审查的言论、文章或主张…\n\n例如：\n"AI将在3年内取代90%的程序员，现在学编程已经没有意义了。掌握提示词工程才是未来，我的课程将帮助你月入10万…"`}
                 rows={7}
-                className="w-full bg-white border border-[#dcc1b8] rounded-xl px-4 py-3 text-sm text-[#1b1c18] placeholder-[#89726b] resize-none focus:outline-none focus:border-[#f97316] transition-colors"
+                className="w-full bg-white border border-[#dcc1b8] rounded-xl px-4 py-3 text-sm text-[#1b1c18] placeholder-[#89726b] resize-none focus:outline-none focus:border-[#d97757] transition-colors"
               />
               <div className="text-right text-xs text-[#89726b]">
                 {targetContent.length} 字
@@ -299,10 +299,10 @@ export default function InterrogateInterface() {
                       disabled={disabled}
                       className={`flex flex-col items-center gap-3 px-4 py-4 rounded-lg text-sm transition-all ${
                         selected
-                          ? 'bg-white text-[#1b1c18] shadow-lg shadow-[#f97316]/25'
+                          ? 'bg-white text-[#1b1c18] shadow-lg shadow-[#d97757]/25'
                           : disabled
                             ? 'bg-[#fbf9f2] text-[#89726b]/50 cursor-not-allowed'
-                            : 'bg-white text-[#56423c] shadow-md shadow-black/10 hover:text-[#1b1c18] hover:shadow-lg hover:shadow-[#f97316]/20 hover:scale-105'
+                            : 'bg-white text-[#56423c] shadow-md shadow-black/10 hover:text-[#1b1c18] hover:shadow-lg hover:shadow-[#d97757]/20 hover:scale-105'
                       }`}
                     >
                       <SkillAvatar
@@ -313,7 +313,7 @@ export default function InterrogateInterface() {
                       />
                       <span className="text-xs text-center font-medium">{skill.name}</span>
                       {selected && (
-                        <span className="text-[#f97316] text-sm font-bold">✓</span>
+                        <span className="text-[#d97757] text-sm font-bold">✓</span>
                       )}
                     </button>
                   )

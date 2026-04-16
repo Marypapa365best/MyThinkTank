@@ -21,7 +21,7 @@ export default function HomePage() {
         <div className="max-w-screen-xl mx-auto">
 
           {/* Overline label — editorial signature */}
-          <p className="label-overline text-[#f97316] mb-7">
+          <p className="label-overline text-[#d97757] mb-7">
             严肃商业决策平台 · 拒绝娱乐化
           </p>
 
@@ -31,7 +31,7 @@ export default function HomePage() {
             <br />
             装着一整个
             <br />
-            <em className="serif-italic text-[#f97316] not-italic" style={{ fontStyle: 'italic' }}>
+            <em className="serif-italic text-[#d97757] not-italic" style={{ fontStyle: 'italic' }}>
               智囊团
             </em>
           </h1>
@@ -46,7 +46,7 @@ export default function HomePage() {
               <Button size="xl" className="text-white group-hover:shadow-lg group-hover:[box-shadow:0px_8px_24px_rgba(154,64,33,0.15)] transition-all">免费开始咨询</Button>
             </Link>
             <Link href="/about" className="group">
-              <Button size="xl" variant="outline" className="group-hover:bg-[#fbf9f2] group-hover:border-[#f97316] transition-all">了解方法论</Button>
+              <Button size="xl" variant="outline" className="group-hover:bg-[#fbf9f2] group-hover:border-[#d97757] transition-all">了解方法论</Button>
             </Link>
           </div>
         </div>
@@ -73,12 +73,12 @@ export default function HomePage() {
 
           <div className="flex items-end justify-between mb-12">
             <div>
-              <p className="label-overline text-[#f97316] mb-3">精选智囊</p>
+              <p className="label-overline text-[#d97757] mb-3">精选智囊</p>
               <h2 className="text-4xl text-[#1b1c18]">
                 每一位都经过<em style={{ fontStyle: 'italic' }}>严格</em>研究
               </h2>
             </div>
-            <Link href="/skills" className="text-sm font-medium text-[#56423c] hover:text-[#f97316] hover:underline underline-offset-2 transition-colors flex items-center gap-1">
+            <Link href="/skills" className="text-sm font-medium text-[#56423c] hover:text-[#d97757] hover:underline underline-offset-2 transition-colors flex items-center gap-1">
               查看全部 →
             </Link>
           </div>
@@ -99,12 +99,12 @@ export default function HomePage() {
                     <div className="flex flex-col justify-between flex-1">
                       <span className={`label-overline text-[10px] ${
                         skill.tier === 'free' ? 'text-emerald-700' :
-                        skill.tier === 'pro' ? 'text-[#f97316]' : 'text-amber-700'
+                        skill.tier === 'pro' ? 'text-[#d97757]' : 'text-amber-700'
                       }`}>
                         {skill.tier === 'free' ? 'Free' : skill.tier === 'pro' ? 'Pro' : 'Elite'}
                       </span>
                       <div>
-                        <h3 className="text-lg text-[#1b1c18] group-hover:text-[#f97316] transition-colors leading-tight">
+                        <h3 className="text-lg text-[#1b1c18] group-hover:text-[#d97757] transition-colors leading-tight">
                           {skill.name}
                         </h3>
                         <p className="text-xs text-[#89726b] mt-0.5">{skill.nameEn}</p>
@@ -145,7 +145,7 @@ export default function HomePage() {
               { step: '02', title: '直接提问', desc: '像和真人对话一样，用自然语言描述你的问题或决策困境' },
               { step: '03', title: '获得洞见', desc: '基于40+一手资料提炼的思维框架，给出有深度、有态度的专业判断' },
             ].map((item) => (
-              <div key={item.step} className="border-l-2 border-[#f97316]/20 pl-8 hover:border-[#f97316]/40 transition-colors">
+              <div key={item.step} className="border-l-2 border-[#d97757]/20 pl-8 hover:border-[#d97757]/40 transition-colors">
                 <div className="font-serif text-5xl text-[#3d3e39] font-medium mb-5 leading-none">
                   {item.step}
                 </div>
@@ -161,7 +161,7 @@ export default function HomePage() {
       <section className="bg-[#f5f4ed] py-32 px-8 lg:px-16 border-t border-[#dcc1b8]/40">
         <div className="max-w-screen-xl mx-auto grid md:grid-cols-2 gap-16 items-center">
           <div>
-            <p className="label-overline text-[#f97316] mb-5">我们的立场</p>
+            <p className="label-overline text-[#d97757] mb-5">我们的立场</p>
             <h2 className="text-4xl text-[#1b1c18] mb-6">
               我们不是<br />
               <em style={{ fontStyle: 'italic' }}>Character.AI</em>
@@ -179,8 +179,8 @@ export default function HomePage() {
           </div>
 
           {/* Pull quote */}
-          <div className="border-t-2 border-[#f97316] pt-8 hover:border-[#f97316] transition-all">
-            <p className="font-serif text-4xl italic font-light text-[#1b1c18] leading-snug mb-6 hover:text-[#f97316]/80 transition-colors">
+          <div className="border-t-2 border-[#d97757] pt-8 hover:border-[#d97757] transition-all">
+            <p className="font-serif text-4xl italic font-light text-[#1b1c18] leading-snug mb-6 hover:text-[#d97757]/80 transition-colors">
               &ldquo;精确是优雅的基础。每一个智囊框架，都应服务于决策，而非娱乐。&rdquo;
             </p>
             <cite className="label-overline text-[#89726b] not-italic tracking-wide">

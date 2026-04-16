@@ -181,7 +181,7 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
                 <button
                   key={q}
                   onClick={() => sendMessage(q)}
-                  className="group text-left px-5 py-4 rounded-xl border border-[#dcc1b8] bg-gradient-to-r from-white to-[#fffbf7] text-sm text-[#1b1c18] hover:text-[#f97316] hover:border-[#f97316] hover:from-[#fffbf7] hover:to-[#fef8f2] transition-all duration-300 [box-shadow:0px_0px_0px_1px_rgba(220,193,184,0.3)] hover:[box-shadow:0px_0px_0px_1px_rgba(154,64,33,0.3),_0px_2px_12px_rgba(27,28,24,0.05)]"
+                  className="group text-left px-5 py-4 rounded-xl border border-[#dcc1b8] bg-gradient-to-r from-white to-[#fffbf7] text-sm text-[#1b1c18] hover:text-[#d97757] hover:border-[#d97757] hover:from-[#fffbf7] hover:to-[#fef8f2] transition-all duration-300 [box-shadow:0px_0px_0px_1px_rgba(220,193,184,0.3)] hover:[box-shadow:0px_0px_0px_1px_rgba(154,64,33,0.3),_0px_2px_12px_rgba(27,28,24,0.05)]"
                 >
                   <span className="font-medium">{q}</span>
                 </button>
@@ -198,7 +198,7 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
             {/* Avatar */}
             <div className={`flex-none w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
               msg.role === 'user'
-                ? 'bg-[#f97316] text-white'
+                ? 'bg-[#d97757] text-white'
                 : 'bg-[#efeee7] text-[#56423c] border border-[#dcc1b8]'
             }`}>
               {msg.role === 'user' ? '你' : skillEmoji}
@@ -208,7 +208,7 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
             <div
               className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
                 msg.role === 'user'
-                  ? 'bg-[#f97316] text-white rounded-tr-sm'
+                  ? 'bg-[#d97757] text-white rounded-tr-sm'
                   : 'bg-[#efeee7] border border-[#dcc1b8]/50 text-[#1b1c18] rounded-tl-sm'
               }`}
             >
@@ -260,7 +260,7 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
               className={`flex-none w-10 h-10 rounded-xl flex items-center justify-center transition-all disabled:opacity-30 ${
                 isRecording
                   ? 'bg-red-500 text-[#1b1c18] animate-pulse'
-                  : 'bg-[#efeee7] border border-[#dcc1b8] text-[#89726b] hover:text-[#f97316] hover:border-[#f97316]'
+                  : 'bg-[#efeee7] border border-[#dcc1b8] text-[#89726b] hover:text-[#d97757] hover:border-[#d97757]'
               }`}
             >
               {isRecording ? (
@@ -284,7 +284,7 @@ export default function ChatInterface({ skillId, skillName, skillEmoji }: Props)
             onKeyDown={handleKeyDown}
             placeholder={isRecording ? '正在聆听…' : `问 ${skillName} 任何问题…`}
             rows={1}
-            className="flex-1 bg-white border border-[#dcc1b8] rounded-xl px-4 py-3 text-sm text-[#1b1c18] placeholder-[#89726b] resize-none focus:outline-none focus:border-[#f97316] transition-colors"
+            className="flex-1 bg-white border border-[#dcc1b8] rounded-xl px-4 py-3 text-sm text-[#1b1c18] placeholder-[#89726b] resize-none focus:outline-none focus:border-[#d97757] transition-colors"
             style={{ maxHeight: '120px' }}
             disabled={isLoading}
           />

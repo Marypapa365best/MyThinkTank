@@ -112,19 +112,19 @@ export default function CreateSkillPage() {
           <div className="flex justify-center gap-3">
             <button
               onClick={() => router.push('/brainstorm')}
-              className="px-5 py-2.5 bg-[#f97316] text-[#1b1c18] text-sm font-medium rounded-xl hover:bg-[#f97316]/90 transition-all"
+              className="px-5 py-2.5 bg-[#d97757] text-[#1b1c18] text-sm font-medium rounded-xl hover:bg-[#d97757]/90 transition-all"
             >
               💡 去头脑风暴
             </button>
             <button
               onClick={() => router.push('/interrogate')}
-              className="px-5 py-2.5 border border-[#dcc1b8] text-[#56423c] text-sm rounded-xl hover:text-[#f97316] hover:border-[#f97316] transition-all"
+              className="px-5 py-2.5 border border-[#dcc1b8] text-[#56423c] text-sm rounded-xl hover:text-[#d97757] hover:border-[#d97757] transition-all"
             >
               🔍 去质疑团
             </button>
             <button
               onClick={() => { setStep('input'); setRawText(''); setPersonName(''); setUrlInput('') }}
-              className="px-5 py-2.5 border border-[#dcc1b8] text-[#56423c] text-sm rounded-xl hover:text-[#f97316] hover:border-[#f97316] transition-all"
+              className="px-5 py-2.5 border border-[#dcc1b8] text-[#56423c] text-sm rounded-xl hover:text-[#d97757] hover:border-[#d97757] transition-all"
             >
               再建一个
             </button>
@@ -171,7 +171,7 @@ export default function CreateSkillPage() {
                         onClick={() => setSkillEmoji(e)}
                         className={`w-9 h-9 rounded-lg text-xl flex items-center justify-center transition-all ${
                           skillEmoji === e
-                            ? 'bg-[#f97316] border border-[#f97316] text-white'
+                            ? 'bg-[#d97757] border border-[#d97757] text-white'
                             : 'bg-white border border-[#dcc1b8] hover:bg-[#fbf9f2]'
                         }`}
                       >
@@ -186,7 +186,7 @@ export default function CreateSkillPage() {
                   <input
                     value={skillName}
                     onChange={e => setSkillName(e.target.value)}
-                    className="w-full bg-white border border-[#dcc1b8] rounded-xl px-4 py-2.5 text-sm text-[#1b1c18] placeholder-[#89726b] focus:outline-none focus:border-[#f97316] transition-colors"
+                    className="w-full bg-white border border-[#dcc1b8] rounded-xl px-4 py-2.5 text-sm text-[#1b1c18] placeholder-[#89726b] focus:outline-none focus:border-[#d97757] transition-colors"
                     placeholder="例如：彼得·德鲁克"
                   />
                 </div>
@@ -196,7 +196,7 @@ export default function CreateSkillPage() {
                   <input
                     value={skillDescription}
                     onChange={e => setSkillDescription(e.target.value)}
-                    className="w-full bg-white border border-[#dcc1b8] rounded-xl px-4 py-2.5 text-sm text-[#1b1c18] placeholder-[#89726b] focus:outline-none focus:border-[#f97316] transition-colors"
+                    className="w-full bg-white border border-[#dcc1b8] rounded-xl px-4 py-2.5 text-sm text-[#1b1c18] placeholder-[#89726b] focus:outline-none focus:border-[#d97757] transition-colors"
                     placeholder="一句话描述这位智囊"
                   />
                 </div>
@@ -209,13 +209,13 @@ export default function CreateSkillPage() {
               <div className="flex gap-3">
                 <button
                   onClick={() => setStep('input')}
-                  className="flex-1 py-2.5 border border-[#dcc1b8] text-[#56423c] text-sm rounded-xl hover:text-[#f97316] hover:border-[#f97316] transition-all"
+                  className="flex-1 py-2.5 border border-[#dcc1b8] text-[#56423c] text-sm rounded-xl hover:text-[#d97757] hover:border-[#d97757] transition-all"
                 >
                   重新生成
                 </button>
                 <button
                   onClick={saveSkill}
-                  className="flex-1 py-2.5 bg-[#f97316] text-[#1b1c18] text-sm font-medium rounded-xl hover:bg-[#f97316]/90 transition-all"
+                  className="flex-1 py-2.5 bg-[#d97757] text-[#1b1c18] text-sm font-medium rounded-xl hover:bg-[#d97757]/90 transition-all"
                 >
                   保存智囊
                 </button>
@@ -229,7 +229,7 @@ export default function CreateSkillPage() {
                 value={editedContent}
                 onChange={e => setEditedContent(e.target.value)}
                 rows={20}
-                className="w-full bg-white text-xs text-[#1b1c18] font-mono resize-none focus:outline-none focus:border focus:border-[#f97316] leading-relaxed rounded-lg px-3 py-2 border border-[#dcc1b8]"
+                className="w-full bg-white text-xs text-[#1b1c18] font-mono resize-none focus:outline-none focus:border focus:border-[#d97757] leading-relaxed rounded-lg px-3 py-2 border border-[#dcc1b8]"
               />
             </div>
           </div>
@@ -291,7 +291,7 @@ export default function CreateSkillPage() {
               value={personName}
               onChange={e => setPersonName(e.target.value)}
               placeholder='人物姓名（选填，如 "彼得·德鲁克"、"乔布斯"）'
-              className="w-full bg-white border border-[#dcc1b8] rounded-xl px-4 py-2.5 text-sm text-[#1b1c18] placeholder-[#89726b] focus:outline-none focus:border-[#f97316] transition-colors"
+              className="w-full bg-white border border-[#dcc1b8] rounded-xl px-4 py-2.5 text-sm text-[#1b1c18] placeholder-[#89726b] focus:outline-none focus:border-[#d97757] transition-colors"
             />
           </div>
 
@@ -301,7 +301,7 @@ export default function CreateSkillPage() {
               <button
                 onClick={() => setInputMode('text')}
                 className={`px-4 py-1.5 rounded-lg text-sm transition-all ${
-                  inputMode === 'text' ? 'bg-[#f97316] text-white' : 'text-[#89726b] hover:text-[#56423c]'
+                  inputMode === 'text' ? 'bg-[#d97757] text-white' : 'text-[#89726b] hover:text-[#56423c]'
                 }`}
               >
                 粘贴文本
@@ -309,7 +309,7 @@ export default function CreateSkillPage() {
               <button
                 onClick={() => setInputMode('url')}
                 className={`px-4 py-1.5 rounded-lg text-sm transition-all ${
-                  inputMode === 'url' ? 'bg-[#f97316] text-white' : 'text-[#89726b] hover:text-[#56423c]'
+                  inputMode === 'url' ? 'bg-[#d97757] text-white' : 'text-[#89726b] hover:text-[#56423c]'
                 }`}
               >
                 网页链接
@@ -323,12 +323,12 @@ export default function CreateSkillPage() {
                     value={urlInput}
                     onChange={e => setUrlInput(e.target.value)}
                     placeholder="粘贴文章或维基百科链接…"
-                    className="flex-1 bg-white border border-[#dcc1b8] rounded-xl px-4 py-2.5 text-sm text-[#1b1c18] placeholder-[#89726b] focus:outline-none focus:border-[#f97316] transition-colors"
+                    className="flex-1 bg-white border border-[#dcc1b8] rounded-xl px-4 py-2.5 text-sm text-[#1b1c18] placeholder-[#89726b] focus:outline-none focus:border-[#d97757] transition-colors"
                   />
                   <button
                     onClick={fetchUrl}
                     disabled={urlLoading || !urlInput.trim()}
-                    className="px-4 py-2.5 bg-[#f97316] text-[#1b1c18] text-sm rounded-xl hover:bg-[#f97316]/90 transition-all disabled:opacity-30 disabled:cursor-not-allowed whitespace-nowrap"
+                    className="px-4 py-2.5 bg-[#d97757] text-[#1b1c18] text-sm rounded-xl hover:bg-[#d97757]/90 transition-all disabled:opacity-30 disabled:cursor-not-allowed whitespace-nowrap"
                   >
                     {urlLoading ? '抓取中…' : '抓取'}
                   </button>
@@ -352,7 +352,7 @@ export default function CreateSkillPage() {
                   ? '粘贴该人物的著作摘录、演讲稿、访谈记录、维基百科介绍…\n\n越详细越好，建议至少 200 字。'
                   : '点击上方"抓取"按钮自动填充，或手动粘贴内容…'}
                 rows={10}
-                className="w-full bg-white border border-[#dcc1b8] rounded-xl px-4 py-3 text-sm text-[#1b1c18] placeholder-[#89726b] resize-none focus:outline-none focus:border-[#f97316] transition-colors"
+                className="w-full bg-white border border-[#dcc1b8] rounded-xl px-4 py-3 text-sm text-[#1b1c18] placeholder-[#89726b] resize-none focus:outline-none focus:border-[#d97757] transition-colors"
               />
             </div>
           </div>
@@ -363,7 +363,7 @@ export default function CreateSkillPage() {
             <button
               onClick={generate}
               disabled={rawText.trim().length < 50}
-              className="px-8 py-3 bg-[#f97316] text-white text-sm font-medium rounded-xl hover:bg-[#f97316]/90 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+              className="px-8 py-3 bg-[#d97757] text-white text-sm font-medium rounded-xl hover:bg-[#d97757]/90 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
             >
               {rawText.trim().length < 50
                 ? `还需 ${50 - rawText.trim().length} 字`
